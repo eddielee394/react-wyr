@@ -1,0 +1,468 @@
+@import "variables";
+@import "mixins";
+
+/*
+* Text-style
+* ================ */
+.big {
+	font-size: 18px;
+}
+
+.font {
+	&__family {
+		&-open-sans {
+			font-family: 'Open Sans', sans-serif;
+		}
+		&-montserrat {
+			font-family: 'Montserrat', sans-serif;
+		}
+		&-montserrat-alt {
+			font-family: 'Montserrat Alternates', sans-serif;
+		}
+		&-playfair {
+			font-family: 'Playfair Display', sans-serif;
+		}
+		&-poppins {
+			font-family: 'Poppins', sans-serif;
+		}
+		&-pacifico {
+			font-family: 'Pacifico', sans-serif;
+		}
+		&-roboto {
+			font-family: 'Roboto', sans-serif;
+		}
+		&-roboto-slab {
+			font-family: 'Roboto Slab', sans-serif;
+		}
+		&-oxygen {
+			font-family: 'Oxygen', sans-serif;
+		}
+		&-times-new-roman {
+			font-family: 'Times New Roman', sans-serif;
+		}
+	}
+	&__weight {
+		&-thin {
+			font-weight: 100;
+		}
+		&-ultralight {
+			font-weight: 200;
+		}
+		&-light {
+			font-weight: 300;
+		}
+		&-normal {
+			font-weight: 400;
+		}
+		&-medium {
+			font-weight: 500;
+		}
+		&-semibold {
+			font-weight: 600;
+		}
+		&-bold {
+			font-weight: 700;
+		}
+		&-extrabold {
+			font-weight: 800;
+		}
+	}
+	&__size {
+    &-224 {
+      font-size: rem(76);
+      @media(min-width: 768px) {
+				font-size: 224px;
+			}
+    }
+    &-196 {
+      font-size: rem(76);
+      @media(min-width: 768px) {
+				font-size: 196px;
+			}
+    }
+    &-186 {
+      font-size: rem(76);
+      @media(min-width: 768px) {
+				font-size: 186px;
+			}
+    }
+		&-124 {
+			font-size: rem(76);
+			@media(min-width: 768px) {
+				font-size: 124px;
+			}
+		}
+		&-120 {
+      font-size: rem(76);
+      @media(min-width: 768px) {
+				font-size: 120px;
+			}
+		}
+		&-106 {
+      font-size: rem(50);
+      @media(min-width: 768px) {
+				font-size: 106px;
+			}
+    }
+		&-98 {
+      font-size: rem(50);
+      @media(min-width: 768px) {
+				font-size: 98px;
+			}
+    }
+		&-96 {
+      font-size: rem(50);
+      @media(min-width: 768px) {
+				font-size: 96px;
+			}
+    }
+    &-86{
+      font-size: 86px;
+    }
+    &-84{
+      font-size: 3rem;
+      @media(min-width: 768px) {
+        font-size: rem(84);
+      }
+    }
+		&-82 {
+			font-size: rem(82);
+		}
+		&-78 {
+			font-size: rem(56);
+			@media(min-width: 480px) {
+				font-size: 66px;
+			}
+			@media(min-width: 768px) {
+				font-size: 78px;
+			}
+		}
+		&-72 {
+			font-size: rem(40);
+			@media(min-width: 768px) {
+				font-size: 72px;
+			}
+		}
+		&-64 {
+			font-size: rem(40);
+			@media(min-width: 768px) {
+				font-size: 64px;
+			}
+		}
+		&-58 {
+			font-size: rem(40);
+			@media(min-width: 768px) {
+				font-size: 58px;
+			}
+		}
+		&-56 {
+			font-size: rem(40);
+			@media(min-width: 768px) {
+				font-size: 56px;
+			}
+		}
+		&-54 {
+			font-size: rem(54);
+    }
+    &-50 {
+			font-size: rem(50);
+		}
+		&-48 {
+			font-size: rem(38);
+			@media(min-width: 768px) {
+				font-size: 48px;
+			}
+		}
+		&-42 {
+			font-size: rem(42);
+		}
+		&-46 {
+			font-size: rem(46);
+		}
+		&-40 {
+			font-size: rem(40);
+		}
+		&-36 {
+			font-size: rem(30);
+			@media(min-width: 768px) {
+				font-size: 36px;
+			}
+		}
+		&-36-i {
+			font-size: rem(30) !important;
+			@media(min-width: 768px) {
+				font-size: 36px !important;
+			}
+		}
+		&-38 {
+			font-size: rem(38);
+		}
+		&-36 {
+			font-size: rem(36);
+		}
+		&-34 {
+			font-size: rem(34);
+		}
+		&-32 {
+			font-size: rem(32);
+		}
+		&-30 {
+			font-size: rem(30);
+		}
+		&-28 {
+			font-size: rem(28);
+    }
+    &-27 {
+			font-size: rem(27);
+		}
+		&-26 {
+			font-size: rem(26);
+		}
+		&-25 {
+			font-size: rem(25);
+		}
+		&-24 {
+			font-size: rem(24);
+		}
+		&-23 {
+			font-size: rem(23);
+		}
+		&-22 {
+			font-size: rem(22);
+		}
+		&-21 {
+			font-size: rem(21);
+		}
+		&-20 {
+			font-size: rem(20);
+		}
+		&-19 {
+			font-size: rem(19);
+		}
+		&-18 {
+			font-size: rem(18);
+		}
+		&-17 {
+			font-size: rem(17);
+		}
+		&-16 {
+			font-size: rem(16);
+		}
+		&-15 {
+			font-size: rem(15);
+		}
+		&-14 {
+			font-size: rem(14);
+		}
+		&-13 {
+			font-size: rem(13);
+		}
+		&-12 {
+			font-size: rem(12);
+		}
+		&-11 {
+			font-size: rem(11);
+		}
+		&-10 {
+			font-size: rem(10);
+		}
+	}
+	&__style {
+		&-italic {
+			font-style: italic;
+		}
+		&-normal {
+			font-style: normal;
+		}
+	}
+}
+
+// Text weight
+//
+.font-weight-normal {
+	font-weight: 400 !important;
+}
+
+.font-weight-bold {
+	font-weight: 700;
+}
+
+.font-weight-light {
+	font-weight: 300;
+}
+
+.font-weight-thin {
+	font-weight: 100;
+}
+
+// Text spacing
+//
+.letter-spacing {
+	&--100 {
+		letter-spacing: -1px;
+	}
+	&-1{
+		letter-spacing: 0.01em
+	}
+	&--1{
+		letter-spacing: -0.01em
+	}
+	&-20 {
+		letter-spacing: 0.02em !important;
+	}
+	&--20{
+		letter-spacing: -0.02em;
+	}
+	&-40 {
+		letter-spacing: 0.04em;
+	}
+	&--40 {
+		letter-spacing: -0.04em;
+	}
+	&-60 {
+		letter-spacing: 0.06em;
+	}
+	&-100 {
+		letter-spacing: 0.1em;
+	}
+	&-200 {
+		letter-spacing: 0.2em;
+	}
+	&-300 {
+		letter-spacing: 0.3em;
+	}
+}
+
+.line__height {
+  &-224 {
+    line-height: rem(76);
+    @media(min-width: 768px) {
+      line-height: 224px;
+    }
+  }
+  &-98 {
+    line-height: 50px;
+		@media(min-width: 768px) {
+			line-height: 98px;
+		}
+  }
+  &-96 {
+    line-height: 50px;
+		@media(min-width: 768px) {
+			line-height: 96px;
+		}
+  }
+  &-88 {
+    line-height: 50px;
+		@media(min-width: 768px) {
+			line-height: 88px;
+		}
+  }
+  &-84 {
+    line-height: 84px;
+  }
+	&-78 {
+		line-height: 50px;
+		@media(min-width: 768px) {
+			line-height: 78px;
+		}
+	}
+	&-68 {
+		line-height: 50px;
+		@media(min-width: 768px) {
+			line-height: 68px;
+		}
+	}
+	&-64 {
+		line-height: 64px;
+	}
+	&-60 {
+		line-height: 60px;
+	}
+	&-56 {
+		line-height: 56px;
+	}
+	&-52 {
+		line-height: 52px;
+	}
+	&-50 {
+		line-height: 50px;
+	}
+	&-48 {
+		line-height: 48px;
+	}
+	&-46 {
+		line-height: 46px;
+	}
+	&-44 {
+		line-height: 44px;
+	}
+	&-42 {
+		line-height: 42px;
+	}
+	&-40 {
+		line-height: 40px;
+	}
+	&-38 {
+		line-height: 38px;
+	}
+	&-36 {
+		line-height: 36px;
+	}
+	&-34 {
+		line-height: 34px;
+	}
+	&-32 {
+		line-height: 32px;
+	}
+	&-30 {
+		line-height: 30px;
+	}
+	&-28 {
+		line-height: 28px;
+	}
+	&-27 {
+		line-height: 27px;
+	}
+	&-26 {
+		line-height: 26px;
+	}
+	&-24 {
+		line-height: 24px;
+	}
+	&-22 {
+		line-height: 22px;
+	}
+	&-21 {
+		line-height: 21px;
+	}
+	&-20 {
+		line-height: 20px;
+	}
+	&-19 {
+		line-height: 19px;
+	}
+	&-16 {
+		line-height: 16px;
+	}
+	&-15 {
+		line-height: 15px;
+	}
+	&-14 {
+		line-height: 14px;
+	}
+	&-12 {
+		line-height: 12px;
+	}
+	&-10 {
+		line-height: 10px;
+	}
+	&-8 {
+		line-height: 8px;
+	}
+}
+
+.text-decoration_underline {
+	text-decoration: underline;
+}
+

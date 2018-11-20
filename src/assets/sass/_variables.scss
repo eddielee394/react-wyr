@@ -1,0 +1,90 @@
+//========================================================
+//                     Variables
+//=========================================================
+
+//== Layout settings
+$layout-boxed-width: 1200px;
+$layout-boxed-bg: #444;
+
+//== Bootstrap resolutions
+$screen-xs-min: 0;
+$screen-sm-min: 576px;
+$screen-md-min: 768px;
+$screen-lg-min: 992px;
+$screen-xl-min: 1230px;
+
+//== Flex Grid system
+// Define your custom flex responsive grid.
+$container-width: 300px;
+$container-xs-width: 480px;
+$container-sm-width: 750px;
+$container-md-width: 970px;
+$container-lg-width: 1200px;
+$container-xl-width: 1800px;
+
+$row-ws: 25px;
+$row-ws-sm: 30px;
+$row-ws-lg: 90px;
+
+$col-count: 12;
+$col-spacing: 30px;
+
+// Fonts
+$default-font-family: 'Open Sans', sans-serif;
+$secondary-font-family: 'Montserrat', sans-serif;
+$fa: "Font Awesome\ 5 Free";
+
+$fa-font-path: "../../../node_modules/@fortawesome/fontawesome-free/webfonts";
+
+// img
+$img-path: './../images';
+
+$default-font-weight: 400;
+$default-font-size: 16px;
+
+//== Colors
+$gray-base: #000;
+$gray-dark: #333;
+$gray: #555;
+
+
+//== Main Colors
+$black: #000;
+$white: #fff;
+$turquoise: #0dbeff; // TODO: Позже разобрать
+$gray: #f7f7f7;
+$dark-gray: #f2f2f2;
+$delimiter-double-border: #e4eeff; //TODO:
+$delimiter-doted: #e0e0ff;
+$heading-number: #dfdfdf;
+$icon-bg: #e0e0ff;
+$white-dopdown: #eff5ff;
+$white-dropdown_border-color: #dee9fc;
+$wave-background: #07e3ff; // TODO: Позже разобрать
+
+$black_rgba: rgba(0, 0, 0, .3);
+
+// button width and heights
+$bsk-btn_s-length: 41px;
+$bsk-btn_m-length: 52px;
+$bsk-btn_l-length: 68px;
+$bsk-btn_xl-length: 86px;
+
+//Grid Layout
+$xl-min: 'screen and (min-width: #{$screen-xl-min})';
+$lg-min: 'screen and (min-width: #{$screen-lg-min})';
+$md-max: 'screen and (max-width: #{$screen-lg-min - 1})';
+$md-min: 'screen and (min-width: #{$screen-md-min})';
+$sm-max: 'screen and (max-width: #{$screen-md-min - 1})';
+$sm-min: 'screen and (min-width: #{$screen-sm-min})';
+$xs-max: 'screen and (max-width: #{$screen-sm-min - 1})';
+$xs-min: 'screen and (min-width: #{$screen-xs-min})';
+$xm-max: 'screen and (max-width: 479px)';
+$xm-min: 'screen and (min-width: 480px)';
+
+//Var classes
+%bg-style {
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}

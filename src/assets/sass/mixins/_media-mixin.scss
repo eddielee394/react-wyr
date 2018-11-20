@@ -1,0 +1,85 @@
+//
+// Bootstrap media upgrade
+// --------------------------------------------------
+
+@mixin make-media($resolution, $gutter) {
+	.media-#{$resolution} {
+		-webkit-flex-direction: row;
+		-ms-flex-direction: row;
+		flex-direction: row;
+		> .media-left img, > .media-right img {
+			max-width: none;
+		}
+
+		> .media-right {
+			padding-left: $gutter;
+			padding-top: 0;
+			-ms-flex: 0 0 auto;
+			-webkit-flex: 0 0 auto;
+			flex: 0 0 auto;
+			max-width: 100%;
+		}
+		> .media-left {
+			padding-right: $gutter;
+			padding-bottom: 0;
+			-ms-flex: 0 0 auto;
+			-webkit-flex: 0 0 auto;
+			flex: 0 0 auto;
+			max-width: 100%;
+		}
+		.media-body {
+			-ms-flex: 0 1 auto;
+			-webkit-flex: 0 1 auto;
+			flex: 0 1 auto;
+		}
+	}
+
+	.media-#{$resolution}-base {
+		> .media-left img, > .media-right img {
+			max-width: 100%;
+		}
+
+		> .media-left,
+		> .media-right,
+		.media-body {
+			padding: 0;
+			display: block;
+			vert-align: top;
+		}
+		> .media-right {
+			padding-top: $gutter;
+		}
+		> .media-left {
+			padding-bottom: $gutter;
+		}
+	}
+
+	.media-#{$resolution}-rtl {
+		direction: rtl;
+
+		> .media-left {
+			padding-right: 0;
+			padding-left: $media-gutter;
+		}
+
+		> .media-right {
+			padding-right: $media-gutter;
+			padding-left: 0;
+		}
+	}
+
+	.media-#{$resolution}-ltr {
+		direction: ltr;
+
+		> .media-left {
+			padding-right: $media-gutter;
+			padding-left: 0;
+		}
+
+		> .media-right {
+			padding-right: 0;
+			padding-left: $media-gutter;
+		}
+	}
+}
+

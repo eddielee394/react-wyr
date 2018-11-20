@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 162">
+    <defs>
+        <style>.a{fill:red;}.a,.b{fill-rule:evenodd;}.b{fill:#fff;}</style>
+    </defs>
+    <polygon class="a" points="1548 0 0 103 0 162 1920 162 1920 90.93 1548 0"/>
+    <path class="b" d="M1548,0l372,135v27H0Z"/>
+</svg>

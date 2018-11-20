@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 155">
+    <defs>
+        <style>
+            .a{fill:none;}.b,.d{fill:#fff;}.b{stroke:#fff;stroke-miterlimit:10;}.c,.d{fill-rule:evenodd;}.c{fill:url(#a);}
+        </style>
+        <pattern id="a" width="11.34" height="11.34" patternUnits="userSpaceOnUse" viewBox="0 0 11.34 11.34">
+            <rect class="a" width="11.34" height="11.34"/>
+            <line class="b" x1="25.69" y1="8.32" x2="8.32" y2="25.69"/>
+            <line class="b" x1="14.36" y1="8.32" x2="-3.02" y2="25.69"/>
+            <line class="b" x1="20.03" y1="8.32" x2="2.65" y2="25.69"/>
+            <line class="b" x1="3.02" y1="8.32" x2="-14.36" y2="25.69"/>
+            <line class="b" x1="8.69" y1="8.32" x2="-8.69" y2="25.69"/>
+            <line class="b" x1="25.69" y1="-3.02" x2="8.32" y2="14.36"/>
+            <line class="b" x1="14.36" y1="-3.02" x2="-3.02" y2="14.36"/>
+            <line class="b" x1="20.03" y1="-3.02" x2="2.65" y2="14.36"/>
+            <line class="b" x1="3.02" y1="-3.02" x2="-14.36" y2="14.36"/>
+            <line class="b" x1="8.69" y1="-3.02" x2="-8.69" y2="14.36"/>
+            <line class="b" x1="25.69" y1="-14.36" x2="8.32" y2="3.02"/>
+            <line class="b" x1="14.36" y1="-14.36" x2="-3.02" y2="3.02"/>
+            <line class="b" x1="20.03" y1="-14.36" x2="2.65" y2="3.02"/>
+            <line class="b" x1="3.02" y1="-14.36" x2="-14.36" y2="3.02"/>
+            <line class="b" x1="8.69" y1="-14.36" x2="-8.69" y2="3.02"/>
+        </pattern>
+    </defs>
+    <polygon class="c" points="1380 93 545 79 0 10 0 155 1920 155 1380 93"/>
+    <path class="d" d="M1375,93,1920,0V155H0Z"/>
+</svg>
