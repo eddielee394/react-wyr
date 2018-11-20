@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 365.6">
+    <defs>
+        <style>.a{fill:red;}.a,.b{fill-rule:evenodd;}.b{fill:#fff;}</style>
+    </defs>
+    <path class="a" d="M1920,365.6H0V233.21C487.24,89,1095.45-106.63,1920,70.34Z"/>
+    <path class="b" d="M0,343.21V365.6H1920V89.6C1125.22-68.53,13.61,337.23,0,343.21Z"/>
+</svg>

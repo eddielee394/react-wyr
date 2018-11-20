@@ -1,0 +1,175 @@
+@import "variables";
+@import "mixins";
+
+/*
+* Controls
+* ================ */
+
+.form-control {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	box-shadow: none;
+	border: none;
+}
+
+/*
+input {
+	width: 100%;
+	height: 54px;
+	border-radius: 25px;
+	box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+	border: 2px solid rgba(255, 255, 255, 0.2);
+	background: rgba(255, 255, 255, 0.12);
+	color: $white;
+	padding: 15px 60px 15px 35px;
+	line-height: 24px;
+	font-size: 16px;
+
+	@include placeholder($white);
+
+	& + .btn {
+		border-radius: 50%;
+		background: linear-gradient(-10deg, #15bdff, #00f6ff);
+		color: $white;
+		position: absolute;
+		top: 6px;
+		right: 6px;
+		width: 42px;
+		height: 42px;
+		margin: 0;
+		padding: 0;
+		border: none;
+
+		&:hover {
+			[class*="fa-paper-plane"] {
+				animation: flyOut 1.5s forwards;
+			}
+		}
+
+		[class*="fa-"] {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			display: block;
+
+			&:before {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+
+		[class*="fa-paper-plane"] {
+			transform-origin: left top;
+			transform: translate(0, 0) scale(1) rotate(0);
+
+			&:before {
+				transform: translate(-50%, -50%);
+			}
+		}
+	}
+}
+*/
+@keyframes flyOut {
+	0% {
+		transform: translate(0, 0) scale(1) rotate(0);
+	}
+	50% {
+		transform: translate(150%, -150%) scale(0) rotate(-20deg);
+	}
+	51% {
+		transform: translate(-50%, 150%) scale(0) rotate(-20deg);
+	}
+	100% {
+		transform: translate(0, 0) scale(1) rotate(0);
+	}
+}
+
+.badge:not(a) {
+	&.badge-primary {
+		background: linear-gradient(to right, var(--brk-base-2), var(--brk-base-5));
+		color: $white;
+		border-radius: 50px;
+		padding: 0 20px;
+	}
+	.badge-secondary {
+	}
+	.badge-success {
+	}
+	.badge-danger {
+	}
+	.badge-warning {
+	}
+	.badge-info {
+	}
+	.badge-light {
+	}
+	.badge-dark {
+	}
+
+	&.badge-pill {
+		.badge-primary {
+		}
+		.badge-secondary {
+		}
+		.badge-success {
+		}
+		.badge-danger {
+		}
+		.badge-warning {
+		}
+		.badge-info {
+		}
+		.badge-light {
+		}
+		.badge-dark {
+		}
+	}
+}
+
+a.badge {
+	.badge-primary {
+		background: linear-gradient(to top, #337EFF, #0FC8FF);
+		color: $white;
+		vertical-align: middle;
+	}
+	.badge-secondary {
+	}
+	.badge-success {
+	}
+	.badge-danger {
+	}
+	.badge-warning {
+	}
+	.badge-info {
+	}
+	.badge-light {
+	}
+	.badge-dark {
+	}
+}
+
+.divider-dashed {
+	width: 100%;
+	display: block;
+	margin: 30px 0 25px;
+	float: left;
+	position: relative;
+
+	&:before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 0;
+		height: 0;
+		width: 100%;
+		opacity: 0.2;
+		border-bottom: 1px dashed;
+	}
+}

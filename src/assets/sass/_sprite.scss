@@ -1,0 +1,45 @@
+%brk-brk-snow-divider-1 {
+  background: url(#{$img-path}/sprite.png) 0px -44px;
+  width: 100px;
+  height: 6px;
+}
+%brk-dashed-border-primary-light {
+  background: url(#{$img-path}/sprite.png) 0px 0px;
+  width: 100px;
+  height: 1px;
+}
+%brk-dashed-border-primary {
+  background: url(#{$img-path}/sprite.png) 0px -11px;
+  width: 100px;
+  height: 1px;
+}
+%brk-dashed-border {
+  background: url(#{$img-path}/sprite.png) 0px -22px;
+  width: 100px;
+  height: 1px;
+}
+%brk-hatch_1 {
+  background: url(#{$img-path}/sprite.png) 0px -33px;
+  width: 10px;
+  height: 1px;
+}
+%brk-snow-bg-2 {
+  background: url(#{$img-path}/sprite.png) 0px -60px;
+  width: 100px;
+  height: 6px;
+}
+%brk-snow-bg {
+  background: url(#{$img-path}/sprite.png) 0px -108px;
+  width: 100px;
+  height: 101px;
+}
+%brk-snow-border-2 {
+  background: url(#{$img-path}/sprite.png) 0px -76px;
+  width: 100px;
+  height: 6px;
+}
+%brk-snow-border {
+  background: url(#{$img-path}/sprite.png) 0px -92px;
+  width: 100px;
+  height: 6px;
+}
