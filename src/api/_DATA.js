@@ -1,12 +1,12 @@
 /**
  * Users Data
- * @type {{sarahedo: {id: string, name: string, avatarURL: string, answers: {"8xf0y6ziyjabvozdd253nd": string, "6ni6ok3ym7mf1p33lnez": string, am8ehyc8byjqgar0jgpub9: string, loxhs1bqm25b708cmbf3g: string}, questions: string[]}, tylermcginnis: {id: string, name: string, avatarURL: string, answers: {vthrdm985a262al8qx3do: string, xj352vofupe1dqz9emx13r: string}, questions: string[]}, johndoe: {id: string, name: string, avatarURL: string, answers: {xj352vofupe1dqz9emx13r: string, vthrdm985a262al8qx3do: string, "6ni6ok3ym7mf1p33lnez": string}, questions: string[]}}}
+ * @type {{im_not_a_horse: {id: string, name: string, avatarURL: string, answers: {"8xf0y6ziyjabvozdd253nd": string, "6ni6ok3ym7mf1p33lnez": string, am8ehyc8byjqgar0jgpub9: string, loxhs1bqm25b708cmbf3g: string}, questions: string[]}, burt_b: {id: string, name: string, avatarURL: string, answers: {vthrdm985a262al8qx3do: string, xj352vofupe1dqz9emx13r: string}, questions: string[]}, johndoe: {id: string, name: string, avatarURL: string, answers: {xj352vofupe1dqz9emx13r: string, vthrdm985a262al8qx3do: string, "6ni6ok3ym7mf1p33lnez": string}, questions: string[]}}}
  */
 let users = {
-  sarahedo: {
-    id: "sarahedo",
-    name: "Sarah Edo",
-    avatarURL: "../../images/snow.jpg",
+  im_not_a_horse: {
+    id: "im_not_a_horse",
+    name: "Sarah Jessica Marker",
+    avatarURL: "http://i.pravatar.cc/50?img=47",
     answers: {
       "8xf0y6ziyjabvozdd253nd": "optionOne",
       "6ni6ok3ym7mf1p33lnez": "optionOne",
@@ -15,10 +15,10 @@ let users = {
     },
     questions: ["8xf0y6ziyjabvozdd253nd", "am8ehyc8byjqgar0jgpub9"]
   },
-  tylermcginnis: {
-    id: "tylermcginnis",
-    name: "Tyler McGinnis",
-    avatarURL: "../../images/tyler.jpg",
+  burt_b: {
+    id: "burt_b",
+    name: "Burt Beynolds",
+    avatarURL: ".http://i.pravatar.cc/50?img=53",
     answers: {
       vthrdm985a262al8qx3do: "optionOne",
       xj352vofupe1dqz9emx13r: "optionTwo"
@@ -28,7 +28,7 @@ let users = {
   johndoe: {
     id: "johndoe",
     name: "John Doe",
-    avatarURL: "../../images/leaf.jpg",
+    avatarURL: "http://i.pravatar.cc/50?img=51",
     answers: {
       xj352vofupe1dqz9emx13r: "optionOne",
       vthrdm985a262al8qx3do: "optionTwo",
@@ -45,10 +45,10 @@ let users = {
 let questions = {
   "8xf0y6ziyjabvozdd253nd": {
     id: "8xf0y6ziyjabvozdd253nd",
-    author: "sarahedo",
+    author: "im_not_a_horse",
     timestamp: 1467166872634,
     optionOne: {
-      votes: ["sarahedo"],
+      votes: ["im_not_a_horse"],
       text: "have horrible short term memory"
     },
     optionTwo: {
@@ -65,42 +65,42 @@ let questions = {
       text: "become a superhero"
     },
     optionTwo: {
-      votes: ["johndoe", "sarahedo"],
+      votes: ["johndoe", "im_not_a_horse"],
       text: "become a supervillian"
     }
   },
   am8ehyc8byjqgar0jgpub9: {
     id: "am8ehyc8byjqgar0jgpub9",
-    author: "sarahedo",
+    author: "im_not_a_horse",
     timestamp: 1488579767190,
     optionOne: {
       votes: [],
       text: "be telekinetic"
     },
     optionTwo: {
-      votes: ["sarahedo"],
+      votes: ["im_not_a_horse"],
       text: "be telepathic"
     }
   },
   loxhs1bqm25b708cmbf3g: {
     id: "loxhs1bqm25b708cmbf3g",
-    author: "tylermcginnis",
+    author: "burt_b",
     timestamp: 1482579767190,
     optionOne: {
       votes: [],
       text: "be a front-end developer"
     },
     optionTwo: {
-      votes: ["sarahedo"],
+      votes: ["im_not_a_horse"],
       text: "be a back-end developer"
     }
   },
   vthrdm985a262al8qx3do: {
     id: "vthrdm985a262al8qx3do",
-    author: "tylermcginnis",
+    author: "burt_b",
     timestamp: 1489579767190,
     optionOne: {
-      votes: ["tylermcginnis"],
+      votes: ["burt_b"],
       text: "find $50 yourself"
     },
     optionTwo: {
@@ -117,7 +117,7 @@ let questions = {
       text: "write JavaScript"
     },
     optionTwo: {
-      votes: ["tylermcginnis"],
+      votes: ["burt_b"],
       text: "write Swift"
     }
   }
