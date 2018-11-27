@@ -6,6 +6,7 @@
   "rules": {
     "max-empty-lines": [4, {"ignore": ["comments"]}],
     "no-descending-specificity": null,
-    "font-family-no-missing-generic-family-keyword": null
+    "font-family-no-missing-generic-family-keyword": null,
+    "indentation": 4
   }
 }

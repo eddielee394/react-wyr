@@ -1,45 +1,49 @@
 $brk-base-colors: ();
-$brk-base-colors: map-merge((
-				"brand-primary":      #ff9a1d,
-				"secondary":          #ffac36,
-				"white":              #fff,
-				"black":              #000,
-				"brk-dark-base":      #272727,
-				"brk-base-1":         #ff9a1d,
-				"brk-base-2":         #ff9a1d,
-				"brk-base-3":         #000243,
-				"brk-base-4":         #ff9a1d,
-				"brk-base-5":         #ffd800,
-				"brk-base-6":         #ff9a1d,
-				"brk-base-7":         #ff9a1d,
-				"brk-base-8":         #ff9a1d,
-				"brk-secondary-1":    #ffac36,
-				"brk-secondary-2":    #ffac36,
-				"brk-secondary-3":    #ffac36,
-				"brk-secondary-4":    #ffac36,
-				"brk-secondary-5":    #ffac36,
-				"brk-secondary-6":    #ffac36,
-				"text-base-color-1":  #c4c4c4,
-				"text-base-color-2":  #0F5AE0,
-				"text-base-color-3":  #f3f3f3,
-        "form-color-1":				#000243
-), $brk-base-colors);
+$brk-base-colors: map-merge(
+    (
+        "brand-primary": #ff9a1d,
+        "secondary": #ffac36,
+        "white": #fff,
+        "black": #000,
+        "brk-dark-base": #272727,
+        "brk-base-1": #ff9a1d,
+        "brk-base-2": #ff9a1d,
+        "brk-base-3": #000243,
+        "brk-base-4": #ff9a1d,
+        "brk-base-5": #ffd800,
+        "brk-base-6": #ff9a1d,
+        "brk-base-7": #ff9a1d,
+        "brk-base-8": #ff9a1d,
+        "brk-secondary-1": #ffac36,
+        "brk-secondary-2": #ffac36,
+        "brk-secondary-3": #ffac36,
+        "brk-secondary-4": #ffac36,
+        "brk-secondary-5": #ffac36,
+        "brk-secondary-6": #ffac36,
+        "text-base-color-1": #c4c4c4,
+        "text-base-color-2": #0f5ae0,
+        "text-base-color-3": #f3f3f3,
+        "form-color-1": #000243
+    ),
+    $brk-base-colors
+);
 
 @function safe-rgb($color) {
-  @return unquote("#{red($color)}, #{green($color)}, #{blue($color)}");
+    @return unquote("#{red($color)}, #{green($color)}, #{blue($color)}");
 }
 
 /* ----------- Palette variable ----------- */
 :root {
-	@each $color, $value in $brk-base-colors {
-		--#{$color}: #{$value};
-	}
+    @each $color, $value in $brk-base-colors {
+        --#{$color}: #{$value};
+    }
 
-	// RGB
-	@each $color, $value in $brk-base-colors {
-		--#{$color}-rgb: #{safe-rgb($value)};
-  }
-  
-  --b-radius: inherit; 
+    // RGB
+    @each $color, $value in $brk-base-colors {
+        --#{$color}-rgb: #{safe-rgb($value)};
+    }
+
+    --b-radius: inherit;
 }
+
 /* ----------- Palette variable ----------- */
