@@ -1,0 +1,45 @@
+$brk-base-colors: ();
+$brk-base-colors: map-merge((
+				"brand-primary":      adjust-hue(#2775FF, 120deg),
+				"secondary":          adjust-hue(#7202bb, 120deg),
+				"white":              #fff,
+				"black":              #000,
+				"brk-dark-base":      adjust-hue(#272727, 120deg),
+				"brk-base-1":         adjust-hue(#69adff, 120deg),
+				"brk-base-2":         adjust-hue(#00c6ff, 120deg),
+				"brk-base-3":         adjust-hue(#0F5AE0, 120deg),
+				"brk-base-4":         adjust-hue(#e8ecff, 120deg),
+				"brk-base-5":         adjust-hue(#00f6ff, 120deg),
+				"brk-base-6":         adjust-hue(#0B98F6, 120deg),
+				"brk-base-7":         adjust-hue(#a7ebff, 120deg),
+				"brk-base-8":         adjust-hue(#1600ba, 120deg),// TODO: !!!
+				"brk-secondary-1":    adjust-hue(#4f34c9, 120deg),
+				"brk-secondary-2":    adjust-hue(#4F00BA, 120deg),
+				"brk-secondary-3":    adjust-hue(#7400ba, 120deg),
+				"brk-secondary-4":    adjust-hue(#6e50c2, 120deg),
+				"brk-secondary-5":    adjust-hue(#6377DF, 120deg),
+				"brk-secondary-6":    adjust-hue(#b50aff, 120deg),
+				"text-base-color-1":  #c4c4c4,
+				"text-base-color-2":  adjust-hue(#0F5AE0, 120deg),
+				"text-base-color-3":  #f3f3f3,
+				"form-color-1":					adjust-hue(#e8ecff, 120deg),
+), $brk-base-colors);
+
+@function safe-rgb($color) {
+	@return unquote("#{red($color)}, #{green($color)}, #{blue($color)}");
+}
+
+/* ----------- Palette variable ----------- */
+:root {
+	@each $color, $value in $brk-base-colors {
+		--#{$color}: #{$value};
+	}
+
+	// RGB
+	@each $color, $value in $brk-base-colors {
+		--#{$color}-rgb: #{safe-rgb($value)};
+	}
+
+	--b-radius: inherit;
+}
+/* ----------- Palette variable ----------- */

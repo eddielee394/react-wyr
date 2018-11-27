@@ -1,0 +1,45 @@
+$brk-base-colors: ();
+$brk-base-colors: map-merge((
+				"brand-primary":      #08d75f,
+				"secondary":          #00e5e4,
+				"white":              #fff,
+				"black":              #000,
+				"brk-dark-base":      #272727,
+				"brk-base-1": 				#29db87,
+				"brk-base-2": 				#08ec60,
+				"brk-base-3": 				#08b957,
+				"brk-base-4":         #e8ecff,
+				"brk-base-5": 				#6bff94,
+				"brk-base-6": 				#4bde75,
+				"brk-base-7": 				#5fffa4,
+				"brk-base-8": 				#00b1b0,
+				"brk-secondary-1":    #00e5e4,
+				"brk-secondary-2": 		#00e5d3,
+				"brk-secondary-3":    #00e5e4,
+				"brk-secondary-4": 		#00f0de,
+				"brk-secondary-5":    #00e5e4,
+				"brk-secondary-6": 		#00eaf4,
+				"text-base-color-1":  #c4c4c4,
+				"text-base-color-2": 	#00e784,
+				"text-base-color-3":  #f3f3f3,
+				"form-color-1":				#e8ecff
+), $brk-base-colors);
+
+@function safe-rgb($color) {
+	@return unquote("#{red($color)}, #{green($color)}, #{blue($color)}");
+}
+
+/* ----------- Palette variable ----------- */
+:root {
+	@each $color, $value in $brk-base-colors {
+		--#{$color}: #{$value};
+	}
+
+	// RGB
+	@each $color, $value in $brk-base-colors {
+		--#{$color}-rgb: #{safe-rgb($value)};
+	}
+
+	--b-radius: inherit;
+}
+/* ----------- Palette variable ----------- */
