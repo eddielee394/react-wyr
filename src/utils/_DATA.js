@@ -18,7 +18,7 @@ let users = {
   burt_b: {
     id: "burt_b",
     name: "Burt Beynolds",
-    avatarURL: ".http://i.pravatar.cc/50?img=53",
+    avatarURL: "http://i.pravatar.cc/50?img=53",
     answers: {
       vthrdm985a262al8qx3do: "optionOne",
       xj352vofupe1dqz9emx13r: "optionTwo"
