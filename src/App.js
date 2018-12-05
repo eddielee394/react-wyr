@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 //components
-import Dashboard from "./components/Dashboard";
+// import Dashboard from "./components/Dashboard";
 
 //methods
 import { handleInitialData } from "./actions/shared";

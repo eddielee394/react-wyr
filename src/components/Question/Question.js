@@ -4,6 +4,36 @@ import { connect } from "react-redux";
 const Question = props => {
   const { question, author } = props;
 
+  //get Vote counts by option
+  const getVoteCount = (option = null) => handleVoteCount(option);
+
+  //get vote percentage by option
+  const getVotePercent = (option = null) => handleVotePercent(option);
+
+  //get users count
+  const getUserCount = () => {
+    const { users } = props;
+    return Object.keys(users).length;
+  };
+
+  //handle option vote count
+  const handleVoteCount = option => option.votes.length;
+
+  //handle option vote percentage
+  const handleVotePercent = option => {
+    let usersCount = getUserCount();
+    let voteCount = getVoteCount(option);
+    return calcPercent(voteCount, usersCount);
+  };
+
+  //todo: move to a util helper
+  const calcPercent = (partialValue, totalValue) => {
+    let value = (100 * partialValue) / totalValue;
+    value = value.toFixed(0);
+
+    return `${value}%`;
+  };
+
   return (
     <div>
       <h1>Would you rather?</h1>
@@ -12,7 +42,11 @@ const Question = props => {
       <img src={author.avatarUrl} />
       <p>timestamp: {question.timestamp}</p>
       <p>optionOne: {question.optionOne.text}</p>
+      <p>Votes Count: {getVoteCount(question.optionOne)}</p>
+      <p>Votes Percent: {getVotePercent(question.optionOne)}</p>
       <p>optionTwo: {question.optionTwo.text}</p>
+      <p>Votes Count: {getVoteCount(question.optionTwo)}</p>
+      <p>Votes Percent: {getVotePercent(question.optionTwo)}</p>
     </div>
   );
 };
@@ -38,7 +72,8 @@ function mapStateToProps({ users, questions }, { id }) {
   return {
     //get the question, author of the question
     question,
-    author
+    author,
+    users
   };
 }
 
