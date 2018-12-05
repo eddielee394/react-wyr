@@ -1,3 +1,5 @@
+import { formatQuestion } from "./helpers";
+
 /**
  * Users Data
  * @type {{im_not_a_horse: {id: string, name: string, avatarURL: string, answers: {"8xf0y6ziyjabvozdd253nd": string, "6ni6ok3ym7mf1p33lnez": string, am8ehyc8byjqgar0jgpub9: string, loxhs1bqm25b708cmbf3g: string}, questions: string[]}, burt_b: {id: string, name: string, avatarURL: string, answers: {vthrdm985a262al8qx3do: string, xj352vofupe1dqz9emx13r: string}, questions: string[]}, johndoe: {id: string, name: string, avatarURL: string, answers: {xj352vofupe1dqz9emx13r: string, vthrdm985a262al8qx3do: string, "6ni6ok3ym7mf1p33lnez": string}, questions: string[]}}}
@@ -124,23 +126,8 @@ let questions = {
 };
 
 /**
- * Generate User Id
- * @return {string}
- */
-function generateUID() {
-  return (
-    Math.random()
-      .toString(36)
-      .substring(2, 15) +
-    Math.random()
-      .toString(36)
-      .substring(2, 15)
-  );
-}
-
-/**
  * Gets Users
- * @return {Promise<any>}
+ * @return {Promise<{users: Object}>}
  * @private
  */
 export function _getUsers() {
@@ -151,7 +138,7 @@ export function _getUsers() {
 
 /**
  * Gets Questions
- * @return {Promise<any>}
+ * @return {Promise<{questions: Object}>}
  * @private
  */
 export function _getQuestions() {
@@ -161,37 +148,14 @@ export function _getQuestions() {
 }
 
 /**
- * Formats the questions for storage
- * @param optionOneText
- * @param optionTwoText
- * @param author
- * @return {{id: string, timestamp: number, author: *, optionOne: {votes: Array, text: *}, optionTwo: {votes: Array, text: *}}}
- */
-function formatQuestion({ optionOneText, optionTwoText, author }) {
-  return {
-    id: generateUID(),
-    timestamp: Date.now(),
-    author,
-    optionOne: {
-      votes: [],
-      text: optionOneText
-    },
-    optionTwo: {
-      votes: [],
-      text: optionTwoText
-    }
-  };
-}
-
-/**
  * Saves the question
  * @param question
- * @return {Promise<any>}
+ * @return {Promise<{id: string, author: string, optionOne: Object, optionTwo: Object, timestamp: Object}>}
  * @private
  */
 export function _saveQuestion(question) {
   return new Promise((res, rej) => {
-    const authedUser = question.author;
+    const authUser = question.author;
     const formattedQuestion = formatQuestion(question);
 
     setTimeout(() => {
@@ -202,9 +166,9 @@ export function _saveQuestion(question) {
 
       users = {
         ...users,
-        [authedUser]: {
-          ...users[authedUser],
-          questions: users[authedUser].questions.concat([formattedQuestion.id])
+        [authUser]: {
+          ...users[authUser],
+          questions: users[authUser].questions.concat([formattedQuestion.id])
         }
       };
 
@@ -214,34 +178,34 @@ export function _saveQuestion(question) {
 }
 
 /**
- *
- * @param authedUser
- * @param qid
+ * Saves answer to the question
+ * @param authUser
+ * @param questionId
  * @param answer
- * @return {Promise<any>}
+ * @return {Promise<{authUser: string, questionId: string, answer: string }>}
  * @private
  */
-export function _saveQuestionAnswer({ authedUser, qid, answer }) {
+export function _saveQuestionAnswer({ authUser, questionId, answer }) {
   return new Promise((res, rej) => {
     setTimeout(() => {
       users = {
         ...users,
-        [authedUser]: {
-          ...users[authedUser],
+        [authUser]: {
+          ...users[authUser],
           answers: {
-            ...users[authedUser].answers,
-            [qid]: answer
+            ...users[authUser].answers,
+            [questionId]: answer
           }
         }
       };
 
       questions = {
         ...questions,
-        [qid]: {
-          ...questions[qid],
+        [questionId]: {
+          ...questions[questionId],
           [answer]: {
-            ...questions[qid][answer],
-            votes: questions[qid][answer].votes.concat([authedUser])
+            ...questions[questionId][answer],
+            votes: questions[questionId][answer].votes.concat([authUser])
           }
         }
       };
