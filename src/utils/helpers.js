@@ -71,8 +71,12 @@ export const generateUID = () => {
  * @return {string}
  */
 export const calcPercent = (partialValue, totalValue) => {
+  //do the calculation
   let value = (100 * partialValue) / totalValue;
+  //ditch the decimals
   value = value.toFixed(0);
+  //don't return more than 100%
+  value = Math.min(value, 100);
 
   return `${value}%`;
 };

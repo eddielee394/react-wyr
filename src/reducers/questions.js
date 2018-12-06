@@ -20,12 +20,18 @@ const questions = (state = {}, action) => {
         ...state,
         //get the question id & build the new object
         [action.questionId]: {
+          //spread the state from the old object
           ...state[action.questionId],
+          //find the answer object
           [action.answer]: {
+            //spread the  state from the old answer object
             ...state[action.questionId][action.answer],
-            votes: state[action.questionId][action.answer].votes.concat([
-              action.authUser
-            ])
+            //update the votes on the answer object with the new state
+            votes:
+              //if the user already voted, than do nothing,  otherwise add their vote
+              state[action.questionId][action.answer].votes.concat([
+                action.authUser
+              ])
           }
         }
       };
