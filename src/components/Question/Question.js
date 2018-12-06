@@ -1,8 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
+import { handleVoteQuestionAnswer } from "../../actions/questions";
+import { calcPercent } from "../../utils/helpers";
 
 const Question = props => {
-  const { question, author } = props;
+  const { question, author, users, dispatch } = props;
+
+  //handle adding a vote
+  const handleAddVote = event => {
+    event.preventDefault();
+    const authUser = "burt_b";
+    const option = "optionOne";
+    dispatch(
+      handleVoteQuestionAnswer({
+        authUser,
+        questionId: question.id,
+        answer: option
+      })
+    );
+  };
 
   //get Vote counts by option
   const getVoteCount = (option = null) => handleVoteCount(option);
@@ -12,7 +28,6 @@ const Question = props => {
 
   //get users count
   const getUserCount = () => {
-    const { users } = props;
     return Object.keys(users).length;
   };
 
@@ -26,14 +41,6 @@ const Question = props => {
     return calcPercent(voteCount, usersCount);
   };
 
-  //todo: move to a util helper
-  const calcPercent = (partialValue, totalValue) => {
-    let value = (100 * partialValue) / totalValue;
-    value = value.toFixed(0);
-
-    return `${value}%`;
-  };
-
   return (
     <div>
       <h1>Would you rather?</h1>
@@ -42,6 +49,7 @@ const Question = props => {
       <img src={author.avatarUrl} />
       <p>timestamp: {question.timestamp}</p>
       <p>optionOne: {question.optionOne.text}</p>
+      <button onClick={handleAddVote}>Vote</button>
       <p>Votes Count: {getVoteCount(question.optionOne)}</p>
       <p>Votes Percent: {getVotePercent(question.optionOne)}</p>
       <p>optionTwo: {question.optionTwo.text}</p>
@@ -58,7 +66,7 @@ const Question = props => {
  * @param id
  * @return {{question: *, author: {avatarUrl: *, name: null}}}
  */
-function mapStateToProps({ users, questions }, { id }) {
+function mapStateToProps({ users, questions, authUser }, { id }) {
   //get the current question from the questions store state by id
   const question = questions[id];
 
