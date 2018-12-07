@@ -1,7 +1,5 @@
 import { API } from "../utils/api";
-
-export const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
-export const VOTE_QUESTION_ANSWER = "VOTE_QUESTION_ANSWER";
+import { questionConstants } from "../constants";
 
 /**
  * Receive Questions action type
@@ -9,12 +7,12 @@ export const VOTE_QUESTION_ANSWER = "VOTE_QUESTION_ANSWER";
  * @return {{type: string, questions: *}}
  */
 export const receiveQuestions = questions => ({
-  type: RECEIVE_QUESTIONS,
+  type: questionConstants.RECEIVE_QUESTIONS,
   questions
 });
 
 export const voteQuestionAnswer = ({ authUser, questionId, answer }) => ({
-  type: VOTE_QUESTION_ANSWER,
+  type: questionConstants.VOTE_QUESTION_ANSWER,
   authUser,
   questionId,
   answer

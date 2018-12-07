@@ -1,4 +1,4 @@
-import { RECEIVE_QUESTIONS, VOTE_QUESTION_ANSWER } from "../actions/questions";
+import { questionConstants } from "../constants";
 
 /**
  * Questions Reducer
@@ -8,14 +8,14 @@ import { RECEIVE_QUESTIONS, VOTE_QUESTION_ANSWER } from "../actions/questions";
  */
 const questions = (state = {}, action) => {
   switch (action.type) {
-    case RECEIVE_QUESTIONS:
+    case questionConstants.RECEIVE_QUESTIONS:
       return {
         //spread the current state
         ...state,
         //merge the actions questions with the current state
         ...action.questions
       };
-    case VOTE_QUESTION_ANSWER:
+    case questionConstants.VOTE_QUESTION_ANSWER:
       //get the users that have already answered the question as an array from the prev state
       const usersAnswered = [...state[action.questionId][action.answer].votes];
       //check if the current user has answered the question already
