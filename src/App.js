@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 
 //methods
 import { handleInitialData } from "./actions/shared";
-import { QuestionList } from "./components/Question";
+import { QuestionListContainer } from "./containers/Question";
 
 class App extends Component {
   /**
@@ -24,7 +24,7 @@ class App extends Component {
       <div className="main-wrapper container">
         <div className="row">
           <div className="col-12">
-            <QuestionList />
+            <QuestionListContainer />
           </div>
         </div>
       </div>
