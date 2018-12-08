@@ -1,4 +1,0 @@
-export const questionConstants = {
-  RECEIVE_QUESTIONS: "RECEIVE_QUESTIONS",
-  VOTE_QUESTION_ANSWER: "VOTE_QUESTION_ANSWER",
-};

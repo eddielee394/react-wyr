@@ -1,18 +1,72 @@
+import { configureFakeDB } from "fake-db/_DATA";
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import { createStore } from "redux";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import "assets/sass/App.scss";
+import jssExtend from "jss-extend";
+import JssProvider from "react-jss/lib/JssProvider";
+import { create } from "jss";
+import { createGenerateClassName, jssPreset } from "@material-ui/core/styles";
 import { Provider } from "react-redux";
-import reducer from "./reducers";
-import middleware from "./middleware";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { Router } from "react-router-dom";
+import { routes } from "./config/routesConfig";
+// import { PersistGate } from "redux-persist/integration/react";
+import history from "./utils/history";
+import { store, persistor } from "./store";
 
-const store = createStore(reducer, composeWithDevTools(middleware));
+import { Auth } from "./auth";
+import { FuseAuthorization, FuseTheme, FuseLayout } from "@fuse";
+import {
+  MainFooter,
+  MainNavbarContent,
+  MainNavbarHeader,
+  MainToolbar,
+  QuickPanel,
+  SettingsPanel
+} from "components/_layout";
+
+// configureFakeDB();
+
+library.add(fas, far, fab);
+
+const jss = create({
+  ...jssPreset(),
+  plugins: [...jssPreset().plugins, jssExtend()]
+});
+
+jss.options.insertionPoint = document.getElementById("jss-insertion-point");
+const generateClassName = createGenerateClassName();
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <JssProvider jss={jss} generateClassName={generateClassName}>
+    <Provider store={store}>
+      {/*<PersistGate loading={null} persistor={persistor}>*/}
+      <Auth>
+        <Router history={history}>
+          <FuseAuthorization routes={routes}>
+            <FuseTheme>
+              <FuseLayout
+                routes={routes}
+                toolbar={<MainToolbar />}
+                navbarHeader={<MainNavbarHeader />}
+                navbarContent={<MainNavbarContent />}
+                footer={<MainFooter />}
+                rightSidePanel={
+                  <React.Fragment>
+                    <QuickPanel />
+                  </React.Fragment>
+                }
+                contentWrapper={<SettingsPanel />}
+              />
+            </FuseTheme>
+          </FuseAuthorization>
+        </Router>
+      </Auth>
+      {/*</PersistGate>*/}
+    </Provider>
+  </JssProvider>,
   document.getElementById("root")
 );
