@@ -3,11 +3,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 //components
-// import Dashboard from "./components/Dashboard";
+import DashboardPage from "./components/_pages/dashboard/DashboardPage";
 
 //methods
 import { handleInitialData } from "./actions/shared";
-import { QuestionListContainer } from "./containers/Question";
 
 class App extends Component {
   /**
@@ -21,13 +20,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className="main-wrapper container">
-        <div className="row">
-          <div className="col-12">
-            <QuestionListContainer />
+      <main className="main-wrapper">
+        <div className="main-page container">
+          <div className="row">
+            <div className="col-12">
+              <DashboardPage />
+            </div>
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { QuestionList } from "../../components/Question";
+import { QuestionList } from "../../Question/index";
 
 class QuestionListContainer extends Component {
   render() {

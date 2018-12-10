@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
-import { Question } from "../../components/Question";
+import { Question } from "../../Question/index";
 import React, { Component } from "react";
-import { handleVoteQuestionAnswer } from "../../actions/questions";
-import { calcPercent } from "../../utils/helpers";
+import { handleVoteQuestionAnswer } from "../../../actions/questions";
+import { calcPercent } from "../../../utils/helpers";
 
 class QuestionContainer extends Component {
   /**

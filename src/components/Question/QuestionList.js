@@ -1,5 +1,5 @@
 import React from "react";
-import { QuestionContainer } from "../../containers/Question";
+import { QuestionContainer } from "../_containers/question";
 
 const QuestionList = props => {
   const { questionIds } = props;
