@@ -6,7 +6,7 @@ import { questionConstants } from "../constants";
  * @param action
  * @return {Object}
  */
-const questions = (state = {}, action) => {
+const questionsReducers = (state = {}, action) => {
   switch (action.type) {
     case questionConstants.RECEIVE_QUESTIONS:
       return {
@@ -53,4 +53,4 @@ const questions = (state = {}, action) => {
   }
 };
 
-export default questions;
+export default questionsReducers;

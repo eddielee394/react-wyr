@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import mock from "./mock";
-import _ from "../@lodash";
+import _ from "../_lodash";
 import { Helpers } from "../utils";
 
 const jwtConfig = {

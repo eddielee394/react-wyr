@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import DashboardPage from "./components/_pages/dashboard/DashboardPage";
 
 //methods
-import { handleInitialData } from "./store/actions/shared";
+import { handleInitialData } from "./store/actions/shared.actions";
 
 class App extends Component {
   /**

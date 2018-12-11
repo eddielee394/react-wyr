@@ -1,7 +1,6 @@
 import { Api } from "../../utils";
-import { receiveQuestions } from "./questions";
-import { receiveUsers } from "./users";
-
+import { receiveQuestions } from "./question.actions";
+import { receiveUsers } from "./users.actions";
 /**
  * Handles loading initial user & questions data
  * @method

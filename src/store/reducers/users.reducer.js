@@ -1,4 +1,4 @@
-import { RECEIVE_USERS } from "../actions/users";
+import { RECEIVE_USERS } from "../actions/users.actions";
 
 /**
  * users reducer
