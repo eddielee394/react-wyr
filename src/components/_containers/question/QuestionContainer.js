@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { Question } from "../../Question/index";
 import React, { Component } from "react";
 import { handleVoteQuestionAnswer } from "../../../actions/questions";
-import { calcPercent } from "../../../utils/helpers";
+import { Helpers } from "../../../utils";
 
 class QuestionContainer extends Component {
   /**
@@ -41,7 +41,7 @@ class QuestionContainer extends Component {
   getVotePercent = option => {
     let usersCount = this.getUserCount();
     let voteCount = this.getVoteCount(option);
-    return calcPercent(voteCount, usersCount);
+    return Helpers.calcPercent(voteCount, usersCount);
   };
 
   /**

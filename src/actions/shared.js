@@ -1,4 +1,4 @@
-import { API } from "../utils/api";
+import { Api } from "../utils";
 import { receiveQuestions } from "./questions";
 import { receiveUsers } from "./users";
 
@@ -8,7 +8,7 @@ import { receiveUsers } from "./users";
  * @return {function(*): Promise<{users: Object }>}
  */
 export const handleInitialData = () => dispatch => {
-  return API.getInitialData().then(({ users, questions }) => {
+  return Api.getInitialData().then(({ users, questions }) => {
     //add objects to the redux store
     dispatch(receiveQuestions(questions));
     dispatch(receiveUsers(users));

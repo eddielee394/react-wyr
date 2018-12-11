@@ -3,7 +3,7 @@ import {
   _getUsers,
   _saveQuestion,
   _saveQuestionAnswer
-} from "./_DATA";
+} from "../fake-db/_DATA";
 
 /**
  * API Methods
@@ -15,21 +15,20 @@ import {
  * @param {function} saveQuestionAnswer
  * @type {{getInitialData: (function(): Promise<{users: Object, questions: Object} | never>), getUsers: (function(): Promise<{Object}>), getQuestions: (function(): Promise<Object>), saveQuestion: (function(*=): Promise<Object>), saveQuestionAnswer: (function(*=): Promise<Object>)}}
  */
-export const API = {
+class API {
   /**
    * Gets the initial application data
    * @function
    * @memberof API
    * @return {Promise<{users: {Object}, questions: {Object}} | never>}
    */
-  getInitialData: () => {
-    return Promise.all([API.getUsers(), API.getQuestions()]).then(
+  static getInitialData = () =>
+    Promise.all([API.getUsers(), API.getQuestions()]).then(
       ([users, questions]) => ({
         users,
         questions
       })
     );
-  },
 
   /**
    * Gets users from database
@@ -37,7 +36,7 @@ export const API = {
    * @description Get all of the existing users from the database
    * @return {Promise<{users: {Object}}>} Object where the key is the user’s id and the value is the user object
    */
-  getUsers: () => _getUsers(),
+  static getUsers = () => _getUsers();
 
   /**
    * Gets questions from database
@@ -45,7 +44,7 @@ export const API = {
    * @function
    * @return {Promise<{questions: Object}>} Object where the key is the question’s id and the value is the question object
    */
-  getQuestions: () => _getQuestions(),
+  static getQuestions = () => _getQuestions();
 
   /**
    * Saves a question
@@ -54,7 +53,7 @@ export const API = {
    * @function
    * @return {Promise<{id: string, author: string, optionOne: Object, optionTwo: Object, timestamp: Object}>}
    */
-  saveQuestion: params => _saveQuestion(params),
+  static saveQuestion = params => _saveQuestion(params);
 
   /**
    * Saves the answer to a question
@@ -63,5 +62,7 @@ export const API = {
    * @function
    * @return {Promise<{authUser: string, questionId: string, answer: string }>}
    */
-  saveQuestionAnswer: params => _saveQuestionAnswer(params)
-};
+  static saveQuestionAnswer = params => _saveQuestionAnswer(params);
+}
+
+export default API;

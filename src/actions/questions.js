@@ -1,4 +1,4 @@
-import { API } from "../utils/api";
+import { Api } from "../utils";
 import { questionConstants } from "../constants";
 
 /**
@@ -23,7 +23,7 @@ export const voteQuestionAnswer = ({ authUser, questionId, answer }) => ({
  * @param params
  */
 export const handleVoteQuestionAnswer = params => dispatch => {
-  return API.saveQuestionAnswer(params)
+  return Api.saveQuestionAnswer(params)
     .then(() => {
       dispatch(voteQuestionAnswer(params));
     })
