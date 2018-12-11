@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { Question } from "../../Question/index";
 import React, { Component } from "react";
-import { handleVoteQuestionAnswer } from "../../../actions/questions";
+import { handleVoteQuestionAnswer } from "../../../store/actions/questions";
 import { Helpers } from "../../../utils";
 
 class QuestionContainer extends Component {

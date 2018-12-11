@@ -1,4 +1,4 @@
-import { Api } from "../utils";
+import { Api } from "../../utils";
 import { questionConstants } from "../constants";
 
 /**
