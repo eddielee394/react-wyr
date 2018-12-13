@@ -1,12 +1,23 @@
-import history from "../../../utils/history";
-import _ from "../../../_lodash";
-import store from "../../../store";
-import * as Actions from "../../../store/actions";
-import jwtService from "../../../jwtService";
+import history from "utils/history";
+import _ from "@lodash";
+import store from "store";
+import * as Actions from "store/actions";
+import jwtService from "jwtService";
 
+export const GET_ALL_USERS = "[USERS] GET ALL";
 export const SET_USER_DATA = "[USER] SET DATA";
 export const REMOVE_USER_DATA = "[USER] REMOVE DATA";
 export const USER_LOGGED_OUT = "[USER] LOGGED OUT";
+
+export function getAllUsers(users) {
+  // const request = axios.get()
+  return dispatch => {
+    dispatch({
+      TYPE: GET_ALL_USERS,
+      payload: users
+    });
+  };
+}
 
 /**
  * Set User Data

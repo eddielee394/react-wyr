@@ -1,3 +1,4 @@
+@import "normalize.scss";
 @import "variables.scss";
 @import "mixins.scss";
 @import "sprite.scss";
@@ -122,8 +123,7 @@ body {
 @font-face {
   font-family: "berserk";
   src: url("../fonts/berserk/berserk.eot");
-  src:
-    url("../fonts/berserk/berserk.eot?#iefix") format("embedded-opentype"),
+  src: url("../fonts/berserk/berserk.eot?#iefix") format("embedded-opentype"),
     url("../fonts/berserk/berserk.woff") format("woff"),
     url("../fonts/berserk/berserk.ttf") format("truetype"),
     url("../fonts/berserk/berserk.svg#berserk") format("svg");
@@ -337,12 +337,11 @@ a:focus {
 }
 
 .bg-purple {
-  background:
-    linear-gradient(
-      to right,
-      var(--brk-secondary-4),
-      var(--secondary)
-    );
+  background: linear-gradient(
+    to right,
+    var(--brk-secondary-4),
+    var(--secondary)
+  );
 }
 
 .visible {
@@ -414,12 +413,11 @@ a:focus {
     left: 0;
     right: 0;
     bottom: 0;
-    background:
-      linear-gradient(
-        to right,
-        var(--brand-primary),
-        var(--secondary)
-      );
+    background: linear-gradient(
+      to right,
+      var(--brand-primary),
+      var(--secondary)
+    );
     opacity: 0.9;
     z-index: -1;
   }
@@ -436,12 +434,11 @@ a:focus {
     left: 0;
     right: 0;
     bottom: 0;
-    background:
-      linear-gradient(
-        to right,
-        var(--brand-primary),
-        var(--secondary)
-      );
+    background: linear-gradient(
+      to right,
+      var(--brand-primary),
+      var(--secondary)
+    );
     opacity: 0.94;
     z-index: -1;
     margin: 0;
@@ -498,12 +495,11 @@ a:focus {
     left: 0;
     right: 0;
     bottom: 0;
-    background:
-      linear-gradient(
-        to right,
-        var(--brk-secondary-4) 20%,
-        var(--secondary) 70%
-      );
+    background: linear-gradient(
+      to right,
+      var(--brk-secondary-4) 20%,
+      var(--secondary) 70%
+    );
     opacity: 0.94;
     z-index: -1;
   }
@@ -957,12 +953,11 @@ a:focus {
   background: linear-gradient(to right, var(--brk-base-2), var(--brk-base-5));
 
   &_primary {
-    background:
-      linear-gradient(
-        to right,
-        var(--brand-primary),
-        var(--secondary)
-      );
+    background: linear-gradient(
+      to right,
+      var(--brand-primary),
+      var(--secondary)
+    );
   }
 }
 
@@ -1658,13 +1653,12 @@ body .main-icon {
     left: -50px;
     bottom: 0;
     z-index: 9;
-    background:
-      linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0.2) 0%,
-        rgba(255, 255, 255, 1) 50%,
-        rgba(255, 255, 255, 0.2) 100%
-      );
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 1) 50%,
+      rgba(255, 255, 255, 0.2) 100%
+    );
   }
 
   &:hover {
@@ -1676,13 +1670,12 @@ body .main-icon {
   @keyframes lightning-effect {
     0% {
       left: -50px;
-      background:
-        linear-gradient(
-          to right,
-          rgba(255, 255, 255, 0.2) 0%,
-          rgba(255, 255, 255, 1) 50%,
-          rgba(255, 255, 255, 0.2) 100%
-        );
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 1) 50%,
+        rgba(255, 255, 255, 0.2) 100%
+      );
     }
 
     50% {
@@ -2037,12 +2030,11 @@ body .main-icon {
     padding-top: 150%;
     border-radius: 100%;
     z-index: -1;
-    background-image:
-      linear-gradient(
-        to right,
-        rgba(var(--brand-primary-rgb), 0.88) 0%,
-        rgba(var(--secondary-rgb), 0.88) 100%
-      );
+    background-image: linear-gradient(
+      to right,
+      rgba(var(--brand-primary-rgb), 0.88) 0%,
+      rgba(var(--secondary-rgb), 0.88) 100%
+    );
 
     @media screen and (max-width: 576px) {
       width: 500%;

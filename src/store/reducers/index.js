@@ -1,9 +1,6 @@
 import { combineReducers } from "redux";
-import dialog from "./dialog.reducer";
-import navbar from "./navbar.reducer";
-import navigation from "./navigation.reducer";
+import fuse from "./fuse";
 import questions from "./questions.reducers";
-import message from "./message.reducer";
 import auth from "../../auth/store/reducers";
 import users from "./users.reducer";
 /**
@@ -13,12 +10,9 @@ import users from "./users.reducer";
 const createReducer = asyncReducers =>
   combineReducers({
     auth,
-    users,
+    // users,
     questions,
-    navigation,
-    navbar,
-    message,
-    dialog,
+    fuse,
     ...asyncReducers
   });
 

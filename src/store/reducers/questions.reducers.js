@@ -1,3 +1,5 @@
+import * as Actions from "../actions/index";
+
 import { questionConstants } from "../constants";
 
 /**

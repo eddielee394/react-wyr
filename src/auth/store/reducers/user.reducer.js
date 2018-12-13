@@ -1,11 +1,23 @@
-import * as Actions from "./../actions";
+import * as Actions from "auth/store/actions";
 
 const initialState = {
-  role: "guest"
+  role: "guest",
+  data: {
+    displayName: "John Doe",
+    photoURL: "assets/images/avatars/Velazquez.jpg",
+    email: "johndoe@withinpixels.com",
+    shortcuts: ["calendar", "mail", "contacts", "todo"]
+  }
 };
 
 const user = function(state = initialState, action) {
   switch (action.type) {
+    case Actions.GET_ALL_USERS: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
     case Actions.SET_USER_DATA: {
       return {
         ...initialState,

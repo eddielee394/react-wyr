@@ -1,8 +1,8 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { Helpers } from "../utils";
+import FuseUtils from "@fuse/FuseUtils";
 
-class jwtService extends Helpers.EventEmitter {
+class jwtService extends FuseUtils.EventEmitter {
   init() {
     this.setInterceptors();
     this.handleAuthentication();

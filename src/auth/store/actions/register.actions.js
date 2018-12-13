@@ -1,5 +1,5 @@
-import * as UserActions from "../../../auth/store/actions";
-import jwtService from "../../../jwtService";
+import * as UserActions from "auth/store/actions";
+import jwtService from "jwtService";
 
 export const REGISTER_ERROR = "REGISTER_ERROR";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";

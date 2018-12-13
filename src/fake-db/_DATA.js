@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import mock from "./mock";
-import _ from "../_lodash";
-import { Helpers } from "../utils";
+import _ from "@lodash";
+import { Helpers } from "utils";
 
 const jwtConfig = {
   secret: "some-secret-code-goes-here",
@@ -12,41 +12,126 @@ const jwtConfig = {
  * Users Data
  * @type {{im_not_a_horse: {id: string, name: string, avatarURL: string, answers: {"8xf0y6ziyjabvozdd253nd": string, "6ni6ok3ym7mf1p33lnez": string, am8ehyc8byjqgar0jgpub9: string, loxhs1bqm25b708cmbf3g: string}, questions: string[]}, burt_b: {id: string, name: string, avatarURL: string, answers: {vthrdm985a262al8qx3do: string, xj352vofupe1dqz9emx13r: string}, questions: string[]}, johndoe: {id: string, name: string, avatarURL: string, answers: {xj352vofupe1dqz9emx13r: string, vthrdm985a262al8qx3do: string, "6ni6ok3ym7mf1p33lnez": string}, questions: string[]}}}
  */
-let users = {
-  im_not_a_horse: {
-    id: "im_not_a_horse",
-    name: "Sarah Jessica Marker",
-    avatarURL: "http://i.pravatar.cc/50?img=47",
-    answers: {
-      "8xf0y6ziyjabvozdd253nd": "optionOne",
-      "6ni6ok3ym7mf1p33lnez": "optionOne",
-      am8ehyc8byjqgar0jgpub9: "optionTwo",
-      loxhs1bqm25b708cmbf3g: "optionTwo"
-    },
-    questions: ["8xf0y6ziyjabvozdd253nd", "am8ehyc8byjqgar0jgpub9"]
+// let users = {
+//   im_not_a_horse: {
+//     id: "im_not_a_horse",
+//     name: "Sarah Jessica Marker",
+//     avatarURL: "http://i.pravatar.cc/50?img=47",
+//     answers: {
+//       "8xf0y6ziyjabvozdd253nd": "optionOne",
+//       "6ni6ok3ym7mf1p33lnez": "optionOne",
+//       am8ehyc8byjqgar0jgpub9: "optionTwo",
+//       loxhs1bqm25b708cmbf3g: "optionTwo"
+//     },
+//     questions: ["8xf0y6ziyjabvozdd253nd", "am8ehyc8byjqgar0jgpub9"]
+//   },
+//   burt_b: {
+//     id: "burt_b",
+//     name: "Burt Beynolds",
+//     avatarURL: "http://i.pravatar.cc/50?img=53",
+//     answers: {
+//       vthrdm985a262al8qx3do: "optionOne",
+//       xj352vofupe1dqz9emx13r: "optionTwo"
+//     },
+//     questions: ["loxhs1bqm25b708cmbf3g", "vthrdm985a262al8qx3do"]
+//   },
+//   johndoe: {
+//     id: "johndoe",
+//     name: "John Doe",
+//     avatarURL: "http://i.pravatar.cc/50?img=51",
+//     answers: {
+//       xj352vofupe1dqz9emx13r: "optionOne",
+//       vthrdm985a262al8qx3do: "optionTwo",
+//       "6ni6ok3ym7mf1p33lnez": "optionOne"
+//     },
+//     questions: ["6ni6ok3ym7mf1p33lnez", "xj352vofupe1dqz9emx13r"]
+//   }
+// };
+
+let users = [
+  {
+    uuid: "XgbuVEXBU5gtSKdbQRP1Zbbby1i1",
+    from: "custom-db",
+    password: "admin",
+    role: "admin",
+    data: {
+      displayName: "Abbott Keitch",
+      photoURL: "assets/images/avatars/Abbott.jpg",
+      email: "admin",
+      settings: {
+        layout: {
+          style: "layout1",
+          config: {
+            scroll: "content",
+            navbar: {
+              display: true,
+              folded: true,
+              position: "left"
+            },
+            toolbar: {
+              display: true,
+              style: "fixed",
+              position: "below"
+            },
+            footer: {
+              display: true,
+              style: "fixed",
+              position: "below"
+            },
+            mode: "fullwidth"
+          }
+        },
+        customScrollbars: true,
+        theme: {
+          main: "defaultDark",
+          navbar: "defaultDark",
+          toolbar: "defaultDark",
+          footer: "defaultDark"
+        }
+      },
+      shortcuts: ["calendar", "mail", "contacts"]
+    }
   },
-  burt_b: {
-    id: "burt_b",
-    name: "Burt Beynolds",
-    avatarURL: "http://i.pravatar.cc/50?img=53",
-    answers: {
-      vthrdm985a262al8qx3do: "optionOne",
-      xj352vofupe1dqz9emx13r: "optionTwo"
-    },
-    questions: ["loxhs1bqm25b708cmbf3g", "vthrdm985a262al8qx3do"]
-  },
-  johndoe: {
-    id: "johndoe",
-    name: "John Doe",
-    avatarURL: "http://i.pravatar.cc/50?img=51",
-    answers: {
-      xj352vofupe1dqz9emx13r: "optionOne",
-      vthrdm985a262al8qx3do: "optionTwo",
-      "6ni6ok3ym7mf1p33lnez": "optionOne"
-    },
-    questions: ["6ni6ok3ym7mf1p33lnez", "xj352vofupe1dqz9emx13r"]
+  {
+    uuid: "XgbuVEXBU6gtSKdbTYR1Zbbby1i3",
+    from: "custom-db",
+    password: "staff",
+    role: "staff",
+    data: {
+      displayName: "Arnold Matlock",
+      photoURL: "assets/images/avatars/Arnold.jpg",
+      email: "staff",
+      settings: {
+        layout: {
+          style: "layout2",
+          config: {
+            mode: "boxed",
+            scroll: "content",
+            navbar: {
+              display: true
+            },
+            toolbar: {
+              display: true,
+              position: "below"
+            },
+            footer: {
+              display: true,
+              style: "fixed"
+            }
+          }
+        },
+        customScrollbars: true,
+        theme: {
+          main: "greeny",
+          navbar: "mainThemeDark",
+          toolbar: "mainThemeDark",
+          footer: "mainThemeDark"
+        }
+      },
+      shortcuts: ["calendar", "mail", "contacts", "todo"]
+    }
   }
-};
+];
 
 /**
  * Questions Data
@@ -242,14 +327,14 @@ mock.onGet("/api/auth").reply(config => {
     });
 
     const response = {
+      users,
       user,
       access_token
     };
 
     return [200, response];
-  } 
-    return [200, { error }];
-  
+  }
+  return [200, { error }];
 });
 
 mock.onGet("/api/auth/access-token").reply(config => {
@@ -295,7 +380,7 @@ mock.onPost("/api/auth/register").reply(request => {
       role: "admin",
       data: {
         displayName,
-        photoURL: "assets/images/avatars/Abbott.jpg",
+        avatarUrl: "assets/images/avatars/Abbott.jpg",
         email,
         settings: {},
         shortcuts: []
@@ -317,9 +402,8 @@ mock.onPost("/api/auth/register").reply(request => {
     };
 
     return [200, response];
-  } 
-    return [200, { error }];
-  
+  }
+  return [200, { error }];
 });
 
 mock.onPost("/api/auth/user/update").reply(config => {
