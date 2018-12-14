@@ -4,10 +4,12 @@ import { withStyles } from "@material-ui/core/styles/index";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as Actions from "./store/actions/index";
+import withReducer from "store/withReducer";
+import reducer from "./store/reducers";
 
 const styles = theme => ({
   root: {
-    width: 280,
+    width: 380,
     padding: 24
   }
 });
@@ -43,4 +45,11 @@ function mapStateToProps({ quickPanel }) {
   };
 }
 
-export default withStyles(styles, { withTheme: true })(QuickPanel);
+export default withReducer("quickPanel", reducer)(
+  withStyles(styles, { withTheme: true })(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(QuickPanel)
+  )
+);

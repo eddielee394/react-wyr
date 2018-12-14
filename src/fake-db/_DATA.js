@@ -395,7 +395,7 @@ mock.onPost("/api/auth/register").reply(request => {
     const access_token = jwt.sign({ id: user.uuid }, jwtConfig.secret, {
       expiresIn: jwtConfig.expiresIn
     });
-
+    localStorage.setItem("users", JSON.stringify(users));
     const response = {
       user,
       access_token

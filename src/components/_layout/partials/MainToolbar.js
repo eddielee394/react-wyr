@@ -1,3 +1,4 @@
+import quickPanel from "components/_layout/QuickPanel/store/reducers";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -18,6 +19,7 @@ import {
   Hidden
 } from "@material-ui/core";
 import * as authActions from "auth/store/actions";
+import * as quickPanelActions from "components/_layout/QuickPanel/store/actions";
 
 const styles = theme => ({
   root: {
@@ -171,6 +173,7 @@ class MainToolbar extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
+      toggleQuickPanel: quickPanelActions.toggleQuickPanel,
       logout: authActions.logoutUser
     },
     dispatch
