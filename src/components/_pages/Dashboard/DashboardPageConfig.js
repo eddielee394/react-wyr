@@ -2,10 +2,11 @@ import { authRoles } from "auth";
 import DashboardPage from "components/_pages/Dashboard/DashboardPage";
 
 export const DashboardPageConfig = {
+  auth: authRoles.user,
   routes: [
     {
-      auth: authRoles.user,
       path: "/dashboard",
+      exact: true,
       component: DashboardPage
     }
   ]

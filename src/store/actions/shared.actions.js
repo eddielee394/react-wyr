@@ -10,6 +10,6 @@ export const handleInitialData = () => dispatch => {
   return Api.getInitialData().then(({ users, questions }) => {
     //add objects to the redux store
     dispatch(receiveQuestions(questions));
-    dispatch(receiveUsers(users));
+    // dispatch(receiveUsers(users));
   });
 };

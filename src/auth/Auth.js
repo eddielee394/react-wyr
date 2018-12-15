@@ -9,16 +9,12 @@ class Auth extends Component {
   /*eslint-disable-next-line no-useless-constructor*/
   constructor(props) {
     super(props);
-    /**
-     * Comment the line if you do not use JWt
-     */
+
     this.jwtCheck();
   }
 
   jwtCheck = () => {
     jwtService.on("onAutoLogin", () => {
-      this.props.showMessage({ message: "Logging in with JWT" });
-
       /**
        * Sign in and retrieve user data from Api
        */
@@ -26,8 +22,6 @@ class Auth extends Component {
         .signInWithToken()
         .then(user => {
           this.props.setUserData(user);
-
-          this.props.showMessage({ message: "Logged in with JWT" });
         })
         .catch(error => {
           this.props.showMessage({ message: error });

@@ -27,6 +27,7 @@ export const LoginPageConfig = {
   routes: [
     {
       path: "/login",
+      exact: true,
       component: LoginPage
     }
   ]

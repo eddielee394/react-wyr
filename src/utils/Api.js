@@ -1,3 +1,5 @@
+import axios from "axios/index";
+
 import {
   _getQuestions,
   _getUsers,
@@ -36,7 +38,7 @@ class API {
    * @description Get all of the existing users from the database
    * @return {Promise<{users: {Object}}>} Object where the key is the user’s id and the value is the user object
    */
-  static getUsers = () => _getUsers();
+  static getUsers = () => axios.get("/api/users");
 
   /**
    * Gets questions from database

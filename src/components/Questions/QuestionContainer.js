@@ -1,8 +1,9 @@
-import { connect } from "react-redux";
-import { Question } from "../../Question/index";
 import React, { Component } from "react";
-import { handleVoteQuestionAnswer } from "../../../store/actions/question.actions";
-import { Helpers } from "../../../utils";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { handleVoteQuestionAnswer } from "store/actions/question.actions";
+import { Helpers } from "utils";
+import { Question } from "components/Questions";
 
 class QuestionContainer extends Component {
   /**
@@ -87,6 +88,10 @@ class QuestionContainer extends Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({});
+}
+
 /**
  * Map state to props from store
  * @param users
@@ -114,4 +119,7 @@ function mapStateToProps({ users, questions, authUser }, { id }) {
   };
 }
 
-export default connect(mapStateToProps)(QuestionContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(QuestionContainer);

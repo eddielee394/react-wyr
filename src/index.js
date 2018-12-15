@@ -1,3 +1,4 @@
+import { configureFakeDB } from "fake-db/_DATA";
 import React from "react";
 import ReactDOM from "react-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -23,6 +24,8 @@ import {
   MainToolbar,
   QuickPanel
 } from "components/_layout";
+
+configureFakeDB();
 
 library.add(fas, far, fab);
 

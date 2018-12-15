@@ -2,9 +2,10 @@ import jwt from "jsonwebtoken";
 import mock from "./mock";
 import _ from "@lodash";
 import { Helpers } from "utils";
+import { amber, blue, blueGrey, green } from "@material-ui/core/colors";
 
 const jwtConfig = {
-  secret: "some-secret-code-goes-here",
+  secret: "local-secret",
   expiresIn: "2 days" // A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (days, hours, etc)
 };
 
@@ -51,9 +52,9 @@ const jwtConfig = {
 let users = [
   {
     uuid: "XgbuVEXBU5gtSKdbQRP1Zbbby1i1",
-    from: "custom-db",
+    from: "fake-db",
     password: "admin",
-    role: "admin",
+    role: "user",
     data: {
       displayName: "Abbott Keitch",
       photoURL: "assets/images/avatars/Abbott.jpg",
@@ -94,9 +95,9 @@ let users = [
   },
   {
     uuid: "XgbuVEXBU6gtSKdbTYR1Zbbby1i3",
-    from: "custom-db",
+    from: "fake-db",
     password: "staff",
-    role: "staff",
+    role: "user",
     data: {
       displayName: "Arnold Matlock",
       photoURL: "assets/images/avatars/Arnold.jpg",
@@ -149,7 +150,8 @@ let questions = {
     optionTwo: {
       votes: [],
       text: "have horrible long term memory"
-    }
+    },
+    categoryId: 1
   },
   "6ni6ok3ym7mf1p33lnez": {
     id: "6ni6ok3ym7mf1p33lnez",
@@ -162,7 +164,8 @@ let questions = {
     optionTwo: {
       votes: ["johndoe", "im_not_a_horse"],
       text: "become a supervillian"
-    }
+    },
+    categoryId: 3
   },
   am8ehyc8byjqgar0jgpub9: {
     id: "am8ehyc8byjqgar0jgpub9",
@@ -175,7 +178,8 @@ let questions = {
     optionTwo: {
       votes: ["im_not_a_horse"],
       text: "be telepathic"
-    }
+    },
+    categoryId: 2
   },
   loxhs1bqm25b708cmbf3g: {
     id: "loxhs1bqm25b708cmbf3g",
@@ -188,7 +192,8 @@ let questions = {
     optionTwo: {
       votes: ["im_not_a_horse"],
       text: "be a back-end developer"
-    }
+    },
+    categoryId: 1
   },
   vthrdm985a262al8qx3do: {
     id: "vthrdm985a262al8qx3do",
@@ -201,7 +206,8 @@ let questions = {
     optionTwo: {
       votes: ["johndoe"],
       text: "have your best friend find $500"
-    }
+    },
+    categoryId: 4
   },
   xj352vofupe1dqz9emx13r: {
     id: "xj352vofupe1dqz9emx13r",
@@ -214,9 +220,69 @@ let questions = {
     optionTwo: {
       votes: ["burt_b"],
       text: "write Swift"
-    }
+    },
+    categoryId: 5
   }
 };
+
+let questionCategories = [
+  {
+    id: 1,
+    value: "reactjs-basic",
+    label: "ReactJS Basic",
+    color: amber[500]
+  },
+  {
+    id: 2,
+    value: "reactjs-advanced",
+    label: "ReactJS Advanced",
+    color: amber[500]
+  },
+  {
+    id: 3,
+    value: "react-router",
+    label: "React Router",
+    color: blueGrey[500]
+  },
+  {
+    id: 4,
+    value: "react-redux",
+    label: "React Redux",
+    color: green[500]
+  },
+  {
+    id: 5,
+    value: "jwt-authentication",
+    label: "JWT Authentication",
+    color: green[500]
+  },
+  {
+    id: 6,
+    value: "react-native",
+    label: "React Native",
+    color: green[500]
+  },
+  {
+    id: 7,
+    value: "es6",
+    label: "ES6",
+    color: green[500]
+  },
+  {
+    id: 8,
+    value: "misc",
+    label: "Misc",
+    color: blue[500]
+  }
+];
+
+// store array in local storage for registered users
+users = JSON.parse(localStorage.getItem("users")) || users;
+
+export function configureFakeDB() {
+  localStorage.setItem("users", JSON.stringify(users));
+  localStorage.setItem("questions", JSON.stringify(questions));
+}
 
 /**
  * Gets Users
@@ -308,6 +374,63 @@ export function _saveQuestionAnswer({ authUser, questionId, answer }) {
   });
 }
 
+/**
+ * Questions mock requests
+ */
+mock.onGet("/api/questions").reply(() => {
+  return [200, questions];
+});
+
+mock.onGet("/api/question").reply(request => {
+  const { courseId } = request.params;
+  const response = _.find(questions, { id: courseId });
+
+  return [200, response];
+});
+
+mock.onGet("/api/question/save").reply(request => {
+  const data = JSON.parse(request.data);
+  let question = null;
+
+  //check if the question exists in the db, if so return it so we can use it later, otherwise return the new question
+  questions = questions.map(_question => {
+    if (_question.id === data.id) {
+      question = data;
+      return question;
+    }
+    return _question;
+  });
+
+  //if the question doesn't exist let's add the new one to the existing questions array
+  if (!question) {
+    question = data;
+    questions = [...questions, question];
+  }
+  return [200, question];
+});
+
+mock.onGet("/api/questions/categories").reply(() => {
+  return [200, questionCategories];
+});
+
+/**
+ * Users mock requests
+ */
+mock.onGet("/api/users").reply(config => {
+  const data = JSON.parse(config.data);
+  const { users } = data;
+  const response = {
+    users
+  };
+
+  if (users) {
+    return [200, response];
+  }
+
+  const error = {};
+  return [200, { error }];
+});
+
 mock.onGet("/api/auth").reply(config => {
   const data = JSON.parse(config.data);
   const { email, password } = data;
@@ -375,12 +498,12 @@ mock.onPost("/api/auth/register").reply(request => {
   if (!error.displayName && !error.password && !error.email) {
     const newUser = {
       uuid: Helpers.generateUID(),
-      from: "custom-db",
+      from: "localStorage",
       password,
-      role: "admin",
+      role: "user",
       data: {
         displayName,
-        avatarUrl: "assets/images/avatars/Abbott.jpg",
+        avatarUrl: "http://pravatar.cc/128",
         email,
         settings: {},
         shortcuts: []
@@ -395,7 +518,9 @@ mock.onPost("/api/auth/register").reply(request => {
     const access_token = jwt.sign({ id: user.uuid }, jwtConfig.secret, {
       expiresIn: jwtConfig.expiresIn
     });
+
     localStorage.setItem("users", JSON.stringify(users));
+
     const response = {
       user,
       access_token
