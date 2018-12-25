@@ -9,6 +9,13 @@ export const navigationConfig = [
     url: "/dashboard",
     children: [
       {
+        id: "dashboard-home",
+        title: "Home",
+        type: "item",
+        icon: "whatshot",
+        url: "/dashboard"
+      },
+      {
         id: "questions-answered",
         title: "Answered Questions",
         type: "item",
@@ -17,10 +24,10 @@ export const navigationConfig = [
       },
       {
         id: "questions-unanswered",
-        title: "Unanswered Questions",
+        title: "Todo Test",
         type: "item",
         icon: "whatshot",
-        url: "/questions/unanswered"
+        url: "/apps/mail"
       },
       {
         id: "questions-all",

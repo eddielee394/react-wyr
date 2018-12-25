@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import * as userActions from "auth/store/actions";
 import { bindActionCreators } from "redux";
 import * as Actions from "store/actions";
-import jwtService from "jwtService";
+import jwtService from "utils/jwtService";
 
 class Auth extends Component {
   /*eslint-disable-next-line no-useless-constructor*/
@@ -50,7 +50,7 @@ function mapDispatchToProps(dispatch) {
     {
       logout: userActions.logoutUser,
       setUserData: userActions.setUserData,
-      getAllUsers: userActions.getAllUsers,
+      // getAllUsers: userActions.getAllUsers,
       showMessage: Actions.showMessage,
       hideMessage: Actions.hideMessage
     },

@@ -1,4 +1,4 @@
-import jwtService from "jwtService";
+import jwtService from "utils/jwtService";
 import { setUserData } from "auth/store/actions/user.actions";
 
 export const LOGIN_ERROR = "LOGIN_ERROR";

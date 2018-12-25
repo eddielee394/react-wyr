@@ -6,6 +6,7 @@ import { DashboardPageConfig } from "components/_pages/Dashboard/DashboardPageCo
 import { Error404PageConfig } from "components/_pages/errors/404/Error404PageConfig";
 import { Error500PageConfig } from "components/_pages/errors/500/Error500PageConfig";
 import { LandingPageConfig } from "components/_pages/Landing/LandingPageConfig";
+import { PollsConfig } from "components/polls/PollsConfig";
 
 export const pagesConfigs = [
   ResetPasswordPageConfig,
@@ -15,5 +16,6 @@ export const pagesConfigs = [
   DashboardPageConfig,
   LandingPageConfig,
   Error500PageConfig,
-  Error404PageConfig
+  Error404PageConfig,
+  PollsConfig
 ];

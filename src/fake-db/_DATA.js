@@ -13,52 +13,23 @@ const jwtConfig = {
  * Users Data
  * @type {{im_not_a_horse: {id: string, name: string, avatarURL: string, answers: {"8xf0y6ziyjabvozdd253nd": string, "6ni6ok3ym7mf1p33lnez": string, am8ehyc8byjqgar0jgpub9: string, loxhs1bqm25b708cmbf3g: string}, questions: string[]}, burt_b: {id: string, name: string, avatarURL: string, answers: {vthrdm985a262al8qx3do: string, xj352vofupe1dqz9emx13r: string}, questions: string[]}, johndoe: {id: string, name: string, avatarURL: string, answers: {xj352vofupe1dqz9emx13r: string, vthrdm985a262al8qx3do: string, "6ni6ok3ym7mf1p33lnez": string}, questions: string[]}}}
  */
-// let users = {
-//   im_not_a_horse: {
-//     id: "im_not_a_horse",
-//     name: "Sarah Jessica Marker",
-//     avatarURL: "http://i.pravatar.cc/50?img=47",
-//     answers: {
-//       "8xf0y6ziyjabvozdd253nd": "optionOne",
-//       "6ni6ok3ym7mf1p33lnez": "optionOne",
-//       am8ehyc8byjqgar0jgpub9: "optionTwo",
-//       loxhs1bqm25b708cmbf3g: "optionTwo"
-//     },
-//     questions: ["8xf0y6ziyjabvozdd253nd", "am8ehyc8byjqgar0jgpub9"]
-//   },
-//   burt_b: {
-//     id: "burt_b",
-//     name: "Burt Beynolds",
-//     avatarURL: "http://i.pravatar.cc/50?img=53",
-//     answers: {
-//       vthrdm985a262al8qx3do: "optionOne",
-//       xj352vofupe1dqz9emx13r: "optionTwo"
-//     },
-//     questions: ["loxhs1bqm25b708cmbf3g", "vthrdm985a262al8qx3do"]
-//   },
-//   johndoe: {
-//     id: "johndoe",
-//     name: "John Doe",
-//     avatarURL: "http://i.pravatar.cc/50?img=51",
-//     answers: {
-//       xj352vofupe1dqz9emx13r: "optionOne",
-//       vthrdm985a262al8qx3do: "optionTwo",
-//       "6ni6ok3ym7mf1p33lnez": "optionOne"
-//     },
-//     questions: ["6ni6ok3ym7mf1p33lnez", "xj352vofupe1dqz9emx13r"]
-//   }
-// };
-
 let users = [
   {
     uuid: "XgbuVEXBU5gtSKdbQRP1Zbbby1i1",
     from: "fake-db",
-    password: "admin",
+    password: "password",
     role: "user",
     data: {
-      displayName: "Abbott Keitch",
-      photoURL: "assets/images/avatars/Abbott.jpg",
-      email: "admin",
+      displayName: "da_anchorman",
+      name: "Ron Burgundy",
+      avatarURL: "http://i.pravatar.cc/50?img=51",
+      email: "da_anchorman@test.com",
+      answers: {
+        xj352vofupe1dqz9emx13r: "1",
+        vthrdm985a262al8qx3do: "2",
+        "6ni6ok3ym7mf1p33lnez": "1"
+      },
+      questions: ["6ni6ok3ym7mf1p33lnez", "xj352vofupe1dqz9emx13r"],
       settings: {
         layout: {
           style: "layout1",
@@ -96,12 +67,66 @@ let users = [
   {
     uuid: "XgbuVEXBU6gtSKdbTYR1Zbbby1i3",
     from: "fake-db",
-    password: "staff",
+    password: "password",
     role: "user",
     data: {
-      displayName: "Arnold Matlock",
-      photoURL: "assets/images/avatars/Arnold.jpg",
-      email: "staff",
+      displayName: "burt_b",
+      name: "Burt Beynolds",
+      avatarURL: "http://i.pravatar.cc/50?img=53",
+      email: "burt_b@test.com",
+      answers: {
+        vthrdm985a262al8qx3do: 1,
+        xj352vofupe1dqz9emx13r: 2,
+        xj352vofupe1dqz3emx15z: 1
+      },
+      questions: ["loxhs1bqm25b708cmbf3g", "vthrdm985a262al8qx3do"],
+      settings: {
+        layout: {
+          style: "layout2",
+          config: {
+            mode: "boxed",
+            scroll: "content",
+            navbar: {
+              display: true
+            },
+            toolbar: {
+              display: true,
+              position: "below"
+            },
+            footer: {
+              display: true,
+              style: "fixed"
+            }
+          }
+        },
+        customScrollbars: true,
+        theme: {
+          main: "greeny",
+          navbar: "mainThemeDark",
+          toolbar: "mainThemeDark",
+          footer: "mainThemeDark"
+        }
+      },
+      shortcuts: ["calendar", "mail", "contacts", "todo"]
+    }
+  },
+  {
+    uuid: "XgbuVEXBU1gtSKdbTYR1Zbbby1i3",
+    from: "fake-db",
+    password: "password",
+    role: "user",
+    data: {
+      displayName: "im_not_a_horse",
+      name: "Sarah Jessica Marker",
+      avatarURL: "http://i.pravatar.cc/50?img=47",
+      email: "im_not_a_horse@test.com",
+      answers: {
+        "8xf0y6ziyjabvozdd253nd": 1,
+        "6ni6ok3ym7mf1p33lnez": 1,
+        am8ehyc8byjqgar0jgpub9: 2,
+        loxhs1bqm25b708cmbf3g: 2
+      },
+      questions: ["8xf0y6ziyjabvozdd253nd", "am8ehyc8byjqgar0jgpub9"],
       settings: {
         layout: {
           style: "layout2",
@@ -136,34 +161,40 @@ let users = [
 
 /**
  * Questions Data
- * @type {{"8xf0y6ziyjabvozdd253nd": {id: string, author: string, timestamp: number, optionOne: {votes: string[], text: string}, optionTwo: {votes: Array, text: string}}, "6ni6ok3ym7mf1p33lnez": {id: string, author: string, timestamp: number, optionOne: {votes: Array, text: string}, optionTwo: {votes: string[], text: string}}, am8ehyc8byjqgar0jgpub9: {id: string, author: string, timestamp: number, optionOne: {votes: Array, text: string}, optionTwo: {votes: string[], text: string}}, loxhs1bqm25b708cmbf3g: {id: string, author: string, timestamp: number, optionOne: {votes: Array, text: string}, optionTwo: {votes: string[], text: string}}, vthrdm985a262al8qx3do: {id: string, author: string, timestamp: number, optionOne: {votes: string[], text: string}, optionTwo: {votes: string[], text: string}}, xj352vofupe1dqz9emx13r: {id: string, author: string, timestamp: number, optionOne: {votes: string[], text: string}, optionTwo: {votes: string[], text: string}}}}
+ * @type {{"8xf0y6ziyjabvozdd253nd": {id: string, author: string, timestamp: number, 1: {votes: string[], text: string}, 2: {votes: Array, text: string}}, "6ni6ok3ym7mf1p33lnez": {id: string, author: string, timestamp: number, 1: {votes: Array, text: string}, 2: {votes: string[], text: string}}, am8ehyc8byjqgar0jgpub9: {id: string, author: string, timestamp: number, 1: {votes: Array, text: string}, 2: {votes: string[], text: string}}, loxhs1bqm25b708cmbf3g: {id: string, author: string, timestamp: number, 1: {votes: Array, text: string}, 2: {votes: string[], text: string}}, vthrdm985a262al8qx3do: {id: string, author: string, timestamp: number, 1: {votes: string[], text: string}, 2: {votes: string[], text: string}}, xj352vofupe1dqz9emx13r: {id: string, author: string, timestamp: number, 1: {votes: string[], text: string}, 2: {votes: string[], text: string}}}}
  */
 let questions = {
   "8xf0y6ziyjabvozdd253nd": {
     id: "8xf0y6ziyjabvozdd253nd",
     author: "im_not_a_horse",
     timestamp: 1467166872634,
-    optionOne: {
-      votes: ["im_not_a_horse"],
-      text: "have horrible short term memory"
-    },
-    optionTwo: {
-      votes: [],
-      text: "have horrible long term memory"
+    title: "Memory",
+    answers: {
+      1: {
+        votes: ["im_not_a_horse"],
+        text: "have horrible short term memory"
+      },
+      2: {
+        votes: [],
+        text: "have horrible long term memory"
+      }
     },
     categoryId: 1
   },
   "6ni6ok3ym7mf1p33lnez": {
     id: "6ni6ok3ym7mf1p33lnez",
-    author: "johndoe",
+    author: "da_anchorman",
     timestamp: 1468479767190,
-    optionOne: {
-      votes: [],
-      text: "become a superhero"
-    },
-    optionTwo: {
-      votes: ["johndoe", "im_not_a_horse"],
-      text: "become a supervillian"
+    title: "Evil or good?",
+    answers: {
+      1: {
+        votes: [],
+        text: "become a superhero"
+      },
+      2: {
+        votes: ["da_anchorman", "im_not_a_horse"],
+        text: "become a supervillian"
+      }
     },
     categoryId: 3
   },
@@ -171,13 +202,16 @@ let questions = {
     id: "am8ehyc8byjqgar0jgpub9",
     author: "im_not_a_horse",
     timestamp: 1488579767190,
-    optionOne: {
-      votes: [],
-      text: "be telekinetic"
-    },
-    optionTwo: {
-      votes: ["im_not_a_horse"],
-      text: "be telepathic"
+    title: "Superpowers",
+    answers: {
+      1: {
+        votes: [],
+        text: "be telekinetic"
+      },
+      2: {
+        votes: ["im_not_a_horse"],
+        text: "be telepathic"
+      }
     },
     categoryId: 2
   },
@@ -185,13 +219,16 @@ let questions = {
     id: "loxhs1bqm25b708cmbf3g",
     author: "burt_b",
     timestamp: 1482579767190,
-    optionOne: {
-      votes: [],
-      text: "be a front-end developer"
-    },
-    optionTwo: {
-      votes: ["im_not_a_horse"],
-      text: "be a back-end developer"
+    title: "Front-end or Back-end?",
+    answers: {
+      1: {
+        votes: [],
+        text: "be a front-end developer"
+      },
+      2: {
+        votes: ["im_not_a_horse"],
+        text: "be a back-end developer"
+      }
     },
     categoryId: 1
   },
@@ -199,33 +236,56 @@ let questions = {
     id: "vthrdm985a262al8qx3do",
     author: "burt_b",
     timestamp: 1489579767190,
-    optionOne: {
-      votes: ["burt_b"],
-      text: "find $50 yourself"
-    },
-    optionTwo: {
-      votes: ["johndoe"],
-      text: "have your best friend find $500"
+    title: "Money",
+    answers: {
+      1: {
+        votes: ["burt_b"],
+        text: "find $50 yourself"
+      },
+      2: {
+        votes: ["da_anchorman"],
+        text: "have your best friend find $500"
+      }
     },
     categoryId: 4
   },
   xj352vofupe1dqz9emx13r: {
     id: "xj352vofupe1dqz9emx13r",
-    author: "johndoe",
+    author: "da_anchorman",
     timestamp: 1493579767190,
-    optionOne: {
-      votes: ["johndoe"],
-      text: "write JavaScript"
-    },
-    optionTwo: {
-      votes: ["burt_b"],
-      text: "write Swift"
+    title: "JS or Swift?",
+    answers: {
+      1: {
+        votes: ["da_anchorman"],
+        text: "write JavaScript"
+      },
+      2: {
+        votes: ["burt_b"],
+        text: "write Swift"
+      }
     },
     categoryId: 5
+  },
+  xj352vofupe1dqz3emx15z: {
+    id: "xj352vofupe1dqz3emx15z",
+    author: "da_anchorman",
+    timestamp: 1493579767190,
+    title: "JS or Swift?",
+    answers: {
+      1: {
+        votes: ["da_anchorman"],
+        text: "write JavaScript"
+      },
+      2: {
+        votes: ["burt_b"],
+        text: "write Swift"
+      }
+    },
+    categoryId: 1
   }
 };
 
-let questionCategories = [
+let categories = [
   {
     id: 1,
     value: "reactjs-basic",
@@ -277,12 +337,12 @@ let questionCategories = [
 ];
 
 // store array in local storage for registered users
-users = JSON.parse(localStorage.getItem("users")) || users;
-
-export function configureFakeDB() {
-  localStorage.setItem("users", JSON.stringify(users));
-  localStorage.setItem("questions", JSON.stringify(questions));
-}
+// users = JSON.parse(localStorage.getItem("users")) || users;
+//
+// export function configureFakeDB() {
+//   localStorage.setItem("users", JSON.stringify(users));
+//   localStorage.setItem("questions", JSON.stringify(questions));
+// }
 
 /**
  * Gets Users
@@ -309,7 +369,7 @@ export function _getQuestions() {
 /**
  * Saves the question
  * @param question
- * @return {Promise<{id: string, author: string, optionOne: Object, optionTwo: Object, timestamp: Object}>}
+ * @return {Promise<{id: string, author: string, 1: Object, 2: Object, timestamp: Object}>}
  * @private
  */
 export function _saveQuestion(question) {
@@ -377,14 +437,52 @@ export function _saveQuestionAnswer({ authUser, questionId, answer }) {
 /**
  * Questions mock requests
  */
-mock.onGet("/api/questions").reply(() => {
+mock.onGet("/api/questions").reply(request => {
+  // const data = JSON.parse(request.data);
+  questions = Object.values(questions);
+  // console.log("/api/questions request: ", data);
+
+  let response = questions;
+
+  if (request.params) {
+    const { categoryId, questionId } = request.params;
+    console.log("Request params: ", request.params);
+
+    const category = _.find(categories, { value: categoryId });
+    console.log("Request categoryId: ", request.params.categoryId);
+    const _categoryId = category.id;
+
+    questions = questions.filter(
+      question => question.categoryId === _categoryId
+    );
+
+    // let question = questions.filter(_question => _question.id === questionId);
+    let question = _.find(questions, { id: questionId });
+    console.log(question);
+
+    response = {
+      questions: [...questions],
+      category: category,
+      question: question
+    };
+
+    return [200, response];
+  }
+  console.log(questions);
   return [200, questions];
 });
 
-mock.onGet("/api/question").reply(request => {
-  const { courseId } = request.params;
-  const response = _.find(questions, { id: courseId });
+// mock.onGet("/api/questions").reply(request => {
+//   questions = Object.values(questions);
+//   console.log(request);
+//   return [200, questions];
+// });
 
+mock.onGet("/api/question").reply(request => {
+  console.log(request);
+
+  const { questionId } = request.params;
+  const response = _.find(questions, { id: questionId });
   return [200, response];
 });
 
@@ -410,7 +508,7 @@ mock.onGet("/api/question/save").reply(request => {
 });
 
 mock.onGet("/api/questions/categories").reply(() => {
-  return [200, questionCategories];
+  return [200, categories];
 });
 
 /**
@@ -450,7 +548,7 @@ mock.onGet("/api/auth").reply(config => {
     });
 
     const response = {
-      users,
+      // users,
       user,
       access_token
     };
@@ -501,6 +599,7 @@ mock.onPost("/api/auth/register").reply(request => {
       from: "localStorage",
       password,
       role: "user",
+      token: null,
       data: {
         displayName,
         avatarUrl: "http://pravatar.cc/128",
@@ -519,7 +618,7 @@ mock.onPost("/api/auth/register").reply(request => {
       expiresIn: jwtConfig.expiresIn
     });
 
-    localStorage.setItem("users", JSON.stringify(users));
+    // localStorage.setItem("users", JSON.stringify(users));
 
     const response = {
       user,

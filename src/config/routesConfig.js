@@ -10,7 +10,7 @@ export const routes = [
   {
     path: "/",
     exact: true,
-    component: () => <Redirect to="/landing" />
+    component: () => <Redirect to="/dashboard" />
   },
   {
     component: () => <Redirect to="/error-404" />

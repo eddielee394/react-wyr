@@ -3,21 +3,15 @@ import * as Actions from "auth/store/actions";
 const initialState = {
   role: "guest",
   data: {
-    displayName: "John Doe",
-    photoURL: "assets/images/avatars/Velazquez.jpg",
-    email: "johndoe@withinpixels.com",
+    displayName: "Guest",
+    avatarURL: "http://i.pravatar.cc/128",
+    email: "test@test.com",
     shortcuts: ["calendar", "mail", "contacts", "todo"]
   }
 };
 
 const user = function(state = initialState, action) {
   switch (action.type) {
-    case Actions.GET_ALL_USERS: {
-      return {
-        ...state,
-        ...action.payload
-      };
-    }
     case Actions.SET_USER_DATA: {
       return {
         ...initialState,

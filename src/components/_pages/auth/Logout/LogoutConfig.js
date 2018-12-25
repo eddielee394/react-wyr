@@ -1,5 +1,5 @@
 import {authRoles} from 'auth';
-import store from 'store';
+import {store} from 'store';
 import {logoutUser} from 'auth/store/actions';
 
 export const LogoutConfig = {

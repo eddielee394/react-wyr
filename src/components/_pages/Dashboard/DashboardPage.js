@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import * as Actions from "store/actions";
+import { bindActionCreators } from "redux";
+// import withReducer from "store/withReducer";
+// import reducer from "auth/store/reducers";
+// import axios from "axios";
 
 class DashboardPage extends Component {
   /**
@@ -7,8 +12,8 @@ class DashboardPage extends Component {
    *
    */
   componentDidMount() {
-    const { dispatch } = this.props;
-    // dispatch(handleInitialData());
+    // console.log(axios.get("/api/auth"));
+    // this.props.getAllUsers();
   }
 
   render() {
@@ -21,6 +26,15 @@ class DashboardPage extends Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      // getAllUsers: Actions.handleInitialData
+    },
+    dispatch
+  );
+}
+
 function mapStateToProps(state) {
   const { users } = state;
 
@@ -29,4 +43,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(DashboardPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DashboardPage);

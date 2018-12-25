@@ -21,3 +21,7 @@ export { default as FuseMessage } from "./FuseMessage/FuseMessage";
 export { default as FuseScrollbars } from "./FuseScrollbars/FuseScrollbars";
 export { default as FuseNavigation } from "./FuseNavigation/FuseNavigation";
 export { default as FuseShortcuts } from "./FuseShortcuts/FuseShortcuts";
+export {
+  default as FuseSplashScreen
+} from "./FuseSplashScreen/FuseSplashScreen";
+export { FuseSelectedTheme } from "./FuseTheme/FuseTheme";

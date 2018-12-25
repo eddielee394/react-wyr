@@ -1,17 +1,17 @@
 import { combineReducers } from "redux";
 import fuse from "./fuse";
-import questions from "./questions.reducers";
 import auth from "../../auth/store/reducers";
 import users from "./users.reducer";
+
 /**
  * Root reducer
  * @param asyncReducers
+ * @param history
  */
 const createReducer = asyncReducers =>
   combineReducers({
     auth,
-    // users,
-    questions,
+    users,
     fuse,
     ...asyncReducers
   });

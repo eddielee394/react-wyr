@@ -1,12 +1,10 @@
-export const RECEIVE_USERS = "RECEIVE_USERS";
+export const GET_ALL_USERS = "[USERS] GET ALL";
 
-/**
- * Create Receive Users Action
- * @summary action creator
- * @param users
- * @return {{type: string, users: *}}
- */
-export const receiveUsers = users => ({
-  type: RECEIVE_USERS,
-  users
-});
+export function getAllUsers(users) {
+  return dispatch => {
+    dispatch({
+      type: GET_ALL_USERS,
+      payload: users
+    });
+  };
+}

@@ -13,8 +13,10 @@ import { createGenerateClassName, jssPreset } from "@material-ui/core/styles";
 import { Provider } from "react-redux";
 import { Router } from "react-router-dom";
 import { routes } from "./config/routesConfig";
+// import { PersistGate } from "redux-persist/integration/react";
 import history from "./utils/history";
-import store from "./store";
+import { store, persistor } from "./store";
+
 import { Auth } from "./auth";
 import { FuseAuthorization, FuseTheme, FuseLayout } from "@fuse";
 import {
@@ -25,7 +27,7 @@ import {
   QuickPanel
 } from "components/_layout";
 
-configureFakeDB();
+// configureFakeDB();
 
 library.add(fas, far, fab);
 
@@ -40,6 +42,7 @@ const generateClassName = createGenerateClassName();
 ReactDOM.render(
   <JssProvider jss={jss} generateClassName={generateClassName}>
     <Provider store={store}>
+      {/*<PersistGate loading={null} persistor={persistor}>*/}
       <Auth>
         <Router history={history}>
           <FuseAuthorization routes={routes}>
@@ -60,6 +63,7 @@ ReactDOM.render(
           </FuseAuthorization>
         </Router>
       </Auth>
+      {/*</PersistGate>*/}
     </Provider>
   </JssProvider>,
   document.getElementById("root")
