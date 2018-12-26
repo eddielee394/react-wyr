@@ -1,9 +1,9 @@
-import { FuseUtils } from "@fuse";
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { pagesConfigs } from "components/_pages/pagesConfigs";
+import { FuseUtils } from "@fuse";
+import { componentsConfig } from "components/componentsConfig";
 
-const routeConfigs = [...pagesConfigs];
+const routeConfigs = [...componentsConfig];
 
 export const routes = [
   ...FuseUtils.generateRoutesFromConfigs(routeConfigs),
