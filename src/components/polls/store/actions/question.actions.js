@@ -8,10 +8,8 @@ export const UPDATE_QUESTION = "[POLLS] UPDATE QUESTION";
 
 export function getQuestion(params) {
   const request = axios.get("/api/questions", { params });
-  console.log("getQuestion params: ", params);
   return dispatch =>
     request.then(response => {
-      console.log("getQuestion payload: ", response.data.question);
       dispatch({
         type: GET_QUESTION,
         payload: response.data.question

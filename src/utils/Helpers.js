@@ -9,8 +9,12 @@ class Helpers {
    * @param timestamp
    * @return {string}
    */
-  static formatDate = timestamp => {
+  static formatDate = (timestamp, relative = true) => {
     const d = new Date(timestamp);
+    console.log(d);
+    if (relative) {
+      return moment.utc(d).fromNow();
+    }
 
     const formattedDate = moment
       .utc(d)

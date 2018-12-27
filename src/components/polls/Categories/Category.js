@@ -176,7 +176,7 @@ class Category extends Component {
    * @return {number}
    */
   getUserCount = () => {
-    const { users } = this.props;
+    const { users } = this.props.auth;
     return Object.keys(users).length;
   };
 
@@ -366,23 +366,12 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-function mapStateToProps({ polls, users, auth }) {
-  // const { categories } = polls.questions;
-  // const questions = polls.questions.data;
-  // const categoryName = _category.label;
-  // const _category = _.find(categories, { value: categoryValue });
-  //get the author & properties
-  // const author = {
-  //   avatarURL: users[question.author] ? users[question.author].avatarURL : null,
-  //   name: users[question.author] ? users[question.author].name : null
-  // };
+function mapStateToProps({ polls, auth }) {
   return {
     question: polls.question,
     questions: polls.questions.data,
     category: polls.questions.category,
-    auth,
-    users
-    // categoryName
+    auth
   };
 }
 

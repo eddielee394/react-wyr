@@ -25,6 +25,7 @@ import connect from "react-redux/es/connect/connect";
 import classNames from "classnames";
 import _ from "@lodash";
 import { Link } from "react-router-dom";
+import { Helpers } from "utils";
 
 const styles = theme => ({
   root: {
@@ -88,8 +89,8 @@ class CategoryList extends Component {
         return false;
       }
       let searchTextResults =
-        item.optionOne.text.toLowerCase().includes(searchText.toLowerCase()) ||
-        item.optionTwo.text.toLowerCase().includes(searchText.toLowerCase());
+        item.answers[1].text.toLowerCase().includes(searchText.toLowerCase()) ||
+        item.answers[2].text.toLowerCase().includes(searchText.toLowerCase());
 
       return searchTextResults;
     });
@@ -137,7 +138,7 @@ class CategoryList extends Component {
               color="inherit"
               className="text-24 sm:text-40 font-light"
             >
-              WELCOME TO ACADEMY
+              Would You Rather???
             </Typography>
           </FuseAnimate>
 
@@ -148,9 +149,7 @@ class CategoryList extends Component {
               className="mt-8 sm:mt-16 mx-auto max-w-512"
             >
               <span className="opacity-75">
-                Our questions will step you through the process of building a
-                small application, or adding a new feature to an existing
-                application.
+                Select any of the questions below to get started!
               </span>
             </Typography>
           </FuseAnimate>
@@ -231,18 +230,22 @@ class CategoryList extends Component {
                         color: theme.palette.getContrastText(category.color)
                       }}
                     >
-                      <Typography
-                        className="font-medium truncate"
-                        color="inherit"
-                      >
-                        {category.label}
-                      </Typography>
+                      <Link to={`/questions/${category.value}`}>
+                        <Typography
+                          className="font-medium truncate"
+                          color="inherit"
+                        >
+                          {category.label}
+                        </Typography>
+                      </Link>
                       <div className="flex items-center justify-center opacity-75">
                         <Icon className="text-20 mr-8" color="inherit">
                           access_time
                         </Icon>
                         <div className="text-16 whitespace-no-wrap">
-                          {question.length} min
+                          <Typography variant="caption">
+                            {Helpers.formatDate(question.timestamp)}
+                          </Typography>
                         </div>
                       </div>
                     </div>

@@ -120,6 +120,9 @@ class QuestionList extends Component {
     // );
   };
 
+  handleGetAuthor = question =>
+    _.find(this.props.auth.users, { id: question.userId });
+
   buttonStatus = questionId =>
     this.userHasAnswered(questionId) ? "COMPLETED" : "START";
 
@@ -134,6 +137,8 @@ class QuestionList extends Component {
         className="flex flex-wrap py-24"
       >
         {questions.map(question => {
+          const author = this.handleGetAuthor(question);
+
           return (
             <div
               className="w-full pb-24 sm:w-1/2 lg:w-1/3 sm:p-16"
@@ -147,9 +152,9 @@ class QuestionList extends Component {
                     color: theme.palette.getContrastText(category.color)
                   }}
                 >
-                  <Avatar src={author.avatarURL} />
+                  <Avatar src={author.data.avatarURL} />
                   <Typography className="font-medium truncate" color="inherit">
-                    {question.author}
+                    {author.data.displayName}
                   </Typography>
                   <div className="flex items-center justify-center opacity-75">
                     <Icon className="text-20 mr-8" color="inherit">
@@ -202,31 +207,28 @@ function mapDispatchToProps(dispatch) {
     {
       getCategories: Actions.getCategories,
       getQuestionsByCategory: Actions.getQuestionsByCategory,
-      updateQuestion: Actions.updateQuestion,
-      getQuestion: Actions.getQuestion
+      updateQuestion: Actions.updateQuestion
     },
     dispatch
   );
 }
 
-function mapStateToProps({ polls, users, auth }) {
-  const author = {
-    avatarURL: "http://i.pravatar.cc/50?img=51",
-    name: "test name"
-    // avatarURL: users.id[polls.questions.author]
-    //   ? users.id[polls.questions.author].data.avatarURL
-    //   : null,
-    // name: users.id[polls.questions.author]
-    //   ? users.id[polls.questions.author].data.name
-    //   : null
-  };
+function mapStateToProps({ polls, auth }) {
+  // const author = {
+  // avatarURL: "http://i.pravatar.cc/50?img=51",
+  // name: "test name"
+  // avatarURL: auth.users.id[polls.questions.author]
+  //   ? auth.users.id[polls.questions.author].data.avatarURL
+  //   : null,
+  // name: auth.users.id[polls.questions.author]
+  //   ? auth.users.id[polls.questions.author].data.name
+  //   : null
+  // };
 
   return {
     questions: polls.questions.data,
     category: polls.questions.category,
-    author,
-    auth,
-    users
+    auth
   };
 }
 

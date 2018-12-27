@@ -166,8 +166,8 @@ let users = [
 let questions = [
   {
     id: "8xf0y6ziyjabvozdd253nd",
-    author: "im_not_a_horse",
-    timestamp: 1467166872634,
+    userId: "im_not_a_horse",
+    timestamp: 1545099175000,
     title: "Memory",
     answers: {
       1: {
@@ -183,8 +183,8 @@ let questions = [
   },
   {
     id: "6ni6ok3ym7mf1p33lnez",
-    author: "da_anchorman",
-    timestamp: 1468479767190,
+    userId: "da_anchorman",
+    timestamp: 1543111975000,
     title: "Evil or good?",
     answers: {
       1: {
@@ -200,8 +200,8 @@ let questions = [
   },
   {
     id: "am8ehyc8byjqgar0jgpub9",
-    author: "im_not_a_horse",
-    timestamp: 1488579767190,
+    userId: "im_not_a_horse",
+    timestamp: 1545876775000,
     title: "Superpowers",
     answers: {
       1: {
@@ -217,8 +217,8 @@ let questions = [
   },
   {
     id: "loxhs1bqm25b708cmbf3g",
-    author: "burt_b",
-    timestamp: 1482579767190,
+    userId: "burt_b",
+    timestamp: 1543112975000,
     title: "Front-end or Back-end?",
     answers: {
       1: {
@@ -234,7 +234,7 @@ let questions = [
   },
   {
     id: "vthrdm985a262al8qx3do",
-    author: "burt_b",
+    userId: "burt_b",
     timestamp: 1489579767190,
     title: "Money",
     answers: {
@@ -251,8 +251,8 @@ let questions = [
   },
   {
     id: "xj352vofupe1dqz9emx13r",
-    author: "da_anchorman",
-    timestamp: 1493579767190,
+    userId: "da_anchorman",
+    timestamp: 1544667175000,
     title: "JS or Swift?",
     answers: {
       1: {
@@ -268,7 +268,7 @@ let questions = [
   },
   {
     id: "xj352vofupe1dqz3emx15z",
-    author: "da_anchorman",
+    userId: "da_anchorman",
     timestamp: 1493579767190,
     title: "JS or Swift?",
     answers: {
