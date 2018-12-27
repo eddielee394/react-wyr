@@ -21,7 +21,7 @@ import Paper from "@material-ui/core/Paper/Paper";
 import SwipeableViews from "react-swipeable-views";
 import { green } from "@material-ui/core/colors";
 import { Link, withRouter } from "react-router-dom";
-import QuestionTest from "components/polls/Question/QuestionTest";
+import { Question, QuestionList } from "components/polls/Questions";
 import _ from "@lodash";
 
 const styles = theme => ({
@@ -49,7 +49,7 @@ const styles = theme => ({
   }
 });
 
-class QuestionList extends Component {
+class Category extends Component {
   componentDidMount() {
     /**
      * Get the Question list data
@@ -61,8 +61,7 @@ class QuestionList extends Component {
 
   componentDidUpdate(prevProps) {
     /**
-     * If the Question is opened for the first time
-     * Show all questions
+     * get question based on url param
      */
     const { params } = this.props.match;
 
@@ -71,18 +70,24 @@ class QuestionList extends Component {
     }
   }
 
-  handleChangeQuestion = id => {
-    // const { params } = this.props.match;
-    const { category, question } = this.props;
+  handleChangeQuestion = questionId => {
+    const { category } = this.props;
     const categoryId = category.value;
 
-    this.props.history.push(`/questions/${categoryId}/${id}`);
-    // this.props.getQuestion(params);
+    return this.updateQuestionUrl({ questionId, categoryId });
+  };
+
+  updateQuestionUrl = (params = {}) => {
+    const { questionId, categoryId } = params;
+    if (!questionId) {
+      return this.props.history.push(`/questions/${categoryId}`);
+    }
+    return this.props.history.push(`/questions/${categoryId}/${questionId}`);
   };
 
   handleChangeIndex = index => {
     const { questions } = this.props;
-    if (index > -1) {
+    if (index > -1 && index < questions.length) {
       const questionId = questions[index].id;
       this.handleChangeQuestion(questionId);
     }
@@ -175,6 +180,22 @@ class QuestionList extends Component {
     return Object.keys(users).length;
   };
 
+  getQuestionIndex = () => {
+    const { questions, question } = this.props;
+
+    //check for the index of the current question
+    let index = questions.findIndex(_question => _question.id === question.id);
+
+    //sanity check
+    const hasIndex = index > -1;
+
+    if (!hasIndex) {
+      index = 0;
+      return index;
+    }
+    return index;
+  };
+
   render() {
     const {
       classes,
@@ -182,14 +203,88 @@ class QuestionList extends Component {
       questions,
       category,
       match,
-      route,
       ...props
     } = this.props;
+
     const { params } = match;
-    console.log("user has answered", this.userHasAnswered());
-    const index = questions.findIndex(
-      _question => _question.id === question.id
+
+    const index = this.getQuestionIndex();
+
+    const headerTitle = questions && (
+      <Typography className="flex-1 text-20">{category.label}</Typography>
     );
+
+    const questionItem = params.questionId ? (
+      questions.map(_question => (
+        <div
+          className="flex justify-center p-16 pb-64 sm:p-24 sm:pb-64 md:p-48 md:pb-64"
+          key={_question.id}
+        >
+          <Paper
+            className="w-full max-w-lg rounded-8 p-16 md:p-24"
+            elevation={1}
+          >
+            <Question
+              key={_question.id}
+              handleAddVote={this.handleAddVote}
+              handleVoteCount={this.handleVoteCount}
+              handleVotePercent={this.handleVotePercent}
+              question={_question}
+              {...props}
+            />
+          </Paper>
+        </div>
+      ))
+    ) : (
+      <div
+        className="flex justify-center p-16 pb-64 sm:p-24 sm:pb-64 md:p-48 md:pb-64"
+        key="all"
+      >
+        <Paper className="w-full rounded-8 p-16 md:p-24" elevation={1}>
+          <QuestionList />
+        </Paper>
+      </div>
+    );
+
+    const backControl = index !== 0 && (
+      <Fab
+        className=""
+        color="secondary"
+        onClick={() => this.handleBack(index)}
+      >
+        <Icon>chevron_left</Icon>
+      </Fab>
+    );
+
+    const nextControl =
+      index < questions.length - 1 ? (
+        <Fab
+          className=""
+          color="secondary"
+          onClick={() => this.handleNext(index)}
+        >
+          <Icon>chevron_right</Icon>
+        </Fab>
+      ) : (
+        <Fab className={classes.successFab} to="/questions" component={Link}>
+          <Icon>check</Icon>
+        </Fab>
+      );
+
+    const steps = questions.map(_question => {
+      return (
+        <Step
+          classes={{ root: classes.step }}
+          key={_question.id}
+          completed={this.userHasAnswered(_question.id)}
+          onClick={() => this.handleChangeQuestion(_question.id)}
+        >
+          <StepLabel classes={{ root: classes.stepLabel }}>
+            {_question.title}
+          </StepLabel>
+        </Step>
+      );
+    });
 
     return (
       <FusePageSimple
@@ -211,15 +306,10 @@ class QuestionList extends Component {
             <IconButton className="mr-16" to="/questions" component={Link}>
               <Icon>arrow_back</Icon>
             </IconButton>
-            {questions && (
-              <Typography className="flex-1 text-20">
-                {category.label}
-              </Typography>
-            )}
+            {headerTitle}
           </div>
         }
         content={
-          // question && (
           <div className="flex flex-1 relative overflow-hidden">
             <FuseScrollbars className="w-full overflow-auto">
               <SwipeableViews
@@ -228,69 +318,17 @@ class QuestionList extends Component {
                 onChangeIndex={this.handleChangeIndex}
                 enableMouseEvents={true}
               >
-                {questions.map((_question, index) => (
-                  <div
-                    className="flex justify-center p-16 pb-64 sm:p-24 sm:pb-64 md:p-48 md:pb-64"
-                    key={_question.id}
-                  >
-                    <Paper
-                      className="w-full max-w-lg rounded-8 p-16 md:p-24"
-                      elevation={1}
-                    >
-                      {params.questionId ? (
-                        <QuestionTest
-                          key={_question.id}
-                          handleAddVote={this.handleAddVote}
-                          handleVoteCount={this.handleVoteCount}
-                          handleVotePercent={this.handleVotePercent}
-                          question={_question}
-                          {...props}
-                        />
-                      ) : (
-                        "Show list of all questions"
-                      )}
-                    </Paper>
-                  </div>
-                ))}
+                {questionItem}
               </SwipeableViews>
             </FuseScrollbars>
 
             <div className="flex justify-center w-full absolute pin-l pin-r pin-b pb-16 md:pb-32">
               <div className="flex justify-between w-full max-w-xl px-8">
-                <div>
-                  {index !== 0 && (
-                    <Fab
-                      className=""
-                      color="secondary"
-                      onClick={() => this.handleBack(index)}
-                    >
-                      <Icon>chevron_left</Icon>
-                    </Fab>
-                  )}
-                </div>
-                <div>
-                  {index < questions.length - 1 ? (
-                    <Fab
-                      className=""
-                      color="secondary"
-                      onClick={() => this.handleNext(index)}
-                    >
-                      <Icon>chevron_right</Icon>
-                    </Fab>
-                  ) : (
-                    <Fab
-                      className={classes.successFab}
-                      to="/questions"
-                      component={Link}
-                    >
-                      <Icon>check</Icon>
-                    </Fab>
-                  )}
-                </div>
+                <div>{backControl}</div>
+                <div>{nextControl}</div>
               </div>
             </div>
           </div>
-          // )
         }
         leftSidebarContent={
           <Stepper
@@ -298,20 +336,14 @@ class QuestionList extends Component {
             activeStep={index - 1}
             orientation="vertical"
           >
-            {questions.map((_question, index) => {
-              return (
-                <Step
-                  classes={{ root: classes.step }}
-                  key={_question.id}
-                  completed={this.userHasAnswered(_question.id)}
-                  onClick={() => this.handleChangeQuestion(_question.id)}
-                >
-                  <StepLabel classes={{ root: classes.stepLabel }}>
-                    {_question.title}
-                  </StepLabel>
-                </Step>
-              );
-            })}
+            <Step
+              classes={{ root: classes.step }}
+              key="all"
+              onClick={() => this.handleChangeQuestion()}
+            >
+              <StepLabel classes={{ root: classes.stepLabel }}>All</StepLabel>
+            </Step>
+            {steps}
           </Stepper>
         }
         innerScroll
@@ -326,7 +358,6 @@ class QuestionList extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      getCategories: Actions.getCategories,
       getQuestionsByCategory: Actions.getQuestionsByCategory,
       updateQuestion: Actions.updateQuestion,
       getQuestion: Actions.getQuestion
@@ -361,7 +392,7 @@ export default withReducer("polls", reducer)(
       connect(
         mapStateToProps,
         mapDispatchToProps
-      )(QuestionList)
+      )(Category)
     )
   )
 );

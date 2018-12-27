@@ -1,12 +1,11 @@
-import _ from "@lodash";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import * as Actions from "../store/actions";
+import _ from "@lodash";
 
-class QuestionTest extends Component {
-
+class Question extends Component {
   render() {
     const {
       question,
@@ -18,7 +17,7 @@ class QuestionTest extends Component {
     if (!question) {
       return "";
     }
-    console.log("QuestionTest question: ", question);
+
     return (
       <div>
         <p>id: {question.id}</p>
@@ -52,7 +51,7 @@ function mapStateToProps({ polls }) {
 }
 
 export default withRouter(
-  connect()(QuestionTest)
+  connect()(Question)
   // mapStateToProps,
   // null,
   // mapDispatchToProps

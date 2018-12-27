@@ -1,6 +1,8 @@
 import * as Actions from "auth/store/actions";
 
-const users = function(state = [], action) {
+const initialState = {};
+
+const users = function(state = initialState, action) {
   switch (action.type) {
     case Actions.GET_ALL_USERS: {
       return {

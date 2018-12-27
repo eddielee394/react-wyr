@@ -52,7 +52,7 @@ const styles = theme => ({
   content: {}
 });
 
-class Categories extends Component {
+class CategoryList extends Component {
   state = {
     data: this.props.questions,
     categories: this.props.categories
@@ -312,6 +312,6 @@ export default withReducer("polls", reducer)(
     connect(
       mapStateToProps,
       mapDispatchToProps
-    )(Categories)
+    )(CategoryList)
   )
 );

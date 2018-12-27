@@ -9,7 +9,6 @@ export const SET_QUESTIONS_CATEGORY_FILTER =
 
 export function getQuestions() {
   const request = axios.get("/api/questions");
-  // console.log(request.then(response => response.data));
   return dispatch =>
     request.then(response =>
       dispatch({

@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import fuse from "./fuse";
 import auth from "../../auth/store/reducers";
-import users from "./users.reducer";
+// import users from "./users.reducer";
 
 /**
  * Root reducer
@@ -11,7 +11,6 @@ import users from "./users.reducer";
 const createReducer = asyncReducers =>
   combineReducers({
     auth,
-    users,
     fuse,
     ...asyncReducers
   });

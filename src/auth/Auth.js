@@ -10,6 +10,8 @@ class Auth extends Component {
   constructor(props) {
     super(props);
 
+    this.props.getAllUsers();
+
     this.jwtCheck();
   }
 
@@ -50,7 +52,7 @@ function mapDispatchToProps(dispatch) {
     {
       logout: userActions.logoutUser,
       setUserData: userActions.setUserData,
-      // getAllUsers: userActions.getAllUsers,
+      getAllUsers: userActions.getAllUsers,
       showMessage: Actions.showMessage,
       hideMessage: Actions.hideMessage
     },

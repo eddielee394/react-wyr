@@ -8,20 +8,19 @@ export const pollsConfig = {
     {
       path: "/questions/:categoryId/:questionId?",
       component: FuseLoadable({
-        // loader: () => import("./Question/QuestionTest")
-        loader: () => import("./QuestionList/QuestionList")
+        loader: () => import("./Categories/Category")
       })
     },
     {
       path: "/questions/:categoryId",
       component: FuseLoadable({
-        loader: () => import("./QuestionList/QuestionList")
+        loader: () => import("./Categories/Category")
       })
     },
     {
       path: "/questions",
       component: FuseLoadable({
-        loader: () => import("./Categories/Categories")
+        loader: () => import("./Categories/CategoryList")
       })
     }
   ]
