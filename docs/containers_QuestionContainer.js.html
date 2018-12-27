@@ -34,7 +34,7 @@ import { QuestionList } from "../components/Question";
  * @param users
  * @param questions
  * @param id
- * @return {{question: *, author: {avatarUrl: *, name: null}}}
+ * @return {{question: *, author: {avatarURL: *, name: null}}}
  */
 function mapStateToProps({ users, questions }, { id }) {
   //get the current question from the questions store state by id
@@ -42,7 +42,7 @@ function mapStateToProps({ users, questions }, { id }) {
 
   //get the author &amp; properties
   // const author = {
-  //   avatarUrl: users[question.author] ? users[question.author].avatarURL : null,
+  //   avatarURL: users[question.author] ? users[question.author].avatarURL : null,
   //   name: users[question.author] ? users[question.author].name : null
   // };
 

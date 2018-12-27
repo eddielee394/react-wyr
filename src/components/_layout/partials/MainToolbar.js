@@ -58,11 +58,11 @@ class MainToolbar extends Component {
         <div className="flex">
           <FuseAnimate delay={300}>
             <Button className="h-64" onClick={this.userMenuClick}>
-              {user.data.avatarUrl ? (
+              {user.data.avatarURL ? (
                 <Avatar
                   className=""
                   alt="user photo"
-                  src={user.data.avatarUrl}
+                  src={user.data.avatarURL}
                 />
               ) : (
                 <Avatar className="">{user.data.displayName[0]}</Avatar>

@@ -213,7 +213,7 @@ function mapStateToProps({ polls, users, auth }) {
   const author = {
     avatarURL: "http://i.pravatar.cc/50?img=51",
     name: "test name"
-    // avatarUrl: users.id[polls.questions.author]
+    // avatarURL: users.id[polls.questions.author]
     //   ? users.id[polls.questions.author].data.avatarURL
     //   : null,
     // name: users.id[polls.questions.author]

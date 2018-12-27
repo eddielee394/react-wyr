@@ -74,7 +74,7 @@ const Question = props => {
       &lt;h1>Would you rather?&lt;/h1>
       &lt;p>id: {question.id}&lt;/p>
       &lt;p>author: {author.name}&lt;/p>
-      &lt;img src={author.avatarUrl} />
+      &lt;img src={author.avatarURL} />
       &lt;p>timestamp: {question.timestamp}&lt;/p>
       &lt;p>optionOne: {question.optionOne.text}&lt;/p>
       &lt;button onClick={handleAddVote}>Vote&lt;/button>
@@ -92,7 +92,7 @@ const Question = props => {
  * @param users
  * @param questions
  * @param id
- * @return {{question: *, author: {avatarUrl: *, name: null}}}
+ * @return {{question: *, author: {avatarURL: *, name: null}}}
  */
 function mapStateToProps({ users, questions }, { id }) {
   //get the current question from the questions store state by id
@@ -100,7 +100,7 @@ function mapStateToProps({ users, questions }, { id }) {
 
   //get the author &amp; properties
   const author = {
-    avatarUrl: users[question.author] ? users[question.author].avatarURL : null,
+    avatarURL: users[question.author] ? users[question.author].avatarURL : null,
     name: users[question.author] ? users[question.author].name : null
   };
 

@@ -15,7 +15,7 @@ const jwtConfig = {
  */
 let users = [
   {
-    uuid: "XgbuVEXBU5gtSKdbQRP1Zbbby1i1",
+    id: "da_anchorman",
     from: "fake-db",
     password: "password",
     role: "user",
@@ -65,7 +65,7 @@ let users = [
     }
   },
   {
-    uuid: "XgbuVEXBU6gtSKdbTYR1Zbbby1i3",
+    id: "burt_b",
     from: "fake-db",
     password: "password",
     role: "user",
@@ -111,7 +111,7 @@ let users = [
     }
   },
   {
-    uuid: "XgbuVEXBU1gtSKdbTYR1Zbbby1i3",
+    id: "im_not_a_horse",
     from: "fake-db",
     password: "password",
     role: "user",
@@ -163,8 +163,8 @@ let users = [
  * Questions Data
  * @type {{"8xf0y6ziyjabvozdd253nd": {id: string, author: string, timestamp: number, 1: {votes: string[], text: string}, 2: {votes: Array, text: string}}, "6ni6ok3ym7mf1p33lnez": {id: string, author: string, timestamp: number, 1: {votes: Array, text: string}, 2: {votes: string[], text: string}}, am8ehyc8byjqgar0jgpub9: {id: string, author: string, timestamp: number, 1: {votes: Array, text: string}, 2: {votes: string[], text: string}}, loxhs1bqm25b708cmbf3g: {id: string, author: string, timestamp: number, 1: {votes: Array, text: string}, 2: {votes: string[], text: string}}, vthrdm985a262al8qx3do: {id: string, author: string, timestamp: number, 1: {votes: string[], text: string}, 2: {votes: string[], text: string}}, xj352vofupe1dqz9emx13r: {id: string, author: string, timestamp: number, 1: {votes: string[], text: string}, 2: {votes: string[], text: string}}}}
  */
-let questions = {
-  "8xf0y6ziyjabvozdd253nd": {
+let questions = [
+  {
     id: "8xf0y6ziyjabvozdd253nd",
     author: "im_not_a_horse",
     timestamp: 1467166872634,
@@ -181,7 +181,7 @@ let questions = {
     },
     categoryId: 1
   },
-  "6ni6ok3ym7mf1p33lnez": {
+  {
     id: "6ni6ok3ym7mf1p33lnez",
     author: "da_anchorman",
     timestamp: 1468479767190,
@@ -198,7 +198,7 @@ let questions = {
     },
     categoryId: 3
   },
-  am8ehyc8byjqgar0jgpub9: {
+  {
     id: "am8ehyc8byjqgar0jgpub9",
     author: "im_not_a_horse",
     timestamp: 1488579767190,
@@ -215,7 +215,7 @@ let questions = {
     },
     categoryId: 2
   },
-  loxhs1bqm25b708cmbf3g: {
+  {
     id: "loxhs1bqm25b708cmbf3g",
     author: "burt_b",
     timestamp: 1482579767190,
@@ -232,7 +232,7 @@ let questions = {
     },
     categoryId: 1
   },
-  vthrdm985a262al8qx3do: {
+  {
     id: "vthrdm985a262al8qx3do",
     author: "burt_b",
     timestamp: 1489579767190,
@@ -249,7 +249,7 @@ let questions = {
     },
     categoryId: 4
   },
-  xj352vofupe1dqz9emx13r: {
+  {
     id: "xj352vofupe1dqz9emx13r",
     author: "da_anchorman",
     timestamp: 1493579767190,
@@ -266,7 +266,7 @@ let questions = {
     },
     categoryId: 5
   },
-  xj352vofupe1dqz3emx15z: {
+  {
     id: "xj352vofupe1dqz3emx15z",
     author: "da_anchorman",
     timestamp: 1493579767190,
@@ -283,7 +283,7 @@ let questions = {
     },
     categoryId: 1
   }
-};
+];
 
 let categories = [
   {
@@ -438,27 +438,21 @@ export function _saveQuestionAnswer({ authUser, questionId, answer }) {
  * Questions mock requests
  */
 mock.onGet("/api/questions").reply(request => {
-  // const data = JSON.parse(request.data);
   questions = Object.values(questions);
-  // console.log("/api/questions request: ", data);
 
   let response = questions;
 
   if (request.params) {
     const { categoryId, questionId } = request.params;
-    console.log("Request params: ", request.params);
 
     const category = _.find(categories, { value: categoryId });
-    console.log("Request categoryId: ", request.params.categoryId);
     const _categoryId = category.id;
 
     questions = questions.filter(
       question => question.categoryId === _categoryId
     );
 
-    // let question = questions.filter(_question => _question.id === questionId);
     let question = _.find(questions, { id: questionId });
-    console.log(question);
 
     response = {
       questions: [...questions],
@@ -468,15 +462,9 @@ mock.onGet("/api/questions").reply(request => {
 
     return [200, response];
   }
-  console.log(questions);
+
   return [200, questions];
 });
-
-// mock.onGet("/api/questions").reply(request => {
-//   questions = Object.values(questions);
-//   console.log(request);
-//   return [200, questions];
-// });
 
 mock.onGet("/api/question").reply(request => {
   console.log(request);
@@ -515,12 +503,8 @@ mock.onGet("/api/questions/categories").reply(() => {
  * Users mock requests
  */
 mock.onGet("/api/users").reply(config => {
-  const data = JSON.parse(config.data);
-  const { users } = data;
-  const response = {
-    users
-  };
-
+  users = Object.values(users);
+  const response = users;
   if (users) {
     return [200, response];
   }
@@ -543,7 +527,7 @@ mock.onGet("/api/auth").reply(config => {
   if (!error.email && !error.password && !error.displayName) {
     delete user.password;
 
-    const access_token = jwt.sign({ id: user.uuid }, jwtConfig.secret, {
+    const access_token = jwt.sign({ id: user.id }, jwtConfig.secret, {
       expiresIn: jwtConfig.expiresIn
     });
 
@@ -565,10 +549,10 @@ mock.onGet("/api/auth/access-token").reply(config => {
   try {
     const { id } = jwt.verify(access_token, jwtConfig.secret);
 
-    const user = _.cloneDeep(users.find(_user => _user.uuid === id));
+    const user = _.cloneDeep(users.find(_user => _user.id === id));
     delete user.password;
 
-    const updatedAccessToken = jwt.sign({ id: user.uuid }, jwtConfig.secret, {
+    const updatedAccessToken = jwt.sign({ id: user.id }, jwtConfig.secret, {
       expiresIn: jwtConfig.expiresIn
     });
 
@@ -595,14 +579,14 @@ mock.onPost("/api/auth/register").reply(request => {
   };
   if (!error.displayName && !error.password && !error.email) {
     const newUser = {
-      uuid: Helpers.generateUID(),
+      id: Helpers.generateUID(),
       from: "localStorage",
       password,
       role: "user",
       token: null,
       data: {
         displayName,
-        avatarUrl: "http://pravatar.cc/128",
+        avatarURL: "http://pravatar.cc/128",
         email,
         settings: {},
         shortcuts: []
@@ -614,7 +598,7 @@ mock.onPost("/api/auth/register").reply(request => {
     const user = _.cloneDeep(newUser);
     delete user.password;
 
-    const access_token = jwt.sign({ id: user.uuid }, jwtConfig.secret, {
+    const access_token = jwt.sign({ id: user.id }, jwtConfig.secret, {
       expiresIn: jwtConfig.expiresIn
     });
 
@@ -635,7 +619,7 @@ mock.onPost("/api/auth/user/update").reply(config => {
   const { user } = data;
 
   users = users.map(_user => {
-    if (user.uuid === user.id) {
+    if (_user.id === user.id) {
       return _.merge(_user, user);
     }
     return _user;

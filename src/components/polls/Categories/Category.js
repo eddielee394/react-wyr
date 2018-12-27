@@ -373,7 +373,7 @@ function mapStateToProps({ polls, users, auth }) {
   // const _category = _.find(categories, { value: categoryValue });
   //get the author & properties
   // const author = {
-  //   avatarUrl: users[question.author] ? users[question.author].avatarURL : null,
+  //   avatarURL: users[question.author] ? users[question.author].avatarURL : null,
   //   name: users[question.author] ? users[question.author].name : null
   // };
   return {

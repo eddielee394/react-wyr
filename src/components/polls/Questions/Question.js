@@ -21,7 +21,7 @@ class Question extends Component {
     return (
       <div>
         <p>id: {question.id}</p>
-        {/*<p>author: {author.name}</p>*/} {/*<img src={author.avatarUrl} />*/}
+        {/*<p>author: {author.name}</p>*/} {/*<img src={author.avatarURL} />*/}
         <p>timestamp: {question.timestamp}</p>
         <p>optionOne: {question.answers[1].text}</p>
         <button onClick={handleAddVote}>Vote</button>
