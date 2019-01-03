@@ -1,3 +1,4 @@
+import CategoryItem from "components/polls/Categories/CategoryItem";
 import React, { Component } from "react";
 import {
   withStyles,
@@ -55,8 +56,8 @@ const styles = theme => ({
 
 class CategoryList extends Component {
   state = {
-    data: this.props.questions,
-    categories: this.props.categories
+    // questions: {},
+    // categories: this.props.categories
   };
 
   componentDidMount() {
@@ -70,42 +71,34 @@ class CategoryList extends Component {
       !_.isEqual(this.props.searchText, prevProps.searchText) ||
       !_.isEqual(this.props.categoryFilter, prevProps.categoryFilter)
     ) {
-      const data = this.getFilteredArray(
+      const questions = this.getFilteredArray(
         this.props.questions,
         this.props.searchText,
         this.props.categoryFilter
       );
-      this.setState({ data });
+      this.setState({ questions });
     }
   }
 
-  getFilteredArray = (data, searchText, categoryFilter) => {
+  getFilteredArray = (questions, searchText, categoryFilter) => {
     if (searchText.length === 0 && categoryFilter === 0) {
-      return data;
+      return questions;
     }
 
-    return _.filter(data, item => {
-      if (categoryFilter !== 0 && item.categoryId !== categoryFilter) {
+    return _.filter(questions, question => {
+      if (categoryFilter !== 0 && question.question !== categoryFilter) {
         return false;
       }
       let searchTextResults =
-        item.answers[1].text.toLowerCase().includes(searchText.toLowerCase()) ||
-        item.answers[2].text.toLowerCase().includes(searchText.toLowerCase());
+        question.answers.answerOne.text
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+        question.answers.answerTwo.text
+          .toLowerCase()
+          .includes(searchText.toLowerCase());
 
       return searchTextResults;
     });
-  };
-
-  buttonStatus = question => {
-    const { authUser } = this.props;
-    switch (question.activeStep) {
-      case question.totalSteps:
-        return "COMPLETED";
-      case 0:
-        return "START";
-      default:
-        return "CONTINUE";
-    }
   };
 
   render() {
@@ -116,11 +109,14 @@ class CategoryList extends Component {
       categories,
       categoryFilter,
       setCategoryFilter,
+      questionIds,
+      questions,
       theme
     } = this.props;
 
-    const { data } = this.state;
+    // const { questions } = this.state;
 
+    // return <h1>Test</h1>;
     return (
       <div className={classNames(classes.root)}>
         <div
@@ -207,81 +203,25 @@ class CategoryList extends Component {
               </Select>
             </FormControl>
           </div>
-          <FuseAnimateGroup
-            enter={{
-              animation: "transition.slideUpBigIn"
-            }}
-            className="flex flex-wrap py-24"
-          >
-            {data.map(question => {
-              const category = categories.find(
-                _cat => _cat.id === question.categoryId
-              );
-              return (
-                <div
-                  className="w-full pb-24 sm:w-1/2 lg:w-1/3 sm:p-16"
-                  key={question.id}
-                >
-                  <Card elevation={1} className="flex flex-col min-h-256">
-                    <div
-                      className="flex items-center justify-between px-24 h-64"
-                      style={{
-                        background: category.color,
-                        color: theme.palette.getContrastText(category.color)
-                      }}
-                    >
-                      <Link to={`/questions/${category.value}`}>
-                        <Typography
-                          className="font-medium truncate"
-                          color="inherit"
-                        >
-                          {category.label}
-                        </Typography>
-                      </Link>
-                      <div className="flex items-center justify-center opacity-75">
-                        <Icon className="text-20 mr-8" color="inherit">
-                          access_time
-                        </Icon>
-                        <div className="text-16 whitespace-no-wrap">
-                          <Typography variant="caption">
-                            {Helpers.formatDate(question.timestamp)}
-                          </Typography>
-                        </div>
-                      </div>
-                    </div>
-                    <CardContent className="flex flex-col flex-1 items-center justify-center">
-                      <Typography className="text-center text-16 font-400">
-                        {question.title}
-                      </Typography>
-                      <Typography
-                        className="text-center text-13 font-600 mt-4"
-                        color="textSecondary"
-                      >
-                        {question.updated}
-                      </Typography>
-                    </CardContent>
-                    <Divider />
-                    <CardActions className="justify-center">
-                      <Button
-                        to={`/questions/${category.value}/${question.id}`}
-                        component={Link}
-                        className="justify-start px-32"
-                        color="secondary"
-                      >
-                        {this.buttonStatus(question)}
-                      </Button>
-                    </CardActions>
-                    <LinearProgress
-                      className="w-full"
-                      variant="determinate"
-                      value={(question.activeStep * 100) / question.totalSteps}
-                      color="secondary"
-                    />
-                  </Card>
-                </div>
-              );
-            })}
-          </FuseAnimateGroup>
+          {/*<FuseAnimateGroup*/}
+          {/*enter={{*/}
+          {/*animation: "transition.slideUpBigIn"*/}
+          {/*}}*/}
+          {/*className="flex flex-wrap py-24"*/}
+          {/*>*/}
+          {/*{questionIds.map(question => {*/}
+          {/*const category = categories.find(*/}
+          {/*_cat => _cat.id === question.category.id*/}
+          {/*);*/}
+          {/*return (*/}
+          {/*<CategoryItem*/}
+          {/*category={category}*/}
+          {/*question={question}*/}
+          {/*key={question.id}*/}
+          {/*/>*/}
+          {/*);*/}
+          {/*})}*/}
+          {/*</FuseAnimateGroup>*/}
         </div>
       </div>
     );
@@ -301,20 +241,27 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps({ polls, auth }) {
+  // let categories = Object.keys(polls.questions.categories);
+  // const questions = Object.keys(polls.questions.data.entities.questions);
+  const questions = polls.data;
+  let questionIds = polls.data.result;
+
+  console.log("Normalized questions: ", polls.data.entities);
   return {
-    questions: polls.questions.data,
-    searchText: polls.questions.searchText,
-    categories: polls.questions.categories,
-    categoryFilter: polls.questions.categoryFilter,
+    questions,
+    questionIds: questionIds,
+    searchText: polls.searchText,
+    categories: polls.categories,
+    categoryFilter: polls.categoryFilter,
     authUser: auth.user
   };
 }
 
-export default withReducer("polls", reducer)(
-  withStyles(styles, { withTheme: true })(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(CategoryList)
-  )
+export default /*withReducer("polls", reducer)*/ withStyles(styles, {
+  withTheme: true
+})(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(CategoryList)
 );

@@ -1,13 +1,12 @@
 import history from "utils/history";
 import _ from "@lodash";
-import {store} from "store";
+import { store } from "store";
 import * as Actions from "store/actions";
 import jwtService from "utils/jwtService";
 
 export const SET_USER_DATA = "[USER] SET DATA";
 export const REMOVE_USER_DATA = "[USER] REMOVE DATA";
 export const USER_LOGGED_OUT = "[USER] LOGGED OUT";
-
 
 /**
  * Set User Data

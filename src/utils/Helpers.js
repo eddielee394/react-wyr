@@ -7,11 +7,12 @@ class Helpers {
    * @function
    * @example h:i A | mm/dd/yyyy
    * @param timestamp
+   * @param relative
    * @return {string}
    */
   static formatDate = (timestamp, relative = true) => {
     const d = new Date(timestamp);
-    console.log(d);
+
     if (relative) {
       return moment.utc(d).fromNow();
     }
@@ -77,11 +78,8 @@ class Helpers {
    * @return {string}
    */
   static calcPercent = (partialValue, totalValue) => {
-    //do the calculation
     let value = (100 * partialValue) / totalValue;
-    //ditch the decimals
     value = value.toFixed(0);
-    //don't return more than 100%
     value = Math.min(value, 100);
 
     return `${value}%`;

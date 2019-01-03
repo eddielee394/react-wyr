@@ -52,119 +52,98 @@ class MainToolbar extends Component {
     const { userMenu } = this.state;
 
     return (
-      <div className={classNames(classes.root, "flex flex-row")}>
-        <div className="flex flex-1" />
-
-        <div className="flex">
-          <FuseAnimate delay={300}>
-            <Button className="h-64" onClick={this.userMenuClick}>
-              {user.data.avatarURL ? (
-                <Avatar
-                  className=""
-                  alt="user photo"
-                  src={user.data.avatarURL}
-                />
-              ) : (
-                <Avatar className="">{user.data.displayName[0]}</Avatar>
-              )}
-
-              <div className="hidden md:flex flex-col ml-12 items-start">
-                <Typography
-                  component="span"
-                  className="normal-case font-600 flex"
-                >
-                  {user.data.displayName}
-                </Typography>
-                <Typography
-                  className="text-11 capitalize"
-                  color="textSecondary"
-                >
-                  {user.role}
-                </Typography>
-              </div>
-
-              <Icon className="text-16 ml-12 hidden sm:flex" variant="action">
-                keyboard_arrow_down
-              </Icon>
-            </Button>
-          </FuseAnimate>
-
-          <Popover
-            open={Boolean(userMenu)}
-            anchorEl={userMenu}
-            onClose={this.userMenuClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "center"
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "center"
-            }}
-            classes={{
-              paper: "py-8"
-            }}
-          >
-            {user.role === "guest" ? (
-              <React.Fragment>
-                <MenuItem component={Link} to="/login">
-                  <ListItemIcon>
-                    <Icon>lock</Icon>
-                  </ListItemIcon>
-                  <ListItemText className="pl-0" primary="Login" />
-                </MenuItem>
-                <MenuItem component={Link} to="/register">
-                  <ListItemIcon>
-                    <Icon>person_add</Icon>
-                  </ListItemIcon>
-                  <ListItemText className="pl-0" primary="Register" />
-                </MenuItem>
-              </React.Fragment>
+      <div className={classNames(classes.root, "flex justify-end")}>
+        <FuseAnimate delay={300}>
+          <Button className="h-64" onClick={this.userMenuClick}>
+            {user.data.avatarURL ? (
+              <Avatar className="" alt="user photo" src={user.data.avatarURL} />
             ) : (
-              <React.Fragment>
-                <MenuItem
-                  component={Link}
-                  to="/pages/profile"
-                  onClick={this.userMenuClose}
-                >
-                  <ListItemIcon>
-                    <Icon>account_circle</Icon>
-                  </ListItemIcon>
-                  <ListItemText className="pl-0" primary="My Profile" />
-                </MenuItem>
-                <MenuItem
-                  component={Link}
-                  to="/apps/mail"
-                  onClick={this.userMenuClose}
-                >
-                  <ListItemIcon>
-                    <Icon>mail</Icon>
-                  </ListItemIcon>
-                  <ListItemText className="pl-0" primary="Inbox" />
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    logout();
-                    this.userMenuClose();
-                  }}
-                >
-                  <ListItemIcon>
-                    <Icon>exit_to_app</Icon>
-                  </ListItemIcon>
-                  <ListItemText className="pl-0" primary="Logout" />
-                </MenuItem>
-              </React.Fragment>
+              <Avatar className="">{user.data.displayName[0]}</Avatar>
             )}
-          </Popover>
 
-          <div className={classes.separator} />
-          <IconButton
-            className="w-64 h-64"
-            onClick={() => toggleQuickPanel(true)}
-          >
-            <Icon>format_list_bulleted</Icon>
-          </IconButton>
-        </div>
+            <div className="hidden md:flex flex-col ml-12 items-start">
+              <Typography
+                component="span"
+                className="normal-case font-600 flex"
+              >
+                {user.data.displayName}
+              </Typography>
+              <Typography className="text-11 capitalize" color="textSecondary">
+                {user.role}
+              </Typography>
+            </div>
+
+            <Icon className="text-16 ml-12 hidden sm:flex" variant="action">
+              keyboard_arrow_down
+            </Icon>
+          </Button>
+        </FuseAnimate>
+
+        <Popover
+          open={Boolean(userMenu)}
+          anchorEl={userMenu}
+          onClose={this.userMenuClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center"
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "center"
+          }}
+          classes={{
+            paper: "py-8"
+          }}
+        >
+          {user.role === "guest" ? (
+            <React.Fragment>
+              <MenuItem component={Link} to="/login">
+                <ListItemIcon>
+                  <Icon>lock</Icon>
+                </ListItemIcon>
+                <ListItemText className="pl-0" primary="Login" />
+              </MenuItem>
+              <MenuItem component={Link} to="/register">
+                <ListItemIcon>
+                  <Icon>person_add</Icon>
+                </ListItemIcon>
+                <ListItemText className="pl-0" primary="Register" />
+              </MenuItem>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <MenuItem
+                component={Link}
+                to="/dashboard"
+                onClick={this.userMenuClose}
+              >
+                <ListItemIcon>
+                  <Icon>account_circle</Icon>
+                </ListItemIcon>
+                <ListItemText className="pl-0" primary="My Profile" />
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  logout();
+                  this.userMenuClose();
+                }}
+              >
+                <ListItemIcon>
+                  <Icon>exit_to_app</Icon>
+                </ListItemIcon>
+                <ListItemText className="pl-0" primary="Logout" />
+              </MenuItem>
+            </React.Fragment>
+          )}
+        </Popover>
+
+        <div className={classes.separator} />
+        <IconButton
+          className="w-64 h-64"
+          onClick={() => toggleQuickPanel(true)}
+        >
+          <Icon>format_list_bulleted</Icon>
+        </IconButton>
       </div>
     );
   }

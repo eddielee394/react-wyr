@@ -1,18 +1,16 @@
 import React from "react";
-import {injectReducer} from 'store';
+import { injectReducer } from "store";
 
 const withReducer = (key, reducer) => WrappedComponent =>
-    class extends React.PureComponent {
-        constructor(props)
-        {
-            super(props);
-            injectReducer(key, reducer);
-        };
+  class extends React.PureComponent {
+    constructor(props) {
+      super(props);
+      injectReducer(key, reducer);
+    }
 
-        render()
-        {
-            return <WrappedComponent {...this.props} />;
-        };
-    };
+    render() {
+      return <WrappedComponent {...this.props} />;
+    }
+  };
 
 export default withReducer;

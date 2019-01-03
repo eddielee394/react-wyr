@@ -8,7 +8,12 @@ export {
 export {
   default as MainToolbar
 } from "components/_layout/partials/MainToolbar";
+
+export {
+  default as QuickPanel
+} from "components/_layout/QuickPanel/QuickPanel";
 export {
   default as SettingsPanel
 } from "components/_layout/partials/SettingsPanel";
-export { default as QuickPanel } from "./QuickPanel/QuickPanel";
+
+export { default as DevTools } from "components/_layout/partials/DevTools";

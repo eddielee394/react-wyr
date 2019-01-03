@@ -29,10 +29,12 @@ class Question extends Component {
     const {
       question,
       author,
+      updateQuestion,
       handleAddVote,
       handleVoteCount,
       handleVotePercent,
-      classes
+      classes,
+      auth
     } = this.props;
 
     if (!question) {
@@ -68,29 +70,29 @@ class Question extends Component {
           <Typography variant="h6">Would You Rather?</Typography>
         </div>
         <div className="flex flex-col w-full sm:w-1/2">
-          <p>optionOne: {question.answers[1].text}</p>
-          <p>Votes Count: {handleVoteCount(question.answers[1])}</p>
-          <p>Votes Percent: {handleVotePercent(question.answers[1])}</p>
+          <p>optionOne: {question.answers.answerOne.text}</p>
+          <p>Votes Count: {handleVoteCount(question.answers.answerOne)}</p>
+          <p>Votes Percent: {handleVotePercent(question.answers.answerOne)}</p>
           <Button
             variant="contained"
             color="default"
             className={classes.button}
-            onClick={handleAddVote}
+            onClick={() => updateQuestion(auth.user, question.id, "answerOne")}
           >
             Vote
             <CloudUploadIcon className={classes.rightIcon} />
           </Button>
         </div>
         <div className="flex flex-col w-full sm:w-1/2">
-          <p>optionTwo: {question.answers[2].text}</p>
+          <p>optionTwo: {question.answers.answerTwo.text}</p>
 
-          <p>Votes Count: {handleVoteCount(question.answers[2])}</p>
-          <p>Votes Percent: {handleVotePercent(question.answers[2])}</p>
+          <p>Votes Count: {handleVoteCount(question.answers.answerTwo)}</p>
+          <p>Votes Percent: {handleVotePercent(question.answers.answerTwo)}</p>
           <Button
             variant="contained"
             color="default"
             className={classes.button}
-            onClick={handleAddVote}
+            onClick={() => updateQuestion(auth.user, question.id, "answerTwo")}
           >
             Vote
             <CloudUploadIcon className={classes.rightIcon} />
@@ -101,14 +103,29 @@ class Question extends Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      updateQuestion: Actions.updateQuestion
+    },
+    dispatch
+  );
+}
+
 function mapStateToProps({ polls, auth }, { question }) {
-  const author = _.find(auth.users, { id: question.userId });
+  const author = _.find(auth.users, { id: question.author.id });
   return {
     question,
-    author
+    author,
+    auth
   };
 }
 
 export default withStyles(styles)(
-  withRouter(connect(mapStateToProps)(Question))
+  withRouter(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(Question)
+  )
 );

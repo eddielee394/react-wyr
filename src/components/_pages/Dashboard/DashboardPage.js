@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 // import withReducer from "store/withReducer";
 // import reducer from "auth/store/reducers";
 // import axios from "axios";
+import Profile from "components/profile/Profile";
 
 class DashboardPage extends Component {
   /**
@@ -19,31 +20,29 @@ class DashboardPage extends Component {
   render() {
     return (
       <div className="dashboard-wrapper">
-        <h1>This is the Dashboard!</h1>
-        {/*<QuestionListContainer />*/}
+        <Profile />
       </div>
     );
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      // getAllUsers: Actions.handleInitialData
-    },
-    dispatch
-  );
-}
+// function mapDispatchToProps(dispatch) {
+//   return bindActionCreators(
+//     {
+//       // getAllUsers: Actions.handleInitialData
+//     },
+//     dispatch
+//   );
+// }
+//
+// function mapStateToProps(state) {
+//   const { users } = state;
+//
+//   return {
+//     users
+//   };
+// }
 
-function mapStateToProps(state) {
-  const { users } = state;
-
-  return {
-    users
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DashboardPage);
+export default connect()(DashboardPage);
+// mapStateToProps,
+// mapDispatchToProps

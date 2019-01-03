@@ -1,4 +1,6 @@
 import jwt from "jsonwebtoken";
+import { normalize } from "normalizr";
+import { Schemas } from "utils/schemas";
 import mock from "./mock";
 import _ from "@lodash";
 import { Helpers } from "utils";
@@ -13,8 +15,8 @@ const jwtConfig = {
  * Users Data
  * @type {{im_not_a_horse: {id: string, name: string, avatarURL: string, answers: {"8xf0y6ziyjabvozdd253nd": string, "6ni6ok3ym7mf1p33lnez": string, am8ehyc8byjqgar0jgpub9: string, loxhs1bqm25b708cmbf3g: string}, questions: string[]}, burt_b: {id: string, name: string, avatarURL: string, answers: {vthrdm985a262al8qx3do: string, xj352vofupe1dqz9emx13r: string}, questions: string[]}, johndoe: {id: string, name: string, avatarURL: string, answers: {xj352vofupe1dqz9emx13r: string, vthrdm985a262al8qx3do: string, "6ni6ok3ym7mf1p33lnez": string}, questions: string[]}}}
  */
-let users = [
-  {
+let users = {
+  da_anchorman: {
     id: "da_anchorman",
     from: "fake-db",
     password: "password",
@@ -22,12 +24,12 @@ let users = [
     data: {
       displayName: "da_anchorman",
       name: "Ron Burgundy",
-      avatarURL: "http://i.pravatar.cc/50?img=51",
+      avatarURL: "http://i.pravatar.cc/150?img=51",
       email: "da_anchorman@test.com",
       answers: {
-        xj352vofupe1dqz9emx13r: "1",
-        vthrdm985a262al8qx3do: "2",
-        "6ni6ok3ym7mf1p33lnez": "1"
+        xj352vofupe1dqz9emx13r: "answerOne",
+        vthrdm985a262al8qx3do: "answerTwo",
+        "6ni6ok3ym7mf1p33lnez": "answerOne"
       },
       questions: ["6ni6ok3ym7mf1p33lnez", "xj352vofupe1dqz9emx13r"],
       settings: {
@@ -64,7 +66,7 @@ let users = [
       shortcuts: ["calendar", "mail", "contacts"]
     }
   },
-  {
+  burt_b: {
     id: "burt_b",
     from: "fake-db",
     password: "password",
@@ -72,12 +74,12 @@ let users = [
     data: {
       displayName: "burt_b",
       name: "Burt Beynolds",
-      avatarURL: "http://i.pravatar.cc/50?img=53",
+      avatarURL: "http://i.pravatar.cc/150?img=53",
       email: "burt_b@test.com",
       answers: {
-        vthrdm985a262al8qx3do: 1,
-        xj352vofupe1dqz9emx13r: 2,
-        xj352vofupe1dqz3emx15z: 1
+        vthrdm985a262al8qx3do: "answerOne",
+        xj352vofupe1dqz9emx13r: "answerTwo",
+        xj352vofupe1dqz3emx15z: "answerOne"
       },
       questions: ["loxhs1bqm25b708cmbf3g", "vthrdm985a262al8qx3do"],
       settings: {
@@ -110,7 +112,7 @@ let users = [
       shortcuts: ["calendar", "mail", "contacts", "todo"]
     }
   },
-  {
+  im_not_a_horse: {
     id: "im_not_a_horse",
     from: "fake-db",
     password: "password",
@@ -118,13 +120,13 @@ let users = [
     data: {
       displayName: "im_not_a_horse",
       name: "Sarah Jessica Marker",
-      avatarURL: "http://i.pravatar.cc/50?img=47",
+      avatarURL: "http://i.pravatar.cc/150?img=47",
       email: "im_not_a_horse@test.com",
       answers: {
-        "8xf0y6ziyjabvozdd253nd": 1,
-        "6ni6ok3ym7mf1p33lnez": 1,
-        am8ehyc8byjqgar0jgpub9: 2,
-        loxhs1bqm25b708cmbf3g: 2
+        "8xf0y6ziyjabvozdd253nd": "answerOne",
+        "6ni6ok3ym7mf1p33lnez": "answerOne",
+        am8ehyc8byjqgar0jgpub9: "answerTwo",
+        loxhs1bqm25b708cmbf3g: "answerTwo"
       },
       questions: ["8xf0y6ziyjabvozdd253nd", "am8ehyc8byjqgar0jgpub9"],
       settings: {
@@ -157,7 +159,7 @@ let users = [
       shortcuts: ["calendar", "mail", "contacts", "todo"]
     }
   }
-];
+};
 
 /**
  * Questions Data
@@ -166,122 +168,104 @@ let users = [
 let questions = [
   {
     id: "8xf0y6ziyjabvozdd253nd",
-    userId: "im_not_a_horse",
+    author: { id: "im_not_a_horse" },
     timestamp: 1545099175000,
     title: "Memory",
-    answers: {
-      1: {
-        votes: ["im_not_a_horse"],
+    answers: [
+      {
+        id: "answerOne",
+        votes: [{ id: "im_not_a_horse" }],
         text: "have horrible short term memory"
       },
-      2: {
+      {
+        id: "answerTwo",
         votes: [],
         text: "have horrible long term memory"
       }
-    },
-    categoryId: 1
+    ],
+    category: { id: 1 }
   },
   {
     id: "6ni6ok3ym7mf1p33lnez",
-    userId: "da_anchorman",
+    author: { id: "da_anchorman" },
     timestamp: 1543111975000,
     title: "Evil or good?",
-    answers: {
-      1: {
-        votes: [],
-        text: "become a superhero"
-      },
-      2: {
-        votes: ["da_anchorman", "im_not_a_horse"],
+    answers: [
+      { id: "answerOne", votes: [], text: "become a superhero" },
+      {
+        id: "answerTwo",
+        votes: [{ id: "da_anchorman" }, { id: "im_not_a_horse" }],
         text: "become a supervillian"
       }
-    },
-    categoryId: 3
+    ],
+    category: { id: 3 }
   },
   {
     id: "am8ehyc8byjqgar0jgpub9",
-    userId: "im_not_a_horse",
+    author: { id: "im_not_a_horse" },
     timestamp: 1545876775000,
     title: "Superpowers",
-    answers: {
-      1: {
-        votes: [],
-        text: "be telekinetic"
-      },
-      2: {
-        votes: ["im_not_a_horse"],
+    answers: [
+      { id: "answerOne", votes: [], text: "be telekinetic" },
+      {
+        id: "answerTwo",
+        votes: [{ id: "im_not_a_horse" }],
         text: "be telepathic"
       }
-    },
-    categoryId: 2
+    ],
+    category: { id: 2 }
   },
   {
     id: "loxhs1bqm25b708cmbf3g",
-    userId: "burt_b",
+    author: { id: "burt_b" },
     timestamp: 1543112975000,
     title: "Front-end or Back-end?",
-    answers: {
-      1: {
-        votes: [],
-        text: "be a front-end developer"
-      },
-      2: {
+    answers: [
+      { id: "answerOne", votes: [], text: "be a front-end developer" },
+      {
+        id: "answerTwo",
         votes: ["im_not_a_horse"],
         text: "be a back-end developer"
       }
-    },
-    categoryId: 1
+    ],
+    category: { id: 1 }
   },
   {
     id: "vthrdm985a262al8qx3do",
-    userId: "burt_b",
+    author: { id: "burt_b" },
     timestamp: 1489579767190,
     title: "Money",
-    answers: {
-      1: {
-        votes: ["burt_b"],
-        text: "find $50 yourself"
-      },
-      2: {
+    answers: [
+      { id: "answerOne", votes: ["burt_b"], text: "find $50 yourself" },
+      {
+        id: "answerTwo",
         votes: ["da_anchorman"],
         text: "have your best friend find $500"
       }
-    },
-    categoryId: 4
+    ],
+    category: { id: 4 }
   },
   {
     id: "xj352vofupe1dqz9emx13r",
-    userId: "da_anchorman",
+    author: { id: "da_anchorman" },
     timestamp: 1544667175000,
     title: "JS or Swift?",
-    answers: {
-      1: {
-        votes: ["da_anchorman"],
-        text: "write JavaScript"
-      },
-      2: {
-        votes: ["burt_b"],
-        text: "write Swift"
-      }
-    },
-    categoryId: 5
+    answers: [
+      { id: "answerOne", votes: ["da_anchorman"], text: "write JavaScript" },
+      { id: "answerTwo", votes: ["burt_b"], text: "write Swift" }
+    ],
+    category: { id: 5 }
   },
   {
     id: "xj352vofupe1dqz3emx15z",
-    userId: "da_anchorman",
+    author: { id: "da_anchorman" },
     timestamp: 1493579767190,
     title: "JS or Swift?",
-    answers: {
-      1: {
-        votes: ["da_anchorman"],
-        text: "write JavaScript"
-      },
-      2: {
-        votes: ["burt_b"],
-        text: "write Swift"
-      }
-    },
-    categoryId: 1
+    answers: [
+      { id: "answerOne", votes: ["da_anchorman"], text: "write JavaScript" },
+      { id: "answerTwo", votes: ["burt_b"], text: "write Swift" }
+    ],
+    category: { id: 1 }
   }
 ];
 
@@ -438,39 +422,46 @@ export function _saveQuestionAnswer({ authUser, questionId, answer }) {
  * Questions mock requests
  */
 mock.onGet("/api/questions").reply(request => {
-  questions = Object.values(questions);
-
+  // questions = Object.values(questions);
+  console.log(
+    "Axios.questions normalized questions: ",
+    normalize(questions, Schemas.questions),
+    "Axios.questions normalized questions array: ",
+    normalize(questions, Schemas.questions_array)
+  );
   let response = questions;
 
   if (request.params) {
-    const { categoryId, questionId } = request.params;
+    const { categoryId } = request.params;
 
     const category = _.find(categories, { value: categoryId });
     const _categoryId = category.id;
 
     questions = questions.filter(
-      question => question.categoryId === _categoryId
+      question => question.category.id === _categoryId
     );
 
-    let question = _.find(questions, { id: questionId });
-
     response = {
-      questions: [...questions],
-      category: category,
-      question: question
+      questions,
+      category: category
     };
 
     return [200, response];
   }
+  console.log("Axios.questions response", response);
 
   return [200, questions];
 });
 
 mock.onGet("/api/question").reply(request => {
-  console.log(request);
+  console.log("Axios.Question request: ", request, "Questions: ", questions);
 
   const { questionId } = request.params;
+  console.log("Axios.Question questionId: ", questionId);
+
   const response = _.find(questions, { id: questionId });
+  console.log("Axios.Question response: ", response, "Questions: ", questions);
+
   return [200, response];
 });
 
@@ -495,8 +486,82 @@ mock.onGet("/api/question/save").reply(request => {
   return [200, question];
 });
 
+mock.onPost("/api/question/update").reply(request => {
+  const data = JSON.parse(request.data);
+  questions = Object.values(questions);
+
+  /*sample data
+
+  let _questions = {
+    ...questions,
+    [data.questionId]: {
+      ...questions[data.questionId],
+      [data.answer]: {
+        ...questions[data.questionId][data.answer],
+        votes: questions[data.questionId][data.answer].votes.concat([
+          data.authUser
+        ])
+      }
+    }
+  };
+  console.log("Question update sample merged questions: ", _questions);
+  */
+
+  /*
+        data: [
+        {
+          id: '8xf0y6ziyjabvozdd253nd',
+          userId: 'im_not_a_horse',
+          timestamp: 1545099175000,
+          title: 'Memory',
+          answers: {
+            answerOne: {
+              votes: [
+                'im_not_a_horse'
+              ],
+              text: 'have horrible short term memory'
+            },
+            answerTwo: {
+              votes: [],
+              text: 'have horrible long term memory'
+            }
+          },
+          categoryId: 1
+        },
+        ]
+   */
+
+  console.log("Question update post request: ", request, request.data, data);
+  console.log("Question update post request.data: ", request.data);
+  console.log("Question update post data: ", data);
+
+  questions = questions.map(_question => {
+    console.log("Axios question 0: ", _question, _question.id);
+
+    if (_question.id === data.questionId) {
+      console.log("Axios question 1: ", _question);
+      // ...questions[data.questionId][data.answer]
+      return _.merge(_question.answers[data.answerId], data);
+    }
+    console.log("Axios question 2: ", _question);
+    return _question;
+  });
+
+  return [200, data];
+});
+
 mock.onGet("/api/questions/categories").reply(() => {
   return [200, categories];
+});
+
+mock.onGet("/api/questions/category").reply(request => {
+  const { categoryId } = request.params;
+  // console.log("Axios category request: ", request);
+  // console.log("Axios category id: ", categoryId);
+  const response = _.find(categories, { id: categoryId });
+  // console.log("Axios category response: ", response);
+
+  return [200, response];
 });
 
 /**

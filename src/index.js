@@ -24,7 +24,8 @@ import {
   MainNavbarContent,
   MainNavbarHeader,
   MainToolbar,
-  QuickPanel
+  QuickPanel,
+  SettingsPanel
 } from "components/_layout";
 
 // configureFakeDB();
@@ -58,6 +59,7 @@ ReactDOM.render(
                     <QuickPanel />
                   </React.Fragment>
                 }
+                contentWrapper={<SettingsPanel />}
               />
             </FuseTheme>
           </FuseAuthorization>

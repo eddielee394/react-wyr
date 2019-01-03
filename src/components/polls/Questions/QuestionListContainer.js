@@ -184,6 +184,7 @@ class Category extends Component {
     const { questions, question } = this.props;
 
     //check for the index of the current question
+    // let index = 0;
     let index = questions.findIndex(_question => _question.id === question.id);
 
     //sanity check

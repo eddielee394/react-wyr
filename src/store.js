@@ -5,6 +5,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web and AsyncStorage for react-native
 import createReducer from "./store/reducers";
 import thunk from "redux-thunk";
+import { DevTools } from "components/_layout";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 /*
 Fix for Firefox redux dev tools extension
@@ -22,16 +23,15 @@ const composeEnhancers =
       })
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk, logger));
-//redux-persist
-// const persistConfig = {
-//   key: "root",
-//   storage,
-//   stateReconciler: autoMergeLevel2
-// };
+console.log(window.__REDUX_DEVTOOLS_EXTENSION__ ? "true" : "false");
 
-// const persistedReducer = persistReducer(persistConfig, createReducer());
-// let store = createStore(persistedReducer, enhancer);
+const enhancer = window.__REDUX_DEVTOOLS_EXTENSION__
+  ? composeEnhancers(applyMiddleware(thunk, logger))
+  : composeEnhancers(
+      applyMiddleware(thunk, logger),
+      DevTools.instrument({ serialize: true, trace: true })
+    );
+
 const store = createStore(createReducer(), enhancer);
 // let persistor = persistStore(store);
 

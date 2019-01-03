@@ -121,14 +121,14 @@ class QuestionList extends Component {
   };
 
   handleGetAuthor = question =>
-    _.find(this.props.auth.users, { id: question.userId });
+    _.find(this.props.auth.users, { id: question.author.id });
 
   buttonStatus = questionId =>
     this.userHasAnswered(questionId) ? "COMPLETED" : "START";
 
   render() {
     const { questions, author, category, theme } = this.props;
-
+    console.log(questions);
     return (
       <FuseAnimateGroup
         enter={{

@@ -9,7 +9,7 @@ const settingsConfig = {
         position: "left"
       },
       toolbar: {
-        display: true,
+        display: false,
         style: "fixed",
         position: "below"
       },

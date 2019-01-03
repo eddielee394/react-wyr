@@ -41,7 +41,8 @@ export const navigationConfig = [
   {
     id: "leaderboard-page",
     title: "Leaderboard",
-    type: "group",
-    icon: "apps"
+    type: "item",
+    icon: "whatshot",
+    url: "/leaderboard"
   }
 ];
