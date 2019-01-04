@@ -1,4 +1,3 @@
-import { configureFakeDB } from "fake-db/_DATA";
 import React from "react";
 import ReactDOM from "react-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -13,9 +12,8 @@ import { createGenerateClassName, jssPreset } from "@material-ui/core/styles";
 import { Provider } from "react-redux";
 import { Router } from "react-router-dom";
 import { routes } from "./config/routesConfig";
-// import { PersistGate } from "redux-persist/integration/react";
 import history from "./utils/history";
-import { store, persistor } from "./store";
+import { store } from "./store";
 
 import { Auth } from "./auth";
 import { FuseAuthorization, FuseTheme, FuseLayout } from "@fuse";
@@ -27,8 +25,6 @@ import {
   QuickPanel,
   SettingsPanel
 } from "components/_layout";
-
-// configureFakeDB();
 
 library.add(fas, far, fab);
 

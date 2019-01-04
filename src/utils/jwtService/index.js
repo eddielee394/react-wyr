@@ -1,3 +1,3 @@
-import jwtService from './jwtService.js';
+import jwtService from "./jwtService.js";
 
 export default jwtService;

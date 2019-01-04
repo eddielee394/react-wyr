@@ -15,3 +15,4 @@ export {
 export {
   default as SettingsPanel
 } from "components/_layout/partials/SettingsPanel";
+export { default as Loader } from "components/_layout/Loader/Loader";

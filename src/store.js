@@ -1,8 +1,7 @@
-import logger from "middleware/logger";
 import * as reduxModule from "redux";
-import { applyMiddleware, compose, createStore } from "redux";
+import { compose, createStore } from "redux";
+import { default as applyMiddleware } from "middleware";
 import createReducer from "./store/reducers";
-import thunk from "redux-thunk";
 import { DevTools } from "utils";
 
 /*
@@ -23,14 +22,11 @@ const composeEnhancers =
 
 const devToolsExtActive = !!window.__REDUX_DEVTOOLS_EXTENSION__;
 
-const DevToolsInstrument = devToolsExtActive
+const devToolsInstrument = devToolsExtActive
   ? f => f //if extension is active, return empty object
   : DevTools.instrument({ serialize: true, trace: true });
 
-const enhancer = composeEnhancers(
-  applyMiddleware(thunk, logger),
-  DevToolsInstrument
-);
+const enhancer = composeEnhancers(applyMiddleware, devToolsInstrument);
 
 const store = createStore(createReducer(), enhancer);
 

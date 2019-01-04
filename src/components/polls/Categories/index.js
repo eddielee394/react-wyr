@@ -1,4 +1,6 @@
-export { default as Category } from "components/polls/Categories/Category";
+export {
+  default as CategoryItem
+} from "components/polls/Categories/CategoryItem";
 export {
   default as CategoryList
 } from "components/polls/Categories/CategoryList";

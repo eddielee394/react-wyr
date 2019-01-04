@@ -1,50 +1,33 @@
 /**
  * Api middleware
- * @source https://github.com/reduxjs/redux/tree/master/examples/real-world
+ * @des Inspired by https://github.com/reduxjs/redux/tree/master/examples/real-world
  */
-import { normalize, schema } from "normalizr";
-import { camelizeKeys } from "humps";
+import axios from "axios";
 
-// Extracts the next page URL from Github API response.
-const getNextPageUrl = response => {
-  const link = response.headers.get("link");
-  if (!link) {
-    return null;
-  }
-
-  const nextLink = link.split(",").find(s => s.indexOf('rel="next"') > -1);
-  if (!nextLink) {
-    return null;
-  }
-
-  return nextLink
-    .trim()
-    .split(";")[0]
-    .slice(1, -1);
+const axiosRequest = ({ endpoint, method, ...config }) => {
+  return axios({ method: method, url: endpoint, config });
 };
 
-const API_ROOT = process.env.REACT_APP_API_URL;
+const apiRequest = params => {
+  return axiosRequest(params);
+};
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
-const callApi = (endpoint, schema) => {
-  const fullUrl =
-    endpoint.indexOf(API_ROOT) === -1 ? API_ROOT + endpoint : endpoint;
+const callApi = params => {
+  console.log("callApi", params);
+  return apiRequest(params)
+    .then(response => {
+      console.log("api.CallApi request success", response);
 
-  return fetch(fullUrl).then(response =>
-    response.json().then(json => {
-      if (!response.ok) {
-        return Promise.reject(json);
-      }
-
-      const camelizedJson = camelizeKeys(json);
-      const nextPageUrl = getNextPageUrl(response);
-
-      return Object.assign({}, normalize(camelizedJson, schema), {
-        nextPageUrl
-      });
+      // return Object.assign({}, normalize(response.data, schema));
+      return response.data;
     })
-  );
+    .catch(error => {
+      console.log("api.CallApi request error: ", error.config);
+
+      return Promise.reject(error.message);
+    });
 };
 
 // Action key that carries API call info interpreted by this Redux middleware.
@@ -54,12 +37,30 @@ export const CALL_API = "Call API";
 // Performs the call and promises when such actions are dispatched.
 export default store => next => action => {
   const callAPI = action[CALL_API];
+
   if (typeof callAPI === "undefined") {
     return next(action);
   }
 
   let { endpoint } = callAPI;
-  const { schema, types } = callAPI;
+  const { schema, types, method, ...config } = callAPI;
+  const validMethods = [
+    "GET",
+    "HEAD",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS"
+  ];
+
+  if (typeof method === "undefined") {
+    throw new Error("[RSAA] must have a method property");
+  } else if (typeof method !== "string") {
+    throw new Error("[RSAA].method property must be a string");
+  } else if (!~validMethods.indexOf(method.toUpperCase())) {
+    throw new Error(`Invalid [RSAA].method: ${method.toUpperCase()}`);
+  }
 
   if (typeof endpoint === "function") {
     endpoint = endpoint(store.getState());
@@ -87,19 +88,20 @@ export default store => next => action => {
   const [requestType, successType, failureType] = types;
   next(actionWith({ type: requestType }));
 
-  return callApi(endpoint, schema).then(
+  return callApi({ endpoint, method, schema, ...config }).then(
     response =>
       next(
         actionWith({
-          response,
-          type: successType
+          type: successType,
+          payload: response,
+          config: config
         })
       ),
     error =>
       next(
         actionWith({
           type: failureType,
-          error: error.message || "Something bad happened"
+          error: error || "Something bad happened"
         })
       )
   );

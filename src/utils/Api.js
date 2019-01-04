@@ -5,7 +5,7 @@ import {
   _getUsers,
   _saveQuestion,
   _saveQuestionAnswer
-} from "../fake-db/_DATA";
+} from "../database/_DATA";
 
 /**
  * API Methods
@@ -18,13 +18,14 @@ import {
  * @type {{getInitialData: (function(): Promise<{users: Object, questions: Object} | never>), getUsers: (function(): Promise<{Object}>), getQuestions: (function(): Promise<Object>), saveQuestion: (function(*=): Promise<Object>), saveQuestionAnswer: (function(*=): Promise<Object>)}}
  */
 class API {
+  static ROOT_URL = process.env.REACT_APP_API_ROOT_URL;
   /**
    * Gets the initial application data
    * @function
    * @memberof API
    * @return {Promise<{users: {Object}, questions: {Object}} | never>}
    */
-  static getInitialData = () =>
+  static fetchInitialData = () =>
     Promise.all([API.getUsers(), API.getQuestions()]).then(
       ([users, questions]) => ({
         users,
@@ -38,8 +39,8 @@ class API {
    * @description Get all of the existing users from the database
    * @return {Promise<{users: {Object}}>} Object where the key is the user’s id and the value is the user object
    */
-  // static getUsers = () => axios.get("/api/users");
-  static getUsers = () => _getUsers();
+  static fetchUsers = () => axios.get("/api/users");
+  // static getUsers = () => _getUsers();
 
   /**
    * Gets questions from database
@@ -47,17 +48,16 @@ class API {
    * @function
    * @return {Promise<{questions: Object}>} Object where the key is the question’s id and the value is the question object
    */
-  static getQuestions = () => axios.get("/api/questions");
+  static fetchQuestions = () => "/api/questions";
 
-  static getQuestion = params => axios.get("/api/question", { params });
+  static fetchQuestion = params => axios.get("/api/question", { params });
 
-  static getQuestionByCategory = params =>
-    axios.get("/api/questions", { params });
+  static fetchQuestionsByCategory = () => "/api/questions";
 
-  static getCategories = () => axios.get("/api/questions/categories");
+  static fetchCategories = () => "/api/questions/categories";
 
-  static getCategory = params =>
-    axios.get("/api/questions/category", { params });
+  static fetchCategory = () => "/api/questions/category";
+
   /**
    * Saves a question
    * @description Save the polling question in the database

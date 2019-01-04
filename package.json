@@ -1,5 +1,5 @@
 {
-  "name": "react_wyr",
+  "name": "react-wyr",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -28,7 +28,7 @@
     "normalizr": "^3.3.0",
     "perfect-scrollbar": "1.4.0",
     "prop-types": "15.6.2",
-    "query-string": "^6.2.0",
+    "query-string": "^5.1.1",
     "react": "16.6.3",
     "react-dom": "16.6.3",
     "react-jss": "8.6.1",
@@ -38,6 +38,7 @@
     "react-router-config": "4.4.0-beta.6",
     "react-router-dom": "4.4.0-beta.6",
     "react-scripts": "2.1.1",
+    "react-spinners": "^0.5.1",
     "react-swipeable-views": "^0.13.0",
     "redux": "4.0.1",
     "redux-persist": "^5.10.0",

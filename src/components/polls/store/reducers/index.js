@@ -1,10 +1,14 @@
 import { combineReducers } from "redux";
-import questions from "./questions.reducer";
-import question from "./question.reducer";
+import questions from "components/polls/store/reducers/questions.reducer";
+import categories from "components/polls/store/reducers/categories.reducer";
+import category from "components/polls/store/reducers/category.reducer";
+import filters from "components/polls/store/reducers/filters.reducer";
 
 const reducer = combineReducers({
+  categories,
+  category,
   questions,
-  question
+  filters
 });
 
 export default reducer;

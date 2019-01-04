@@ -1,28 +1,18 @@
-import Avatar from "@material-ui/core/es/Avatar/Avatar";
+import _ from "@lodash";
+import {
+  Button,
+  Icon,
+  Typography,
+  Avatar,
+  withStyles
+} from "@material-ui/core";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import * as Actions from "components/polls/store/actions";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import _ from "@lodash";
 import { bindActionCreators } from "redux";
-import * as Actions from "../store/actions";
 import { Helpers } from "utils";
-import { Button, Icon, Typography, withStyles } from "@material-ui/core";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit
-  },
-  leftIcon: {
-    marginRight: theme.spacing.unit
-  },
-  rightIcon: {
-    marginLeft: theme.spacing.unit
-  },
-  iconSmall: {
-    fontSize: 20
-  }
-});
 
 class Question extends Component {
   render() {
@@ -33,13 +23,10 @@ class Question extends Component {
       handleAddVote,
       handleVoteCount,
       handleVotePercent,
+      userHasAnswered,
       classes,
       auth
     } = this.props;
-
-    if (!question) {
-      return "";
-    }
 
     return (
       <div className="flex flex-wrap pb-32">
@@ -67,37 +54,75 @@ class Question extends Component {
           </div>
         </div>
         <div className="flex w-full justify-center m-32">
-          <Typography variant="h6">Would You Rather?</Typography>
+          <Typography variant="h4">Would You Rather?</Typography>
         </div>
-        <div className="flex flex-col w-full sm:w-1/2">
-          <p>optionOne: {question.answers.answerOne.text}</p>
-          <p>Votes Count: {handleVoteCount(question.answers.answerOne)}</p>
-          <p>Votes Percent: {handleVotePercent(question.answers.answerOne)}</p>
-          <Button
-            variant="contained"
-            color="default"
-            className={classes.button}
-            onClick={() => updateQuestion(auth.user, question.id, "answerOne")}
-          >
-            Vote
-            <CloudUploadIcon className={classes.rightIcon} />
-          </Button>
-        </div>
-        <div className="flex flex-col w-full sm:w-1/2">
-          <p>optionTwo: {question.answers.answerTwo.text}</p>
 
-          <p>Votes Count: {handleVoteCount(question.answers.answerTwo)}</p>
-          <p>Votes Percent: {handleVotePercent(question.answers.answerTwo)}</p>
-          <Button
-            variant="contained"
-            color="default"
-            className={classes.button}
-            onClick={() => updateQuestion(auth.user, question.id, "answerTwo")}
-          >
-            Vote
-            <CloudUploadIcon className={classes.rightIcon} />
-          </Button>
+        <div className="flex w-full m-16">
+          <div className="flex flex-col w-full sm:w-1/2">
+            <Typography variant="h6">
+              {question.answers.answerOne.text}
+            </Typography>
+          </div>
+
+          <div className="flex flex-col w-full sm:w-1/2">
+            <Typography variant="h6">
+              {question.answers.answerTwo.text}
+            </Typography>
+          </div>
         </div>
+        {userHasAnswered ? (
+          <div className="flex w-full m-16">
+            <div className="flex flex-col w-full sm:w-1/2">
+              <p>Votes Count: {handleVoteCount(question.answers.answerOne)}</p>
+              <p>
+                Votes Percent: {handleVotePercent(question.answers.answerOne)}
+              </p>
+            </div>
+
+            <div className="flex flex-col w-full sm:w-1/2">
+              <p>Votes Count: {handleVoteCount(question.answers.answerTwo)}</p>
+              <p>
+                Votes Percent: {handleVotePercent(question.answers.answerTwo)}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="flex w-full m-16">
+            <div className="flex flex-col w-full sm:w-1/2">
+              <Button
+                variant="contained"
+                color="default"
+                className={classes.button}
+                onClick={() =>
+                  handleAddVote({
+                    questionId: question.id,
+                    answerId: "answerOne"
+                  })
+                }
+              >
+                Vote
+                <CloudUploadIcon className={classes.rightIcon} />
+              </Button>
+            </div>
+
+            <div className="flex flex-col w-full sm:w-1/2">
+              <Button
+                variant="contained"
+                color="default"
+                className={classes.button}
+                onClick={() =>
+                  handleAddVote({
+                    questionId: question.id,
+                    answerId: "answerTwo"
+                  })
+                }
+              >
+                Vote
+                <CloudUploadIcon className={classes.rightIcon} />
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -112,14 +137,32 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-function mapStateToProps({ polls, auth }, { question }) {
+function mapStateToProps({ polls, auth }, props) {
+  const { question } = props;
+
   const author = _.find(auth.users, { id: question.author.id });
+
   return {
     question,
     author,
     auth
   };
 }
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
+  },
+  iconSmall: {
+    fontSize: 20
+  }
+});
 
 export default withStyles(styles)(
   withRouter(
