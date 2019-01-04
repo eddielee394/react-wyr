@@ -89,8 +89,29 @@ class SettingsPanel extends Component {
     this.setState({ open: false });
   };
 
+  renderDevTools = () => {
+    const { classes } = this.props;
+    const devToolsExtActive = !!window.__REDUX_DEVTOOLS_EXTENSION__;
+    if (devToolsExtActive) {
+      return (
+        <Typography
+          className={classNames(classes.header, "mb-32")}
+          variant="h6"
+        >
+          <a href="https://github.com/zalmoxisus/redux-devtools-extension">
+            Redux DevTools extension
+          </a>{" "}
+          is currently active in your browser. Please disable the extension in
+          your browser in order to view the in-app debug log.
+        </Typography>
+      );
+    }
+    return <DevTools />;
+  };
+
   render() {
     const { classes, theme } = this.props;
+
     return (
       <React.Fragment>
         <Button
@@ -133,7 +154,7 @@ class SettingsPanel extends Component {
               Debug Log
             </Typography>
             <div className={classNames(classes.contentContainer)}>
-              <DevTools />
+              {this.renderDevTools()}
             </div>
           </FuseScrollbars>
         </Drawer>
