@@ -5,7 +5,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web and AsyncStorage for react-native
 import createReducer from "./store/reducers";
 import thunk from "redux-thunk";
-import { DevTools } from "components/_layout";
+import { DevTools } from "utils";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 /*
 Fix for Firefox redux dev tools extension

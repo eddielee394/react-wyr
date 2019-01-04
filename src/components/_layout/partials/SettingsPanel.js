@@ -12,7 +12,7 @@ import {
 import { FuseScrollbars, FuseSettings } from "@fuse";
 import { red, grey, blueGrey } from "@material-ui/core/colors";
 import classNames from "classnames";
-import { DevTools } from "components/_layout";
+import { DevTools } from "utils";
 
 function Transition(props) {
   return <Slide direction="left" {...props} />;
@@ -24,6 +24,9 @@ const styles = theme => ({
   },
   contentContainer: {
     paddingTop: "30px"
+  },
+  buttonClose: {
+    color: grey[300]
   },
   button: {
     position: "absolute",
@@ -114,7 +117,10 @@ class SettingsPanel extends Component {
         >
           <FuseScrollbars className="p-24 sm:p-32">
             <IconButton
-              className="fixed pin-t pin-r z-10"
+              className={classNames(
+                classes.buttonClose,
+                "fixed pin-t pin-r z-10  "
+              )}
               onClick={this.handleClose}
             >
               <Icon>close</Icon>

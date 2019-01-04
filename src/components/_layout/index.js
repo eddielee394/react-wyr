@@ -15,5 +15,3 @@ export {
 export {
   default as SettingsPanel
 } from "components/_layout/partials/SettingsPanel";
-
-export { default as DevTools } from "components/_layout/partials/DevTools";
