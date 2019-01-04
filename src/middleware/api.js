@@ -2,26 +2,8 @@
  * Api middleware
  * @source https://github.com/reduxjs/redux/tree/master/examples/real-world
  */
-import { normalize, schema } from "normalizr";
+import { normalize } from "normalizr";
 import { camelizeKeys } from "humps";
-
-// Extracts the next page URL from Github API response.
-const getNextPageUrl = response => {
-  const link = response.headers.get("link");
-  if (!link) {
-    return null;
-  }
-
-  const nextLink = link.split(",").find(s => s.indexOf('rel="next"') > -1);
-  if (!nextLink) {
-    return null;
-  }
-
-  return nextLink
-    .trim()
-    .split(";")[0]
-    .slice(1, -1);
-};
 
 const API_ROOT = process.env.REACT_APP_API_URL;
 
@@ -38,11 +20,8 @@ const callApi = (endpoint, schema) => {
       }
 
       const camelizedJson = camelizeKeys(json);
-      const nextPageUrl = getNextPageUrl(response);
 
-      return Object.assign({}, normalize(camelizedJson, schema), {
-        nextPageUrl
-      });
+      return Object.assign({}, normalize(camelizedJson, schema));
     })
   );
 };

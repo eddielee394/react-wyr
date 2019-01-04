@@ -1,4 +1,4 @@
-import { normalize, schema } from "normalizr";
+import { schema } from "normalizr";
 
 // Define a users schema
 const voteSchema = new schema.Entity("votes");
