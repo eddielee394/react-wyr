@@ -4,9 +4,11 @@ import {
   Button,
   Typography,
   Dialog,
+  Grid,
   Icon,
   IconButton,
   Slide,
+  Divider,
   withStyles
 } from "@material-ui/core";
 import { FuseScrollbars, FuseSettings } from "@fuse";
@@ -22,8 +24,8 @@ const styles = theme => ({
   header: {
     color: grey[300]
   },
-  contentContainer: {
-    paddingTop: "30px"
+  divider: {
+    backgroundColor: "rgba(224, 224, 224, 0.3)"
   },
   buttonClose: {
     color: grey[300]
@@ -39,7 +41,7 @@ const styles = theme => ({
     padding: 0,
     borderBottomRightRadius: 0,
     borderTopRightRadius: 0,
-    zIndex: 999,
+    zIndex: 5,
     color: theme.palette.getContrastText(red[500]),
     backgroundColor: red[500],
     "&:hover": {
@@ -64,13 +66,13 @@ const styles = theme => ({
     maxWidth: "90vw",
     backgroundColor: "#2A2F3A",
     boxShadow: theme.shadows[5],
-    top: 0,
+    top: 64,
     height: "100%",
     minHeight: "100%",
     bottom: 0,
     right: 0,
     margin: 0,
-    zIndex: 1000,
+    zIndex: 5,
     borderRadius: 0,
     borderLeft: "1px solid rgba(0, 0, 0, 0.40)"
   }
@@ -123,13 +125,11 @@ class SettingsPanel extends Component {
         </Button>
 
         <Drawer
-          TransitionComponent={Transition}
           aria-labelledby="settings-panel"
           aria-describedby="settings"
           variant="persistent"
           anchor="right"
           open={this.state.open}
-          keepMounted
           onClose={this.handleClose}
           BackdropProps={{ invisible: true }}
           classes={{
@@ -152,10 +152,14 @@ class SettingsPanel extends Component {
               variant="h6"
             >
               Debug Log
+              <Divider
+                light={true}
+                className={classNames(classes.divider, "mt-16")}
+              />
             </Typography>
-            <div className={classNames(classes.contentContainer)}>
+            <Grid container spacing={24}>
               {this.renderDevTools()}
-            </div>
+            </Grid>
           </FuseScrollbars>
         </Drawer>
       </React.Fragment>

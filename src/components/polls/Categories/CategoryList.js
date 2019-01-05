@@ -109,6 +109,7 @@ class CategoryList extends Component {
       categories,
       categoryFilter,
       setCategoryFilter,
+      categoryIds,
       questionIds,
       questions,
       theme
@@ -195,7 +196,7 @@ class CategoryList extends Component {
                   <em>All</em>
                 </MenuItem>
 
-                {categories.map(category => (
+                {categoryIds.map(category => (
                   <MenuItem value={category.id} key={category.id}>
                     {category.label}
                   </MenuItem>
@@ -243,15 +244,15 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps({ polls, auth }) {
   // let categories = Object.keys(polls.questions.categories);
   // const questions = Object.keys(polls.questions.data.entities.questions);
-  const questions = polls.data;
-  let questionIds = polls.data.result;
+  const { entities } = polls;
+  console.log(entities);
 
-  console.log("Normalized questions: ", polls.data.entities);
   return {
-    questions,
-    questionIds: questionIds,
+    // questions,
+    // questionIds: polls.questions.data.result,
     searchText: polls.searchText,
     categories: polls.categories,
+    categoryIds: ["1", "2"],
     categoryFilter: polls.categoryFilter,
     authUser: auth.user
   };

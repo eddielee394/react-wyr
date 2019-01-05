@@ -11,16 +11,16 @@ const initialState = {
 
 const questionsReducer = function(state = initialState, action) {
   switch (action.type) {
-    case Actions.GET_QUESTIONS: {
+    case Actions.GET_QUESTIONS_SUCCESS: {
       return {
         ...state,
         data: action.payload
       };
     }
-    case Actions.GET_CATEGORIES: {
+    case Actions.GET_CATEGORIES_SUCCESS: {
       return {
         ...state,
-        categories: action.payload
+        data: action.payload
       };
     }
     case Actions.GET_QUESTIONS_BY_CATEGORY: {

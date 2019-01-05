@@ -5,7 +5,7 @@ import {
   _getUsers,
   _saveQuestion,
   _saveQuestionAnswer
-} from "../fake-db/_DATA";
+} from "../database/_DATA";
 
 /**
  * API Methods
@@ -18,6 +18,7 @@ import {
  * @type {{getInitialData: (function(): Promise<{users: Object, questions: Object} | never>), getUsers: (function(): Promise<{Object}>), getQuestions: (function(): Promise<Object>), saveQuestion: (function(*=): Promise<Object>), saveQuestionAnswer: (function(*=): Promise<Object>)}}
  */
 class API {
+  static ROOT_URL = process.env.REACT_APP_API_ROOT_URL;
   /**
    * Gets the initial application data
    * @function
@@ -38,8 +39,8 @@ class API {
    * @description Get all of the existing users from the database
    * @return {Promise<{users: {Object}}>} Object where the key is the user’s id and the value is the user object
    */
-  // static getUsers = () => axios.get("/api/users");
-  static getUsers = () => _getUsers();
+  static getUsers = () => axios.get("/api/users");
+  // static getUsers = () => _getUsers();
 
   /**
    * Gets questions from database

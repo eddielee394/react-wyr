@@ -1,36 +1,60 @@
 import axios from "axios";
 import { GET_QUESTION } from "components/polls/store/actions/question.actions";
-import { API } from "utils";
+import { API, Schemas } from "utils";
+import { CALL_API } from "middleware/api";
 
 export const GET_QUESTIONS = "[POLLS] GET QUESTIONS";
+export const GET_QUESTIONS_SUCCESS = "[POLLS] GET QUESTIONS SUCCESS";
+export const GET_QUESTIONS_FAILURE = "[POLLS] GET QUESTIONS FAILURE";
+
 export const GET_CATEGORIES = "[POLLS] GET CATEGORIES";
+export const GET_CATEGORIES_SUCCESS = "[POLLS] GET CATEGORIES SUCCESS";
+export const GET_CATEGORIES_FAILURE = "[POLLS] GET CATEGORIES FAILURE";
+
 export const GET_CATEGORY = "[POLLS] GET CATEGORY";
 export const GET_QUESTIONS_BY_CATEGORY = "[POLLS] GET QUESTIONS BY CATEGORY";
 export const SET_QUESTIONS_SEARCH_TEXT = "[POLLS] SET QUESTIONS SEARCH TEXT";
 export const SET_QUESTIONS_CATEGORY_FILTER =
   "[POLLS] SET QUESTIONS CATEGORY FILTER";
 
-export function getQuestions() {
-  const request = API.getQuestions();
-  return dispatch =>
-    request.then(response => {
-      dispatch({
-        type: GET_QUESTIONS,
-        payload: response.data
-      });
-    });
-}
+export const getQuestions = () => ({
+  [CALL_API]: {
+    types: [GET_QUESTIONS, GET_QUESTIONS_SUCCESS, GET_QUESTIONS_FAILURE],
+    endpoint: "/api/questions",
+    method: "GET",
+    schema: Schemas.questionsList
+  }
+});
 
-export function getCategories() {
-  const request = API.getCategories();
-  return dispatch =>
-    request.then(response =>
-      dispatch({
-        type: GET_CATEGORIES,
-        payload: response.data
-      })
-    );
-}
+export const getCategories = () => ({
+  [CALL_API]: {
+    types: [GET_CATEGORIES, GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE],
+    endpoint: "/api/questions/categories",
+    method: "GET",
+    schema: Schemas.categoriesList
+  }
+});
+// export function getQuestions() {
+//   const request = API.getQuestions();
+//   return dispatch =>
+//     request.then(response => {
+//       dispatch({
+//         type: GET_QUESTIONS,
+//         payload: response.data
+//       });
+//     });
+// }
+
+// export function getCategories() {
+//   const request = axios.get("/api/questions/categories");
+//   return dispatch =>
+//     request.then(response =>
+//       dispatch({
+//         type: GET_CATEGORIES,
+//         payload: response.data
+//       })
+//     );
+// }
 
 export function getQuestion(params) {
   console.log("Actions.Question.getQuestion params: ", params);

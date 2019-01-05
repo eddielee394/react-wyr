@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { normalize } from "normalizr";
-import { Schemas } from "utils/schemas";
+import { API, Schemas } from "utils";
 import mock from "./mock";
 import _ from "@lodash";
 import { Helpers } from "utils";
@@ -18,7 +18,7 @@ const jwtConfig = {
 let users = {
   da_anchorman: {
     id: "da_anchorman",
-    from: "fake-db",
+    from: "localStorage",
     password: "password",
     role: "user",
     data: {
@@ -68,7 +68,7 @@ let users = {
   },
   burt_b: {
     id: "burt_b",
-    from: "fake-db",
+    from: "localStorage",
     password: "password",
     role: "user",
     data: {
@@ -114,7 +114,7 @@ let users = {
   },
   im_not_a_horse: {
     id: "im_not_a_horse",
-    from: "fake-db",
+    from: "localStorage",
     password: "password",
     role: "user",
     data: {
@@ -423,12 +423,7 @@ export function _saveQuestionAnswer({ authUser, questionId, answer }) {
  */
 mock.onGet("/api/questions").reply(request => {
   // questions = Object.values(questions);
-  console.log(
-    "Axios.questions normalized questions: ",
-    normalize(questions, Schemas.questions),
-    "Axios.questions normalized questions array: ",
-    normalize(questions, Schemas.questions_array)
-  );
+
   let response = questions;
 
   if (request.params) {
@@ -448,19 +443,13 @@ mock.onGet("/api/questions").reply(request => {
 
     return [200, response];
   }
-  console.log("Axios.questions response", response);
-
   return [200, questions];
 });
 
 mock.onGet("/api/question").reply(request => {
-  console.log("Axios.Question request: ", request, "Questions: ", questions);
-
   const { questionId } = request.params;
-  console.log("Axios.Question questionId: ", questionId);
 
   const response = _.find(questions, { id: questionId });
-  console.log("Axios.Question response: ", response, "Questions: ", questions);
 
   return [200, response];
 });
