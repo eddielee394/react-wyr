@@ -248,7 +248,7 @@ function mapStateToProps({ polls, auth }) {
   console.log(entities);
 
   return {
-    // questions,
+    questions: polls.data.result,
     // questionIds: polls.questions.data.result,
     searchText: polls.searchText,
     categories: polls.categories,
