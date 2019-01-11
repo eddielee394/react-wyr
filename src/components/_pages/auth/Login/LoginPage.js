@@ -5,11 +5,12 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import classNames from "classnames";
 import { FuseAnimate } from "@fuse";
 import LoginForm from "./forms/LoginForm";
+import dark_material_bg from "assets/images/bg-patterns/dark-material-bg.jpg";
+import logo from "assets/images/logos/logo.png";
 
 const styles = theme => ({
   root: {
-    background:
-      "url('/assets/images/backgrounds/dark-material-bg.jpg') no-repeat",
+    background: `url(${dark_material_bg}) no-repeat`,
     backgroundSize: "cover"
   },
   intro: {
@@ -39,11 +40,7 @@ class LoginPage extends Component {
           )}
         >
           <FuseAnimate animation="transition.expandIn">
-            <img
-              className="w-128 mb-32"
-              src="assets/images/logos/fuse.svg"
-              alt="logo"
-            />
+            <img className="w-128 mb-32" src={logo} alt="logo" />
           </FuseAnimate>
 
           <FuseAnimate animation="transition.slideUpIn" delay={300}>
