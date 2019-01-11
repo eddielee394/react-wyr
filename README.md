@@ -14,6 +14,12 @@
 - Normalizr 3.x,
 - Velocity-react
 
+## Getting Started
+- Clone repo
+- Run `npm install`
+- Run `npm start`
+- Navigate to `http://react-wyr.local:3000` in your browser to view site
+
 ## Feature List:
 ... 
 
