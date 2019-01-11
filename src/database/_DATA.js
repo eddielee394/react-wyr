@@ -171,101 +171,117 @@ let questions = [
     author: { id: "im_not_a_horse" },
     timestamp: 1545099175000,
     title: "Memory",
-    answers: [
-      {
+    answers: {
+      answerOne: {
         id: "answerOne",
         votes: [{ id: "im_not_a_horse" }],
         text: "have horrible short term memory"
       },
-      {
+      answerTwo: {
         id: "answerTwo",
         votes: [],
         text: "have horrible long term memory"
       }
-    ],
-    category: { id: 1 }
+    },
+    categoryId: 1
   },
   {
     id: "6ni6ok3ym7mf1p33lnez",
     author: { id: "da_anchorman" },
     timestamp: 1543111975000,
     title: "Evil or good?",
-    answers: [
-      { id: "answerOne", votes: [], text: "become a superhero" },
-      {
+    answers: {
+      answerOne: { id: "answerOne", votes: [], text: "become a superhero" },
+      answerTwo: {
         id: "answerTwo",
         votes: [{ id: "da_anchorman" }, { id: "im_not_a_horse" }],
         text: "become a supervillian"
       }
-    ],
-    category: { id: 3 }
+    },
+    categoryId: 3
   },
   {
     id: "am8ehyc8byjqgar0jgpub9",
     author: { id: "im_not_a_horse" },
     timestamp: 1545876775000,
     title: "Superpowers",
-    answers: [
-      { id: "answerOne", votes: [], text: "be telekinetic" },
-      {
+    answers: {
+      answerOne: { id: "answerOne", votes: [], text: "be telekinetic" },
+      answerTwo: {
         id: "answerTwo",
         votes: [{ id: "im_not_a_horse" }],
         text: "be telepathic"
       }
-    ],
-    category: { id: 2 }
+    },
+    categoryId: 2
   },
   {
     id: "loxhs1bqm25b708cmbf3g",
     author: { id: "burt_b" },
     timestamp: 1543112975000,
     title: "Front-end or Back-end?",
-    answers: [
-      { id: "answerOne", votes: [], text: "be a front-end developer" },
-      {
+    answers: {
+      answerOne: {
+        id: "answerOne",
+        votes: [],
+        text: "be a front-end developer"
+      },
+      answerTwo: {
         id: "answerTwo",
         votes: ["im_not_a_horse"],
         text: "be a back-end developer"
       }
-    ],
-    category: { id: 1 }
+    },
+    categoryId: 1
   },
   {
     id: "vthrdm985a262al8qx3do",
     author: { id: "burt_b" },
     timestamp: 1489579767190,
     title: "Money",
-    answers: [
-      { id: "answerOne", votes: ["burt_b"], text: "find $50 yourself" },
-      {
+    answers: {
+      answerOne: {
+        id: "answerOne",
+        votes: ["burt_b"],
+        text: "find $50 yourself"
+      },
+      answerTwo: {
         id: "answerTwo",
         votes: ["da_anchorman"],
         text: "have your best friend find $500"
       }
-    ],
-    category: { id: 4 }
+    },
+    categoryId: 4
   },
   {
     id: "xj352vofupe1dqz9emx13r",
     author: { id: "da_anchorman" },
     timestamp: 1544667175000,
     title: "JS or Swift?",
-    answers: [
-      { id: "answerOne", votes: ["da_anchorman"], text: "write JavaScript" },
-      { id: "answerTwo", votes: ["burt_b"], text: "write Swift" }
-    ],
-    category: { id: 5 }
+    answers: {
+      answerOne: {
+        id: "answerOne",
+        votes: ["da_anchorman"],
+        text: "write JavaScript"
+      },
+      answerTwo: { id: "answerTwo", votes: ["burt_b"], text: "write Swift" }
+    },
+    categoryId: 5
   },
   {
     id: "xj352vofupe1dqz3emx15z",
     author: { id: "da_anchorman" },
     timestamp: 1493579767190,
     title: "JS or Swift?",
-    answers: [
-      { id: "answerOne", votes: ["da_anchorman"], text: "write JavaScript" },
-      { id: "answerTwo", votes: ["burt_b"], text: "write Swift" }
-    ],
-    category: { id: 1 }
+    answers: {
+      answerOne: {
+        id: "answerOne",
+        votes: ["da_anchorman"],
+        text: "write JavaScript"
+      },
+      answerTwo: { id: "answerTwo", votes: ["burt_b"], text: "write Swift" }
+    },
+    categoryId: 1
   }
 ];
 
@@ -430,10 +446,10 @@ mock.onGet("/api/questions").reply(request => {
     const { categoryId } = request.params;
 
     const category = _.find(categories, { value: categoryId });
-    const _categoryId = category.id;
+    const _categoryId = categoryId;
 
     questions = questions.filter(
-      question => question.category.id === _categoryId
+      question => question.categoryId === _categoryId
     );
 
     response = {

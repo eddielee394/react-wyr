@@ -1,5 +1,5 @@
-import { API } from "utils";
 import { showMessage } from "store/actions/fuse";
+import { API } from "utils";
 
 export const GET_QUESTION = "[POLLS] GET QUESTION";
 export const SAVE_QUESTION = "[POLLS] SAVE QUESTION";
@@ -33,23 +33,6 @@ export function saveQuestion(data) {
     });
 }
 
-/**
- * Handles saving vote for a question answer
- * @param params
- */
-// export const addVote = params => dispatch => {
-//   return Api.saveQuestionAnswer(params)
-//     .then(() => {
-//       dispatch(voteQuestionAnswer(params));
-//       dispatch(showMessage({ message: "Question Updated" }));
-//     })
-//     .catch(event => {
-//       console.warn("Error in handleVoteQuestionAnswer: ", event);
-//       dispatch(voteQuestionAnswer(params));
-//       dispatch(showMessage({ message: "Error updating question: " + event }));
-//     });
-// };
-
 export function updateQuestion(authUser, questionId, answerId) {
   const request = API.updateQuestion({ authUser, questionId, answerId });
   console.log("UpdateQuestion args: ", { authUser, questionId, answerId });
@@ -69,18 +52,3 @@ export function updateQuestion(authUser, questionId, answerId) {
       });
   };
 }
-// export function updateQuestion(data) {
-//   return (dispatch, getState) => {
-//     const { id } = getState().questions.question;
-//     const request = axios.post("/api/question/update", { id, ...data });
-//
-//     request.then(response => {
-//       dispatch(showMessage({ message: "Question Updated" }));
-//
-//       return dispatch({
-//         type: UPDATE_QUESTION,
-//         payload: response.data
-//       });
-//     });
-//   };
-// }

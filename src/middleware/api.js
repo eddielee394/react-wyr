@@ -5,22 +5,24 @@
 import { normalize } from "normalizr";
 import axios from "axios";
 
-const axiosRequest = (endpoint, method) => {
+const axiosRequest = ({ endpoint, method, ...config }) => {
   return axios({ method: method, url: endpoint });
 };
 
-const apiRequest = (endpoint, method) => {
-  return axiosRequest(endpoint, method);
+const apiRequest = params => {
+  return axiosRequest(params);
 };
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
-const callApi = (endpoint, method, schema) => {
-  return apiRequest(endpoint, method)
+const callApi = params => {
+  console.log("callApi", params);
+  return apiRequest(params)
     .then(response => {
       console.log("api.CallApi request success", response);
 
-      return Object.assign({}, normalize(response.data, schema));
+      // return Object.assign({}, normalize(response.data, schema));
+      return response.data;
     })
     .catch(error => {
       console.log("api.CallApi request error: ", error.config);
@@ -42,7 +44,7 @@ export default store => next => action => {
   }
 
   let { endpoint } = callAPI;
-  const { schema, types, method } = callAPI;
+  const { schema, types, method, ...config } = callAPI;
   const validMethods = [
     "GET",
     "HEAD",
@@ -87,7 +89,7 @@ export default store => next => action => {
   const [requestType, successType, failureType] = types;
   next(actionWith({ type: requestType }));
 
-  return callApi(endpoint, method, schema).then(
+  return callApi({ endpoint, method, schema, ...config }).then(
     response =>
       next(
         actionWith({

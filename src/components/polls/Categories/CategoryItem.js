@@ -43,12 +43,6 @@ const styles = theme => ({
 });
 
 class CategoryItem extends Component {
-  componentDidMount() {
-    console.log("component mounted");
-    // this.props.getCategory({ categoryId: this.props.categoryId });
-    // this.props.getQuestion({ questionId: this.props.questionId });
-  }
-
   buttonStatus = question => {
     const { authUser } = this.props;
     switch (question.activeStep) {
@@ -63,9 +57,6 @@ class CategoryItem extends Component {
 
   render() {
     const { category, question, theme } = this.props;
-    console.log("CategoryItem props: ", this.props);
-
-    // return <h1>CategoryItem Component</h1>;
 
     return (
       <div className="w-full pb-24 sm:w-1/2 lg:w-1/3 sm:p-16" key={question.id}>

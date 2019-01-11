@@ -1,3 +1,4 @@
+import { FuseUtils } from "@fuse";
 import CategoryItem from "components/polls/Categories/CategoryItem";
 import React, { Component } from "react";
 import {
@@ -19,50 +20,19 @@ import {
 } from "@material-ui/core";
 import { FuseAnimate, FuseAnimateGroup } from "@fuse";
 import withReducer from "store/withReducer";
-import reducer from "../store/reducers";
+import reducer from "components/polls/store/reducers";
 import { bindActionCreators } from "redux";
-import * as Actions from "../store/actions";
+import * as Actions from "components/polls/store/actions";
 import connect from "react-redux/es/connect/connect";
 import classNames from "classnames";
 import _ from "@lodash";
-import { Link } from "react-router-dom";
-import { Helpers } from "utils";
-
-const styles = theme => ({
-  root: {
-    width: "100%"
-  },
-  header: {
-    background:
-      "linear-gradient(to right, " +
-      theme.palette.primary.dark +
-      " 0%, " +
-      theme.palette.primary.main +
-      " 100%)",
-    color: theme.palette.getContrastText(theme.palette.primary.main)
-  },
-  headerIcon: {
-    position: "absolute",
-    top: -64,
-    left: 0,
-    opacity: 0.04,
-    fontSize: 512,
-    width: 512,
-    height: 512,
-    pointerEvents: "none"
-  },
-  content: {}
-});
+import queryString from "query-string";
 
 class CategoryList extends Component {
-  state = {
-    // questions: {},
-    // categories: this.props.categories
-  };
-
   componentDidMount() {
     this.props.getCategories();
     this.props.getQuestions();
+    this.initCategoryFilter();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -71,34 +41,43 @@ class CategoryList extends Component {
       !_.isEqual(this.props.searchText, prevProps.searchText) ||
       !_.isEqual(this.props.categoryFilter, prevProps.categoryFilter)
     ) {
-      const questions = this.getFilteredArray(
-        this.props.questions,
-        this.props.searchText,
-        this.props.categoryFilter
-      );
-      this.setState({ questions });
+      this.initCategoryFilter();
     }
   }
 
-  getFilteredArray = (questions, searchText, categoryFilter) => {
-    if (searchText.length === 0 && categoryFilter === 0) {
-      return questions;
+  updateUrl = path => {
+    if (!path) {
+      return this.props.history.push(this.props.location.pathname);
     }
+    return this.props.history.push(path);
+  };
 
-    return _.filter(questions, question => {
-      if (categoryFilter !== 0 && question.question !== categoryFilter) {
-        return false;
-      }
-      let searchTextResults =
-        question.answers.answerOne.text
-          .toLowerCase()
-          .includes(searchText.toLowerCase()) ||
-        question.answers.answerTwo.text
-          .toLowerCase()
-          .includes(searchText.toLowerCase());
+  initCategoryFilter = () => {
+    const filterQuery = queryString.parse(this.props.location.search);
+    const categoryId = parseInt(filterQuery.categoryId);
+    if (filterQuery.categoryId) {
+      return this.props.setCategoryFilter({ target: { value: categoryId } });
+    }
+    return false;
+  };
 
-      return searchTextResults;
-    });
+  handleSetCategoryFilter = event => {
+    const categoryId = event.target.value;
+
+    if (!categoryId || categoryId === 0) {
+      this.updateUrl();
+      return this.props.setCategoryFilter(event);
+    }
+    const filterUrl = `/questions?categoryId=${categoryId}`;
+    this.updateUrl(filterUrl);
+    return this.props.setCategoryFilter(event);
+  };
+
+  searchFilterResults = (data, searchText) => {
+    if (searchText.length === 0) {
+      return data;
+    }
+    return FuseUtils.filterArrayByString(data, searchText);
   };
 
   render() {
@@ -108,16 +87,35 @@ class CategoryList extends Component {
       searchText,
       categories,
       categoryFilter,
-      setCategoryFilter,
-      categoryIds,
-      questionIds,
-      questions,
-      theme
+      questions
     } = this.props;
 
-    // const { questions } = this.state;
+    const filteredQuestions = this.searchFilterResults(questions, searchText);
 
-    // return <h1>Test</h1>;
+    let showQuestions = {};
+    if (filteredQuestions.length === 0) {
+      showQuestions = (
+        <div className="flex flex-1 items-center justify-center h-full">
+          <Typography color="textSecondary" variant="h5">
+            No questions match your search
+          </Typography>
+        </div>
+      );
+    } else {
+      showQuestions = filteredQuestions.map(question => {
+        const category = categories.find(
+          _category => _category.id === question.categoryId
+        );
+        return (
+          <CategoryItem
+            category={category}
+            question={question}
+            key={question.id}
+          />
+        );
+      });
+    }
+
     return (
       <div className={classNames(classes.root)}>
         <div
@@ -183,7 +181,7 @@ class CategoryList extends Component {
               </InputLabel>
               <Select
                 value={categoryFilter}
-                onChange={setCategoryFilter}
+                onChange={this.handleSetCategoryFilter}
                 input={
                   <OutlinedInput
                     labelWidth={"category".length * 9}
@@ -196,7 +194,7 @@ class CategoryList extends Component {
                   <em>All</em>
                 </MenuItem>
 
-                {categoryIds.map(category => (
+                {categories.map(category => (
                   <MenuItem value={category.id} key={category.id}>
                     {category.label}
                   </MenuItem>
@@ -204,25 +202,14 @@ class CategoryList extends Component {
               </Select>
             </FormControl>
           </div>
-          {/*<FuseAnimateGroup*/}
-          {/*enter={{*/}
-          {/*animation: "transition.slideUpBigIn"*/}
-          {/*}}*/}
-          {/*className="flex flex-wrap py-24"*/}
-          {/*>*/}
-          {/*{questionIds.map(question => {*/}
-          {/*const category = categories.find(*/}
-          {/*_cat => _cat.id === question.category.id*/}
-          {/*);*/}
-          {/*return (*/}
-          {/*<CategoryItem*/}
-          {/*category={category}*/}
-          {/*question={question}*/}
-          {/*key={question.id}*/}
-          {/*/>*/}
-          {/*);*/}
-          {/*})}*/}
-          {/*</FuseAnimateGroup>*/}
+          <FuseAnimateGroup
+            enter={{
+              animation: "transition.slideUpBigIn"
+            }}
+            className="flex flex-wrap py-24"
+          >
+            {showQuestions}
+          </FuseAnimateGroup>
         </div>
       </div>
     );
@@ -235,34 +222,69 @@ function mapDispatchToProps(dispatch) {
       getCategories: Actions.getCategories,
       getQuestions: Actions.getQuestions,
       setCategoryFilter: Actions.setCategoryFilter,
-      setSearchText: Actions.setQuestionsSearchText
+      setSearchText: Actions.setSearchText
     },
     dispatch
   );
 }
 
-function mapStateToProps({ polls, auth }) {
-  // let categories = Object.keys(polls.questions.categories);
-  // const questions = Object.keys(polls.questions.data.entities.questions);
-  const { entities } = polls;
-  console.log(entities);
+function mapStateToProps({ polls, auth }, props) {
+  const categories = polls.categories.data;
+  let questions = polls.questions.data;
+
+  const filterQuery = queryString.parse(props.location.search);
+  const categoryFilterId = parseInt(filterQuery.categoryId);
+
+  const category = categories.filter(
+    _category => _category.id === categoryFilterId
+  );
+
+  if (category.length > 0 && category.id !== 0) {
+    questions = questions.filter(
+      question => question.categoryId === categoryFilterId
+    );
+  }
 
   return {
-    questions: polls.data.result,
-    // questionIds: polls.questions.data.result,
-    searchText: polls.searchText,
-    categories: polls.categories,
-    categoryIds: ["1", "2"],
-    categoryFilter: polls.categoryFilter,
-    authUser: auth.user
+    questions: questions,
+    categories: categories,
+    categoryFilter: polls.filters.categoryFilter,
+    authUser: auth.user,
+    searchText: polls.filters.searchText
   };
 }
 
-export default /*withReducer("polls", reducer)*/ withStyles(styles, {
-  withTheme: true
-})(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(CategoryList)
+const styles = theme => ({
+  root: {
+    width: "100%"
+  },
+  header: {
+    background:
+      "linear-gradient(to right, " +
+      theme.palette.primary.dark +
+      " 0%, " +
+      theme.palette.primary.main +
+      " 100%)",
+    color: theme.palette.getContrastText(theme.palette.primary.main)
+  },
+  headerIcon: {
+    position: "absolute",
+    top: -64,
+    left: 0,
+    opacity: 0.04,
+    fontSize: 512,
+    width: 512,
+    height: 512,
+    pointerEvents: "none"
+  },
+  content: {}
+});
+
+export default withReducer("polls", reducer)(
+  withStyles(styles, { withTheme: true })(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(CategoryList)
+  )
 );

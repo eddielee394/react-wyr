@@ -18,8 +18,8 @@ import {
 import withReducer from "store/withReducer";
 import { bindActionCreators } from "redux";
 import { Helpers } from "utils";
-import reducer from "../store/reducers";
-import * as Actions from "../store/actions";
+import reducer from "components/polls/store/reducers";
+import * as Actions from "components/polls/store/actions";
 import connect from "react-redux/es/connect/connect";
 import Paper from "@material-ui/core/Paper/Paper";
 import SwipeableViews from "react-swipeable-views";

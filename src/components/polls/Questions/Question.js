@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import _ from "@lodash";
 import { bindActionCreators } from "redux";
-import * as Actions from "../store/actions";
+import * as Actions from "components/polls/store/actions";
 import { Helpers } from "utils";
 import { Button, Icon, Typography, withStyles } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";

@@ -26,8 +26,6 @@ import {
   SettingsPanel
 } from "components/_layout";
 
-// configureFakeDB();
-
 library.add(fas, far, fab);
 
 const jss = create({
