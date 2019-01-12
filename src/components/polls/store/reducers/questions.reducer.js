@@ -14,12 +14,13 @@ const questionsReducer = function(state = initialState, action) {
         routeParams: action.routeParams
       };
     }
-    case Actions.GET_QUESTIONS_BY_CATEGORY: {
-      console.log("Actions.GET_QUESTIONS_BY_CATEGORY", action, state);
+    case Actions.GET_QUESTIONS_BY_CATEGORY_SUCCESS: {
+      const categoryId = action.config.params.categoryId;
+
       let questions = state.data.filter(
-        question => question.categoryId === action.payload
+        question => question.categoryId === categoryId
       );
-      console.log("Actions.GET_QUESTIONS_BY_CATEGORY", questions);
+
       return {
         ...state,
         // questions: action.payload

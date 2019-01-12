@@ -56,8 +56,8 @@ class API {
 
   static fetchCategories = () => "/api/questions/categories";
 
-  static fetchCategory = params =>
-    axios.get("/api/questions/category", { params });
+  static fetchCategory = () => "/api/questions/category";
+
   /**
    * Saves a question
    * @description Save the polling question in the database

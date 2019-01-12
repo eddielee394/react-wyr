@@ -29,6 +29,7 @@ let users = {
       answers: {
         xj352vofupe1dqz9emx13r: "answerOne",
         vthrdm985a262al8qx3do: "answerTwo",
+        loxhs1bqm25b708cmbf3g: "answerTwo",
         "6ni6ok3ym7mf1p33lnez": "answerOne"
       },
       questions: ["6ni6ok3ym7mf1p33lnez", "xj352vofupe1dqz9emx13r"],
@@ -560,10 +561,13 @@ mock.onGet("/api/questions/categories").reply(() => {
 });
 
 mock.onGet("/api/questions/category").reply(request => {
-  const { categoryId } = request.params;
-  // console.log("Axios category request: ", request);
+  console.log("Axios category request: ", request);
+  const { config } = request;
+  const { params } = config;
+  const { categoryId } = params;
+  console.log("Axios category request: ", params);
   // console.log("Axios category id: ", categoryId);
-  const response = _.find(categories, { id: categoryId });
+  const response = _.find(categories, { value: categoryId });
   // console.log("Axios category response: ", response);
 
   return [200, response];

@@ -19,6 +19,7 @@ import {
   LinearProgress
 } from "@material-ui/core";
 import { FuseAnimate, FuseAnimateGroup } from "@fuse";
+import { withRouter } from "react-router-dom";
 import withReducer from "store/withReducer";
 import reducer from "components/polls/store/reducers";
 import { bindActionCreators } from "redux";
@@ -49,6 +50,7 @@ class CategoryList extends Component {
     if (!path) {
       return this.props.history.push(this.props.location.pathname);
     }
+
     return this.props.history.push(path);
   };
 
@@ -282,9 +284,11 @@ const styles = theme => ({
 
 export default withReducer("polls", reducer)(
   withStyles(styles, { withTheme: true })(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(CategoryList)
+    withRouter(
+      connect(
+        mapStateToProps,
+        mapDispatchToProps
+      )(CategoryList)
+    )
   )
 );

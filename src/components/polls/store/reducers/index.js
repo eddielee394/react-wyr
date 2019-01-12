@@ -6,10 +6,10 @@ import category from "components/polls/store/reducers/category.reducer";
 import filters from "components/polls/store/reducers/filters.reducer";
 
 const reducer = combineReducers({
-  questions,
-  question,
   categories,
   category,
+  questions,
+  question,
   filters
 });
 

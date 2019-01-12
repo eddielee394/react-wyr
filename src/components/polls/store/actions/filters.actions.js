@@ -2,7 +2,6 @@ export const SET_CATEGORY_FILTER = "[POLLS] SET CATEGORY FILTER";
 export const SET_SEARCH_TEXT = "[POLLS] SET SEARCH TEXT";
 
 export function setCategoryFilter(event) {
-  console.log("ACTIONS.setCategoryFilter: ", event);
   return dispatch => {
     dispatch({
       type: SET_CATEGORY_FILTER,

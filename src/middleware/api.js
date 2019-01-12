@@ -6,7 +6,7 @@ import { normalize } from "normalizr";
 import axios from "axios";
 
 const axiosRequest = ({ endpoint, method, ...config }) => {
-  return axios({ method: method, url: endpoint });
+  return axios({ method: method, url: endpoint, config });
 };
 
 const apiRequest = params => {
@@ -94,7 +94,8 @@ export default store => next => action => {
       next(
         actionWith({
           type: successType,
-          payload: response
+          payload: response,
+          config: config
         })
       ),
     error =>

@@ -27,44 +27,10 @@ import { green } from "@material-ui/core/colors";
 import { Link, withRouter } from "react-router-dom";
 import _ from "@lodash";
 
-const styles = theme => ({
-  layoutRoot: {},
-  layoutHeader: {
-    height: 72,
-    minHeight: 72
-  },
-  layoutContent: {
-    display: "flex",
-    flex: "1 1 auto",
-    flexDirection: "column",
-    overflow: "hidden"
-  },
-  stepper: {
-    background: "transparent"
-  },
-  step: {},
-  stepLabel: {
-    cursor: "pointer!important"
-  },
-  successFab: {
-    background: green[500] + "!important",
-    color: "white!important"
-  }
-});
-
 class QuestionList extends Component {
   userHasAnswered = questionId => {
     const { auth } = this.props;
     return Object.keys(auth.user.data.answers).includes(questionId);
-  };
-
-  /**
-   * Add vote handler
-   * @param event
-   */
-  handleAddVote = event => {
-    console.log("handleAddVote", event);
-    //this.addVote(event);
   };
 
   /**
@@ -100,26 +66,6 @@ class QuestionList extends Component {
     return Helpers.calcPercent(voteCount, usersCount);
   };
 
-  /**
-   * Adds the vote to the store
-   * @description dispatches the handleVoteQuestionAnswer action
-   * @param event
-   */
-  addVote = event => {
-    event.preventDefault();
-    const { question, dispatch } = this.props;
-    const authUser = "burt_b";
-    const option = "optionOne";
-    console.log("addVote: ", event);
-    // dispatch(
-    //   handleVoteQuestionAnswer({
-    //     authUser,
-    //     questionId: question.id,
-    //     answer: option
-    //   })
-    // );
-  };
-
   handleGetAuthor = question =>
     _.find(this.props.auth.users, { id: question.author.id });
 
@@ -128,7 +74,22 @@ class QuestionList extends Component {
 
   render() {
     const { questions, author, category, theme } = this.props;
-    console.log(questions);
+
+    if (questions.length === 0) {
+      return (
+        <FuseAnimateGroup
+          enter={{
+            animation: "transition.slideUpBigIn"
+          }}
+          className="flex flex-wrap py-24 items-center justify-center"
+        >
+          <Typography color="textSecondary" variant="h5">
+            No questions match your search
+          </Typography>
+        </FuseAnimateGroup>
+      );
+    }
+
     return (
       <FuseAnimateGroup
         enter={{
@@ -213,24 +174,38 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-function mapStateToProps({ polls, auth }) {
-  // const author = {
-  // avatarURL: "http://i.pravatar.cc/50?img=51",
-  // name: "test name"
-  // avatarURL: auth.users.id[polls.questions.author]
-  //   ? auth.users.id[polls.questions.author].data.avatarURL
-  //   : null,
-  // name: auth.users.id[polls.questions.author]
-  //   ? auth.users.id[polls.questions.author].data.name
-  //   : null
-  // };
-
+function mapStateToProps({ polls, auth }, props) {
   return {
-    questions: polls.questions.data,
-    category: polls.questions.category,
+    questions: props.questions,
+    category: props.category,
     auth
   };
 }
+
+const styles = theme => ({
+  layoutRoot: {},
+  layoutHeader: {
+    height: 72,
+    minHeight: 72
+  },
+  layoutContent: {
+    display: "flex",
+    flex: "1 1 auto",
+    flexDirection: "column",
+    overflow: "hidden"
+  },
+  stepper: {
+    background: "transparent"
+  },
+  step: {},
+  stepLabel: {
+    cursor: "pointer!important"
+  },
+  successFab: {
+    background: green[500] + "!important",
+    color: "white!important"
+  }
+});
 
 export default withReducer("polls", reducer)(
   withStyles(styles, { withTheme: true })(

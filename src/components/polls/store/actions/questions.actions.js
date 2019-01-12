@@ -16,37 +16,21 @@ export const getQuestions = routeParams => ({
     types: [GET_QUESTIONS, GET_QUESTIONS_SUCCESS, GET_QUESTIONS_FAILURE],
     endpoint: API.fetchQuestions(),
     method: "GET",
-    routeParams: routeParams,
+    params: routeParams,
     schema: Schemas.questionsList
   }
 });
 
-export const getQuestionsByCategory = categoryId => {
-  return {
-    type: GET_QUESTIONS_BY_CATEGORY,
-    payload: categoryId
-  };
-};
-
-// export const getQuestionsByCategory = categoryId => (dispatch, getState) => {
-//   const response = {
-//     data: categoryId
-//   };
-//
-//   return {
-//     type: GET_QUESTIONS_BY_CATEGORY,
-//     payload: response.data
-//   };
-// };
-// export const getQuestionsByCategory = params => ({
-//   [CALL_API]: {
-//     types: [
-//       GET_QUESTIONS_BY_CATEGORY,
-//       GET_QUESTIONS_BY_CATEGORY_SUCCESS,
-//       GET_QUESTIONS_BY_CATEGORY_FAILURE
-//     ],
-//     endpoint: API.fetchQuestionsByCategory(params),
-//     method: "GET",
-//     schema: Schemas.questionsList
-//   }
-// });
+export const getQuestionsByCategory = categoryId => ({
+  [CALL_API]: {
+    types: [
+      GET_QUESTIONS_BY_CATEGORY,
+      GET_QUESTIONS_BY_CATEGORY_SUCCESS,
+      GET_QUESTIONS_BY_CATEGORY_FAILURE
+    ],
+    endpoint: API.fetchQuestions(),
+    method: "GET",
+    params: categoryId,
+    schema: Schemas.questionsList
+  }
+});
