@@ -1,6 +1,8 @@
 # Would You Rather Project
 *Project & Docs are a work in progress*
 
+![screenshot_dashboard.jpg](docs/screenshots/screenshot_dashboard.jpg)
+
 **Some packages being used:** 
 - React 16
 - Redux 4
@@ -30,3 +32,4 @@
 - [x] Start writing todo list
 - [ ] Write feature list
 - [ ] Write Roadmap
+- [ ] fix issue where category state persists on `/questions` page  when navigating back from empty `QuestionsList` component path, causing an undefined category error in the CategoryList component.
