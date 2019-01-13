@@ -81,8 +81,8 @@ class QuestionListContainer extends Component {
   };
 
   userHasAnswered = questionId => {
-    const { auth } = this.props;
-    return Object.keys(auth.user.data.answers).includes(questionId);
+    const { authUser } = this.props;
+    return Object.keys(authUser.data.answers).includes(questionId);
   };
 
   /**
@@ -357,6 +357,7 @@ function mapStateToProps({ polls, auth }, props) {
     question: question,
     questions: questions,
     category: polls.category.data,
+    authUser: auth.user,
     auth,
     stepIndex
   };

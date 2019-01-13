@@ -1,5 +1,4 @@
 import {
-  withStyles,
   Button,
   Card,
   CardActions,
@@ -7,14 +6,77 @@ import {
   Divider,
   Icon,
   LinearProgress,
-  Typography
+  Typography,
+  withStyles
 } from "@material-ui/core";
-import * as Actions from "components/polls/store/actions";
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React from "react";
 import { Link } from "react-router-dom";
-import { bindActionCreators } from "redux";
 import { Helpers } from "utils";
+
+const CategoryItem = props => {
+  const { category, question, userHasAnswered, theme } = props;
+  const progressValue = userHasAnswered ? 100 : 0;
+
+  const buttonStatus = () => (userHasAnswered ? "COMPLETED" : "START");
+
+  return (
+    <div className="w-full pb-24 sm:w-1/2 lg:w-1/3 sm:p-16" key={question.id}>
+      <Card elevation={1} className="flex flex-col min-h-256">
+        <div
+          className="flex items-center justify-between px-24 h-64"
+          style={{
+            background: category.color,
+            color: theme.palette.getContrastText(category.color)
+          }}
+        >
+          <Button href={`/questions/${category.value}`}>
+            <Typography className="font-medium truncate" variant="button">
+              {category.label}
+            </Typography>
+          </Button>
+          <div className="flex items-center justify-center opacity-75">
+            <Icon className="text-20 mr-8" color="inherit">
+              access_time
+            </Icon>
+            <div className="text-16 whitespace-no-wrap">
+              <Typography variant="caption">
+                {Helpers.formatDate(question.timestamp)}
+              </Typography>
+            </div>
+          </div>
+        </div>
+        <CardContent className="flex flex-col flex-1 items-center justify-center">
+          <Typography className="text-center text-16 font-400">
+            {question.title}
+          </Typography>
+          <Typography
+            className="text-center text-13 font-600 mt-4"
+            color="textSecondary"
+          >
+            {question.updated}
+          </Typography>
+        </CardContent>
+        <Divider />
+        <CardActions className="justify-center">
+          <Button
+            to={`/questions/${category.value}/${question.id}`}
+            component={Link}
+            className="justify-start px-32"
+            color="secondary"
+          >
+            {buttonStatus(question)}
+          </Button>
+        </CardActions>
+        <LinearProgress
+          className="w-full"
+          variant="determinate"
+          value={progressValue}
+          color="secondary"
+        />
+      </Card>
+    </div>
+  );
+};
 
 const styles = theme => ({
   root: {
@@ -42,105 +104,4 @@ const styles = theme => ({
   content: {}
 });
 
-class CategoryItem extends Component {
-  buttonStatus = question => {
-    const { authUser } = this.props;
-    switch (question.activeStep) {
-      case question.totalSteps:
-        return "COMPLETED";
-      case 0:
-        return "START";
-      default:
-        return "CONTINUE";
-    }
-  };
-
-  render() {
-    const { category, question, theme } = this.props;
-
-    return (
-      <div className="w-full pb-24 sm:w-1/2 lg:w-1/3 sm:p-16" key={question.id}>
-        <Card elevation={1} className="flex flex-col min-h-256">
-          <div
-            className="flex items-center justify-between px-24 h-64"
-            style={{
-              background: category.color,
-              color: theme.palette.getContrastText(category.color)
-            }}
-          >
-            <Button href={`/questions/${category.value}`}>
-              <Typography className="font-medium truncate" variant="button">
-                {category.label}
-              </Typography>
-            </Button>
-            <div className="flex items-center justify-center opacity-75">
-              <Icon className="text-20 mr-8" color="inherit">
-                access_time
-              </Icon>
-              <div className="text-16 whitespace-no-wrap">
-                <Typography variant="caption">
-                  {Helpers.formatDate(question.timestamp)}
-                </Typography>
-              </div>
-            </div>
-          </div>
-          <CardContent className="flex flex-col flex-1 items-center justify-center">
-            <Typography className="text-center text-16 font-400">
-              {question.title}
-            </Typography>
-            <Typography
-              className="text-center text-13 font-600 mt-4"
-              color="textSecondary"
-            >
-              {question.updated}
-            </Typography>
-          </CardContent>
-          <Divider />
-          <CardActions className="justify-center">
-            <Button
-              to={`/questions/${category.value}/${question.id}`}
-              component={Link}
-              className="justify-start px-32"
-              color="secondary"
-            >
-              {this.buttonStatus(question)}
-            </Button>
-          </CardActions>
-          <LinearProgress
-            className="w-full"
-            variant="determinate"
-            value={(question.activeStep * 100) / question.totalSteps}
-            color="secondary"
-          />
-        </Card>
-      </div>
-    );
-  }
-}
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      getCategory: Actions.getCategory,
-      getQuestion: Actions.getQuestion
-    },
-    dispatch
-  );
-}
-
-function mapStateToProps({ polls }, props) {
-  //pass from store to component
-  const { question, category } = props;
-  return {
-    // question: polls.question,
-    // category: polls.questions.category
-    question: question,
-    category: category
-  };
-}
-
-export default withStyles(styles, { withTheme: true })(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(CategoryItem)
-);
+export default withStyles(styles, { withTheme: true })(CategoryItem);

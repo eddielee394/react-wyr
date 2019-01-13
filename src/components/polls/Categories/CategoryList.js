@@ -1,85 +1,107 @@
-import { FuseUtils } from "@fuse";
-import CategoryItem from "components/polls/Categories/CategoryItem";
-import React, { Component } from "react";
+import { FuseAnimate, FuseAnimateGroup, FuseUtils } from "@fuse";
 import {
-  withStyles,
-  Button,
-  Card,
-  CardContent,
-  OutlinedInput,
+  FormControl,
   Icon,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
   TextField,
   Typography,
-  CardActions,
-  Divider,
-  Select,
-  InputLabel,
-  FormControl,
-  MenuItem,
-  LinearProgress
+  withStyles
 } from "@material-ui/core";
-import { FuseAnimate, FuseAnimateGroup } from "@fuse";
-import { withRouter } from "react-router-dom";
-import withReducer from "store/withReducer";
-import reducer from "components/polls/store/reducers";
-import { bindActionCreators } from "redux";
-import * as Actions from "components/polls/store/actions";
-import connect from "react-redux/es/connect/connect";
 import classNames from "classnames";
-import _ from "@lodash";
+import { CategoryItem } from "components/polls/Categories";
+import * as Actions from "components/polls/store/actions";
+import reducer from "components/polls/store/reducers";
 import queryString from "query-string";
+import React, { Component } from "react";
+import connect from "react-redux/es/connect/connect";
+import { withRouter } from "react-router-dom";
+import { bindActionCreators } from "redux";
+import withReducer from "store/withReducer";
 
 class CategoryList extends Component {
   componentDidMount() {
     this.props.getCategories();
     this.props.getQuestions();
+    this.initFilters();
+  }
+
+  updateUrlQuery = query => {
+    return this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: queryString.stringify(
+        Object.assign({}, queryString.parse(this.props.location.search), query)
+      )
+    });
+  };
+
+  initFilters = () => {
     this.initCategoryFilter();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      !_.isEqual(this.props.questions, prevProps.questions) ||
-      !_.isEqual(this.props.searchText, prevProps.searchText) ||
-      !_.isEqual(this.props.categoryFilter, prevProps.categoryFilter)
-    ) {
-      this.initCategoryFilter();
-    }
-  }
-
-  updateUrl = path => {
-    if (!path) {
-      return this.props.history.push(this.props.location.pathname);
-    }
-
-    return this.props.history.push(path);
+    this.initStatusFilter();
   };
 
   initCategoryFilter = () => {
     const filterQuery = queryString.parse(this.props.location.search);
-    const categoryId = parseInt(filterQuery.categoryId);
+    const categoryId = filterQuery.categoryId;
+
     if (filterQuery.categoryId) {
       return this.props.setCategoryFilter({ target: { value: categoryId } });
     }
+
     return false;
   };
 
   handleSetCategoryFilter = event => {
     const categoryId = event.target.value;
+    let filterUrl = { categoryId: categoryId };
 
-    if (!categoryId || categoryId === 0) {
-      this.updateUrl();
-      return this.props.setCategoryFilter(event);
+    if (!categoryId || categoryId === "0") {
+      filterUrl = { categoryId: undefined };
     }
-    const filterUrl = `/questions?categoryId=${categoryId}`;
-    this.updateUrl(filterUrl);
+
+    this.updateUrlQuery(filterUrl);
+
     return this.props.setCategoryFilter(event);
+  };
+
+  initStatusFilter = () => {
+    const filterQuery = queryString.parse(this.props.location.search);
+    const status = filterQuery.status;
+
+    if (filterQuery.status) {
+      return this.props.setStatusFilter({ target: { value: status } });
+    }
+
+    return false;
+  };
+
+  handleSetStatusFilter = event => {
+    const status = event.target.value;
+    let filterUrl = { status: status };
+
+    if (!status || status === "0") {
+      filterUrl = { status: undefined };
+    }
+
+    this.updateUrlQuery(filterUrl);
+
+    return this.props.setStatusFilter(event);
   };
 
   searchFilterResults = (data, searchText) => {
     if (searchText.length === 0) {
       return data;
     }
+
     return FuseUtils.filterArrayByString(data, searchText);
+  };
+
+  userHasAnswered = questionId => {
+    const { authUser } = this.props;
+
+    return Object.keys(authUser.data.answers).includes(questionId);
   };
 
   render() {
@@ -89,34 +111,88 @@ class CategoryList extends Component {
       searchText,
       categories,
       categoryFilter,
+      statusFilter,
       questions
     } = this.props;
 
     const filteredQuestions = this.searchFilterResults(questions, searchText);
 
-    let showQuestions = {};
-    if (filteredQuestions.length === 0) {
-      showQuestions = (
+    const showQuestions =
+      filteredQuestions.length === 0 ? (
         <div className="flex flex-1 items-center justify-center h-full">
           <Typography color="textSecondary" variant="h5">
             No questions match your search
           </Typography>
         </div>
+      ) : (
+        filteredQuestions.map(question => {
+          const category = categories.find(
+            _category => _category.id === question.categoryId
+          );
+          return (
+            <CategoryItem
+              category={category}
+              question={question}
+              userHasAnswered={this.userHasAnswered(question.id)}
+              key={question.id}
+            />
+          );
+        })
       );
-    } else {
-      showQuestions = filteredQuestions.map(question => {
-        const category = categories.find(
-          _category => _category.id === question.categoryId
-        );
-        return (
-          <CategoryItem
-            category={category}
-            question={question}
-            key={question.id}
-          />
-        );
-      });
-    }
+
+    const statusFilterElement = (
+      <FormControl className="flex w-full sm:w-320 mx-16" variant="outlined">
+        <InputLabel htmlFor="status-label-placeholder">Status</InputLabel>
+        <Select
+          value={statusFilter}
+          onChange={this.handleSetStatusFilter}
+          input={
+            <OutlinedInput
+              labelWidth={"status".length * 9}
+              name="status"
+              id="status-label-placeholder"
+            />
+          }
+        >
+          <MenuItem value={"0"} key="all">
+            <em>All</em>
+          </MenuItem>
+          <MenuItem value={"1"} key="complete">
+            Complete
+          </MenuItem>
+          <MenuItem value={"2"} key="incomplete">
+            Incomplete
+          </MenuItem>
+        </Select>
+      </FormControl>
+    );
+
+    const categoryFilterElement = (
+      <FormControl className="flex w-full sm:w-320 mx-16" variant="outlined">
+        <InputLabel htmlFor="category-label-placeholder">Category</InputLabel>
+        <Select
+          value={categoryFilter}
+          onChange={this.handleSetCategoryFilter}
+          input={
+            <OutlinedInput
+              labelWidth={"category".length * 9}
+              name="category"
+              id="category-label-placeholder"
+            />
+          }
+        >
+          <MenuItem value={0}>
+            <em>All</em>
+          </MenuItem>
+
+          {categories.map(category => (
+            <MenuItem value={category.id} key={category.id}>
+              {category.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    );
 
     return (
       <div className={classNames(classes.root)}>
@@ -174,35 +250,8 @@ class CategoryList extends Component {
                 shrink: true
               }}
             />
-            <FormControl
-              className="flex w-full sm:w-320 mx-16"
-              variant="outlined"
-            >
-              <InputLabel htmlFor="category-label-placeholder">
-                Category
-              </InputLabel>
-              <Select
-                value={categoryFilter}
-                onChange={this.handleSetCategoryFilter}
-                input={
-                  <OutlinedInput
-                    labelWidth={"category".length * 9}
-                    name="category"
-                    id="category-label-placeholder"
-                  />
-                }
-              >
-                <MenuItem value={0}>
-                  <em>All</em>
-                </MenuItem>
-
-                {categories.map(category => (
-                  <MenuItem value={category.id} key={category.id}>
-                    {category.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            {statusFilterElement}
+            {categoryFilterElement}
           </div>
           <FuseAnimateGroup
             enter={{
@@ -224,6 +273,7 @@ function mapDispatchToProps(dispatch) {
       getCategories: Actions.getCategories,
       getQuestions: Actions.getQuestions,
       setCategoryFilter: Actions.setCategoryFilter,
+      setStatusFilter: Actions.setStatusFilter,
       setSearchText: Actions.setSearchText
     },
     dispatch
@@ -231,28 +281,39 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps({ polls, auth }, props) {
+  //todo move this logic to redux store
   const categories = polls.categories.data;
+  const authUser = auth.user;
+  const { statusFilter, categoryFilter, searchText } = polls.filters;
   let questions = polls.questions.data;
 
-  const filterQuery = queryString.parse(props.location.search);
-  const categoryFilterId = parseInt(filterQuery.categoryId);
-
   const category = categories.filter(
-    _category => _category.id === categoryFilterId
+    _category => _category.id === categoryFilter
   );
 
-  if (category.length > 0 && category.id !== 0) {
+  if (category.length > 0 && category.id !== "0") {
     questions = questions.filter(
-      question => question.categoryId === categoryFilterId
+      question => question.categoryId === categoryFilter
+    );
+  }
+
+  if (statusFilter === "1") {
+    questions = questions.filter(question =>
+      Object.keys(authUser.data.answers).includes(question.id)
+    );
+  } else if (statusFilter === "2") {
+    questions = questions.filter(
+      question => !Object.keys(authUser.data.answers).includes(question.id)
     );
   }
 
   return {
     questions: questions,
     categories: categories,
-    categoryFilter: polls.filters.categoryFilter,
-    authUser: auth.user,
-    searchText: polls.filters.searchText
+    categoryFilter: categoryFilter,
+    statusFilter: statusFilter,
+    authUser: authUser,
+    searchText: searchText
   };
 }
 

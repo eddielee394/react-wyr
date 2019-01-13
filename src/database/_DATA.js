@@ -184,7 +184,7 @@ let questions = [
         text: "have horrible long term memory"
       }
     },
-    categoryId: 1
+    categoryId: "1"
   },
   {
     id: "6ni6ok3ym7mf1p33lnez",
@@ -199,7 +199,7 @@ let questions = [
         text: "become a supervillian"
       }
     },
-    categoryId: 3
+    categoryId: "3"
   },
   {
     id: "am8ehyc8byjqgar0jgpub9",
@@ -214,7 +214,7 @@ let questions = [
         text: "be telepathic"
       }
     },
-    categoryId: 2
+    categoryId: "2"
   },
   {
     id: "loxhs1bqm25b708cmbf3g",
@@ -233,7 +233,7 @@ let questions = [
         text: "be a back-end developer"
       }
     },
-    categoryId: 1
+    categoryId: "1"
   },
   {
     id: "vthrdm985a262al8qx3do",
@@ -252,7 +252,7 @@ let questions = [
         text: "have your best friend find $500"
       }
     },
-    categoryId: 4
+    categoryId: "4"
   },
   {
     id: "xj352vofupe1dqz9emx13r",
@@ -267,7 +267,7 @@ let questions = [
       },
       answerTwo: { id: "answerTwo", votes: ["burt_b"], text: "write Swift" }
     },
-    categoryId: 5
+    categoryId: "5"
   },
   {
     id: "xj352vofupe1dqz3emx15z",
@@ -282,55 +282,55 @@ let questions = [
       },
       answerTwo: { id: "answerTwo", votes: ["burt_b"], text: "write Swift" }
     },
-    categoryId: 1
+    categoryId: "1"
   }
 ];
 
 let categories = [
   {
-    id: 1,
+    id: "1",
     value: "reactjs-basic",
     label: "ReactJS Basic",
     color: amber[500]
   },
   {
-    id: 2,
+    id: "2",
     value: "reactjs-advanced",
     label: "ReactJS Advanced",
     color: amber[500]
   },
   {
-    id: 3,
+    id: "3",
     value: "react-router",
     label: "React Router",
     color: blueGrey[500]
   },
   {
-    id: 4,
+    id: "4",
     value: "react-redux",
     label: "React Redux",
     color: green[500]
   },
   {
-    id: 5,
+    id: "5",
     value: "jwt-authentication",
     label: "JWT Authentication",
     color: green[500]
   },
   {
-    id: 6,
+    id: "6",
     value: "react-native",
     label: "React Native",
     color: green[500]
   },
   {
-    id: 7,
+    id: "7",
     value: "es6",
     label: "ES6",
     color: green[500]
   },
   {
-    id: 8,
+    id: "8",
     value: "misc",
     label: "Misc",
     color: blue[500]

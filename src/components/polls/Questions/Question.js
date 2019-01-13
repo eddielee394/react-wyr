@@ -1,13 +1,18 @@
-import Avatar from "@material-ui/core/es/Avatar/Avatar";
+import _ from "@lodash";
+import {
+  Button,
+  Icon,
+  Typography,
+  Avatar,
+  withStyles
+} from "@material-ui/core";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import * as Actions from "components/polls/store/actions";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import _ from "@lodash";
 import { bindActionCreators } from "redux";
-import * as Actions from "components/polls/store/actions";
 import { Helpers } from "utils";
-import { Button, Icon, Typography, withStyles } from "@material-ui/core";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 
 class Question extends Component {
   render() {

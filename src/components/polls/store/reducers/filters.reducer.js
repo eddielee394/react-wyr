@@ -2,7 +2,8 @@ import * as Actions from "../actions";
 
 const initialState = {
   searchText: "",
-  categoryFilter: 0
+  categoryFilter: "0",
+  statusFilter: "0"
 };
 
 const filtersReducer = function(state = initialState, action) {
@@ -18,6 +19,13 @@ const filtersReducer = function(state = initialState, action) {
       return {
         ...state,
         categoryFilter: action.payload
+      };
+    }
+    case Actions.SET_STATUS_FILTER: {
+      console.log("action.status: ", action.status);
+      return {
+        ...state,
+        statusFilter: action.payload
       };
     }
     default: {
