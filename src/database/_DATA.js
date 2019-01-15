@@ -439,8 +439,6 @@ export function _saveQuestionAnswer({ authUser, questionId, answer }) {
  * Questions mock requests
  */
 mock.onGet("/api/questions").reply(request => {
-  // questions = Object.values(questions);
-
   let response = questions;
 
   if (request.params) {

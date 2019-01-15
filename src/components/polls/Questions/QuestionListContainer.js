@@ -87,11 +87,12 @@ class QuestionListContainer extends Component {
 
   /**
    * Add vote handler
-   * @param event
+   * @param data
    */
-  handleAddVote = event => {
-    console.log("handleAddVote", event);
-    //this.addVote(event);
+  handleAddVote = data => {
+    const userId = this.props.auth.user.id;
+    const params = { ...data, userId };
+    this.addVote(params);
   };
 
   /**
@@ -130,21 +131,10 @@ class QuestionListContainer extends Component {
   /**
    * Adds the vote to the store
    * @description dispatches the handleVoteQuestionAnswer action
-   * @param event
+   * @param data
    */
-  addVote = event => {
-    event.preventDefault();
-    const { question, dispatch } = this.props;
-    const authUser = "burt_b";
-    const option = "optionOne";
-    console.log("addVote: ", event);
-    // dispatch(
-    //   handleVoteQuestionAnswer({
-    //     authUser,
-    //     questionId: question.id,
-    //     answer: option
-    //   })
-    // );
+  addVote = data => {
+    return this.props.updateQuestion(data);
   };
 
   /**
@@ -158,15 +148,7 @@ class QuestionListContainer extends Component {
   };
 
   render() {
-    const {
-      classes,
-      question,
-      questions,
-      category,
-      match,
-      stepIndex,
-      ...props
-    } = this.props;
+    const { classes, questions, category, stepIndex, ...props } = this.props;
 
     const headerTitle = (
       <Typography className="flex-1 text-20">{category.label}</Typography>

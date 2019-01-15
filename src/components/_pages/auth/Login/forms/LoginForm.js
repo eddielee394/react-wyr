@@ -162,11 +162,6 @@ class JWTLoginTab extends Component {
               <tr>
                 <th>
                   <Typography className="font-600" color="textSecondary">
-                    Role
-                  </Typography>
-                </th>
-                <th>
-                  <Typography className="font-600" color="textSecondary">
                     Username
                   </Typography>
                 </th>
@@ -180,24 +175,18 @@ class JWTLoginTab extends Component {
             <tbody>
               <tr>
                 <td>
-                  <Typography>Admin</Typography>
+                  <Typography>burt_b@test.com</Typography>
                 </td>
                 <td>
-                  <Typography>admin</Typography>
-                </td>
-                <td>
-                  <Typography>admin</Typography>
+                  <Typography>password</Typography>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <Typography>Staff</Typography>
+                  <Typography>im_not_a_horse@test.com</Typography>
                 </td>
                 <td>
-                  <Typography>staff</Typography>
-                </td>
-                <td>
-                  <Typography>staff</Typography>
+                  <Typography>password</Typography>
                 </td>
               </tr>
             </tbody>

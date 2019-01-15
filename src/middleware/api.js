@@ -2,7 +2,6 @@
  * Api middleware
  * @des Inspired by https://github.com/reduxjs/redux/tree/master/examples/real-world
  */
-import { normalize } from "normalizr";
 import axios from "axios";
 
 const axiosRequest = ({ endpoint, method, ...config }) => {

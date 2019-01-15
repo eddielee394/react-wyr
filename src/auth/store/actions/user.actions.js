@@ -53,6 +53,53 @@ export function updateUserShortcuts(shortcuts) {
     return dispatch(setUserData(newUser));
   };
 }
+/**
+ * Update User Shortcuts
+ */
+export function updateUserAnswer(data) {
+  const { questionId, answerId } = data;
+  return (dispatch, getState) => {
+    const user = getState().auth.user;
+    const newUser = {
+      ...user,
+      data: {
+        ...user.data,
+        answers: {
+          ...user.data.answers,
+          [questionId]: answerId
+        }
+      }
+    };
+
+    console.log(newUser);
+
+    updateUserData(newUser);
+
+    return dispatch(setUserData(newUser));
+  };
+}
+export function updateUserQuestion(data) {
+  const { questionId, answerId } = data;
+  return (dispatch, getState) => {
+    const user = getState().auth.user;
+    const newUser = {
+      ...user,
+      data: {
+        ...user.data,
+        answers: {
+          ...user.data.answers,
+          [questionId]: answerId
+        }
+      }
+    };
+
+    console.log(newUser);
+
+    updateUserData(newUser);
+
+    return dispatch(setUserData(newUser));
+  };
+}
 
 /**
  * Remove User Data
@@ -107,9 +154,7 @@ function updateUserData(user) {
       jwtService
         .updateUserData(user)
         .then(() => {
-          store.dispatch(
-            Actions.showMessage({ message: "User data saved with api" })
-          );
+          store.dispatch(Actions.showMessage({ message: "User data saved" }));
         })
         .catch(error => {
           store.dispatch(Actions.showMessage({ message: error.message }));
@@ -120,9 +165,7 @@ function updateUserData(user) {
       jwtService
         .updateUserData(user)
         .then(() => {
-          store.dispatch(
-            Actions.showMessage({ message: "User data saved with api" })
-          );
+          store.dispatch(Actions.showMessage({ message: "User data saved" }));
         })
         .catch(error => {
           store.dispatch(Actions.showMessage({ message: error.message }));

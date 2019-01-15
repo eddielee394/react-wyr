@@ -5,12 +5,17 @@ import { withStyles } from "@material-ui/core/styles";
 import { FusePageSimple, FuseAnimate } from "@fuse";
 import { Avatar, Button, Tab, Tabs, Typography } from "@material-ui/core";
 import TimelineTab from "components/profile/tabs/TimelineTab";
-import PhotosVideosTab from "components/profile/tabs/PhotosVideosTab";
-import AboutTab from "components/profile/tabs/AboutTab";
 import connect from "react-redux/es/connect/connect";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import withReducer from "store/withReducer";
+import imgArtsy from "assets/images/bg-patterns/9.png";
+import imgDowntown from "assets/images/bg-patterns/bg-24.jpg";
+import imgMountain from "assets/images/bg-patterns/bg-full_2.jpg";
+import imgWoodlands from "assets/images/bg-patterns/bg-1920_2.jpg";
+import imgBatman from "assets/images/bg-patterns/dark-material-bg.jpg";
+import _ from "lodash";
+import EditTab from "components/profile/tabs/EditTab";
 
 const styles = theme => ({
   layoutRoot: {},
@@ -20,8 +25,6 @@ const styles = theme => ({
   layoutHeader: {
     height: 320,
     minHeight: 320,
-    background:
-      "url('/assets/images/backgrounds/dark-material-bg.jpg') no-repeat",
     backgroundSize: "cover",
     color: "#fff",
     [theme.breakpoints.down("md")]: {
@@ -40,7 +43,15 @@ const styles = theme => ({
 
 class Profile extends Component {
   state = {
-    value: 0
+    profileTab: 0,
+    coverPhotos: [
+      { id: "1", name: "Batman", url: imgBatman },
+      { id: "2", name: "Woodlands", url: imgWoodlands },
+      { id: "3", name: "Mountains", url: imgMountain },
+      { id: "4", name: "Artsy", url: imgArtsy },
+      { id: "4", name: "Downtown", url: imgDowntown }
+    ],
+    activeCoverPhoto: "2"
   };
 
   componentDidMount() {
@@ -48,13 +59,29 @@ class Profile extends Component {
     this.props.getCategories();
   }
 
-  handleChange = (event, value) => {
-    this.setState({ value });
+  getCoverPhoto() {
+    const { coverPhotos, activeCoverPhoto } = this.state;
+    console.log(coverPhotos.filter(photo => photo.id === activeCoverPhoto));
+    const coverPhoto = _.filter(coverPhotos, { id: activeCoverPhoto });
+    return coverPhoto[0];
+  }
+
+  handleUpdateCoverPhoto = id => {
+    this.setState({ activeCoverPhoto: id });
+  };
+
+  handleChange = (event, profileTab) => {
+    this.setState({ profileTab });
   };
 
   render() {
     const { classes, auth, questions } = this.props;
-    const { value } = this.state;
+    const { profileTab } = this.state;
+    const coverPhoto = this.getCoverPhoto();
+    const layoutHeaderStyles = {
+      background: `url(${coverPhoto.url}) no-repeat center center`,
+      backgroundSize: "cover"
+    };
 
     return (
       <FusePageSimple
@@ -64,14 +91,17 @@ class Profile extends Component {
           toolbar: classes.layoutToolbar
         }}
         header={
-          <div className="p-24 flex flex-1 flex-col items-center justify-center md:flex-row md:items-end">
+          <div
+            className="p-24 flex flex-1 flex-col items-center justify-center md:flex-row md:items-end"
+            style={layoutHeaderStyles}
+          >
             <div className="flex flex-1 flex-col items-center justify-center md:flex-row md:items-center md:justify-start">
               <FuseAnimate animation="transition.expandIn" delay={300}>
                 <Avatar className="w-96 h-96" src={auth.user.data.avatarURL} />
               </FuseAnimate>
               <FuseAnimate animation="transition.slideLeftIn" delay={300}>
                 <Typography className="md:ml-24" variant="h4" color="inherit">
-                  John Doe
+                  {auth.user.data.name}
                 </Typography>
               </FuseAnimate>
             </div>
@@ -98,7 +128,7 @@ class Profile extends Component {
         }
         contentToolbar={
           <Tabs
-            value={value}
+            value={profileTab}
             onChange={this.handleChange}
             indicatorColor="secondary"
             textColor="secondary"
@@ -112,27 +142,22 @@ class Profile extends Component {
               classes={{
                 root: classes.tabRoot
               }}
-              label="Timeline"
+              label="Activity"
             />
             <Tab
               classes={{
                 root: classes.tabRoot
               }}
-              label="About"
-            />
-            <Tab
-              classes={{
-                root: classes.tabRoot
-              }}
-              label="Photos & Videos"
+              label="Edit Profile"
             />
           </Tabs>
         }
         content={
           <div className="p-16 sm:p-24">
-            {value === 0 && <TimelineTab questions={questions} auth={auth} />}
-            {value === 1 && <AboutTab />}
-            {value === 2 && <PhotosVideosTab />}
+            {profileTab === 0 && (
+              <TimelineTab questions={questions} auth={auth} />
+            )}
+            {profileTab === 2 && <EditTab />}
           </div>
         }
       />

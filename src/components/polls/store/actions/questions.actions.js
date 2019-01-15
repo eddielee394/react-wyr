@@ -11,12 +11,12 @@ export const GET_QUESTIONS_BY_CATEGORY_SUCCESS =
 export const GET_QUESTIONS_BY_CATEGORY_FAILURE =
   "[POLLS] GET QUESTIONS BY CATEGORY FAILURE";
 
-export const getQuestions = routeParams => ({
+export const getQuestions = params => ({
   [CALL_API]: {
     types: [GET_QUESTIONS, GET_QUESTIONS_SUCCESS, GET_QUESTIONS_FAILURE],
     endpoint: API.fetchQuestions(),
     method: "GET",
-    params: routeParams,
+    params: params,
     schema: Schemas.questionsList
   }
 });

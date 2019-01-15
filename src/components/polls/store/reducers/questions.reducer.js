@@ -10,8 +10,7 @@ const questionsReducer = function(state = initialState, action) {
     case Actions.GET_QUESTIONS_SUCCESS: {
       return {
         ...state,
-        data: action.payload,
-        routeParams: action.routeParams
+        data: action.payload
       };
     }
     case Actions.GET_QUESTIONS_BY_CATEGORY_SUCCESS: {
@@ -23,8 +22,40 @@ const questionsReducer = function(state = initialState, action) {
 
       return {
         ...state,
-        // questions: action.payload
         data: questions
+      };
+    }
+    case Actions.UPDATE_QUESTION_SUCCESS: {
+      const { questionId, answerId, userId } = action.config.params;
+
+      const question = _.find(state.data, { id: questionId });
+
+      const questionIndex = _.findIndex(state.data, { id: questionId });
+
+      const updatedQuestion = {
+        ...question,
+        answers: {
+          ...question.answers,
+          [answerId]: {
+            ...question.answers[answerId],
+            votes: [...question.answers[answerId].votes, { id: userId }]
+          }
+        }
+      };
+
+      let updatedData = [];
+      updatedData = [
+        ...state.data.slice(0, questionIndex),
+        {
+          ...state.data[questionIndex],
+          ...updatedQuestion
+        },
+        ...state.data.slice(questionIndex + 1)
+      ];
+
+      return {
+        ...state,
+        data: updatedData
       };
     }
     default: {

@@ -90,7 +90,10 @@ class Question extends Component {
                 color="default"
                 className={classes.button}
                 onClick={() =>
-                  updateQuestion(auth.user, question.id, "answerOne")
+                  handleAddVote({
+                    questionId: question.id,
+                    answerId: "answerOne"
+                  })
                 }
               >
                 Vote
@@ -104,7 +107,10 @@ class Question extends Component {
                 color="default"
                 className={classes.button}
                 onClick={() =>
-                  updateQuestion(auth.user, question.id, "answerTwo")
+                  handleAddVote({
+                    questionId: question.id,
+                    answerId: "answerTwo"
+                  })
                 }
               >
                 Vote

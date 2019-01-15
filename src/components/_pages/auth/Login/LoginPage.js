@@ -76,9 +76,6 @@ class LoginPage extends Component {
                 <Link className="font-medium" to="/register">
                   Create an account
                 </Link>
-                <Link className="font-medium mt-8" to="/">
-                  Back to Dashboard
-                </Link>
               </div>
             </CardContent>
           </Card>
