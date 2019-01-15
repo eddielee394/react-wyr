@@ -54,16 +54,20 @@ class Question extends Component {
           </div>
         </div>
         <div className="flex w-full justify-center m-32">
-          <Typography variant="h6">Would You Rather?</Typography>
+          <Typography variant="h4">Would You Rather?</Typography>
         </div>
 
         <div className="flex w-full m-16">
           <div className="flex flex-col w-full sm:w-1/2">
-            <p>optionOne: {question.answers.answerOne.text}</p>
+            <Typography variant="h6">
+              {question.answers.answerOne.text}
+            </Typography>
           </div>
 
           <div className="flex flex-col w-full sm:w-1/2">
-            <p>optionTwo: {question.answers.answerTwo.text}</p>
+            <Typography variant="h6">
+              {question.answers.answerTwo.text}
+            </Typography>
           </div>
         </div>
         {userHasAnswered ? (
@@ -133,8 +137,11 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-function mapStateToProps({ polls, auth }, { question }) {
+function mapStateToProps({ polls, auth }, props) {
+  const { question } = props;
+
   const author = _.find(auth.users, { id: question.author.id });
+
   return {
     question,
     author,

@@ -178,7 +178,6 @@ class QuestionListContainer extends Component {
             handleVotePercent={this.handleVotePercent}
             question={_question}
             userHasAnswered={this.userHasAnswered(_question.id)}
-            {...props}
           />
         </Paper>
       </div>
