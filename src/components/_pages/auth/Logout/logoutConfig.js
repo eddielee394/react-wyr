@@ -1,0 +1,16 @@
+import { authRoles } from "auth";
+import { store } from "store";
+import { logoutUser } from "auth/store/actions";
+
+export const logoutConfig = {
+  auth: authRoles.user,
+  routes: [
+    {
+      path: "/logout",
+      component: () => {
+        store.dispatch(logoutUser());
+        return "Logging out..";
+      }
+    }
+  ]
+};

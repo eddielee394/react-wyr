@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utils/api.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils/api.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { formatQuestion } from "./helpers";
+import { questions, users } from "./_DATA";
+
+/**
+ * API Methods
+ * @namespace API
+ * @borrows _getUsers as getUsers
+ * @borrows _getQuestions as getQuestions
+ * @borrows _getUsers as getUsers
+ * @borrows _saveQuestion as saveQuestion
+ * @borrows _saveQuestionAnswer as saveQuestionAnswer
+ * @typedef {Object}
+ * @type {{getInitialData: (function(): Promise&lt;{users: Object, questions: Object} | never>), getUsers: (function(): Promise&lt;{Object}>), getQuestions: (function(): Promise&lt;Object>), saveQuestion: (function(*=): Promise&lt;Object>), saveQuestionAnswer: (function(*=): Promise&lt;Object>)}}
+ */
+export const API = {
+  /**
+   * Gets the initial application data
+   * @method
+   * @memberof API
+   * @return {Promise&lt;{users: {Object}, questions: {Object}} | never>}
+   */
+  getInitialData: () => {
+    return Promise.all([API.getUsers(), API.getQuestions()]).then(
+      ([users, questions]) => ({
+        users,
+        questions
+      })
+    );
+  },
+
+  /**
+   * Gets users from database
+   * @method
+   * @description Get all of the existing users from the database
+   * @return {Promise&lt;{users: {Object}}>} Object where the key is the user’s id and the value is the user object
+   */
+  getUsers: () => _getUsers(),
+
+  /**
+   * Gets questions from database
+   * @description Get all of the existing questions from the database
+   * @return {Promise&lt;{questions: Object}>} Object where the key is the question’s id and the value is the question object
+   */
+  getQuestions: () => _getQuestions(),
+
+  /**
+   * Saves a question
+   * @description Save the polling question in the database
+   * @param params
+   * @return {Promise&lt;{id: string, author: string, optionOne: Object, optionTwo: Object, timestamp: Object}>}
+   */
+  saveQuestion: params => _saveQuestion(params),
+
+  /**
+   * Saves the answer to a question
+   * @description Save the answer to a particular polling question in the database.
+   * @param params
+   * @return {Promise&lt;{authUser: string, questionId: string, answer: string }>}
+   */
+  saveQuestionAnswer: params => _saveQuestionAnswer(params)
+};
+
+/**
+ * Gets Users
+ * @return {Promise&lt;{users: Object}>}
+ * @private
+ */
+function _getUsers() {
+  return new Promise((res, rej) => {
+    setTimeout(() => res({ ...users }), 1000);
+  });
+}
+
+/**
+ * Gets Questions
+ * @return {Promise&lt;{questions: Object}>}
+ * @private
+ */
+function _getQuestions() {
+  return new Promise((res, rej) => {
+    setTimeout(() => res({ ...questions }), 1000);
+  });
+}
+
+/**
+ * Saves the question
+ * @param question
+ * @return {Promise&lt;{id: string, author: string, optionOne: Object, optionTwo: Object, timestamp: Object}>}
+ * @private
+ */
+function _saveQuestion(question) {
+  return new Promise((res, rej) => {
+    const authUser = question.author;
+    const formattedQuestion = formatQuestion(question);
+
+    setTimeout(() => {
+      questions = {
+        ...questions,
+        [formattedQuestion.id]: formattedQuestion
+      };
+
+      users = {
+        ...users,
+        [authUser]: {
+          ...users[authUser],
+          questions: users[authUser].questions.concat([formattedQuestion.id])
+        }
+      };
+
+      res(formattedQuestion);
+    }, 1000);
+  });
+}
+
+/**
+ *
+ * @param authUser
+ * @param questionId
+ * @param answer
+ * @return {Promise&lt;{authUser: string, questionId: string, answer: string }>}
+ * @private
+ */
+function _saveQuestionAnswer({ authUser, questionId, answer }) {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      users = {
+        ...users,
+        [authUser]: {
+          ...users[authUser],
+          answers: {
+            ...users[authUser].answers,
+            [questionId]: answer
+          }
+        }
+      };
+
+      questions = {
+        ...questions,
+        [questionId]: {
+          ...questions[questionId],
+          [answer]: {
+            ...questions[questionId][answer],
+            votes: questions[questionId][answer].votes.concat([authUser])
+          }
+        }
+      };
+
+      res();
+    }, 500);
+  });
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#calcPercent">calcPercent</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#formatQuestion">formatQuestion</a></li><li><a href="global.html#generateUID">generateUID</a></li><li><a href="global.html#handleInitialData">handleInitialData</a></li><li><a href="global.html#handleVoteQuestionAnswer">handleVoteQuestionAnswer</a></li><li><a href="global.html#logger">logger</a></li><li><a href="global.html#mapStateToProps">mapStateToProps</a></li><li><a href="global.html#questions">questions</a></li><li><a href="global.html#receiveQuestions">receiveQuestions</a></li><li><a href="global.html#receiveUsers">receiveUsers</a></li><li><a href="global.html#setVisiblityFilter">setVisiblityFilter</a></li><li><a href="global.html#users">users</a></li><li><a href="global.html#VisibilityFilters">VisibilityFilters</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Dec 05 2018 16:18:49 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
