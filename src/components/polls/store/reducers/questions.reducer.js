@@ -25,6 +25,13 @@ const questionsReducer = function(state = initialState, action) {
         data: questions
       };
     }
+    case Actions.STORE_QUESTION_SUCCESS: {
+      const data = [...state.data, { ...action.payload }];
+      return {
+        ...state,
+        data: data
+      };
+    }
     case Actions.UPDATE_QUESTION_SUCCESS: {
       const { questionId, answerId, userId } = action.config.params;
 

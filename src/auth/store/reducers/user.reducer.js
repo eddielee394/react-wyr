@@ -1,12 +1,12 @@
+import imgAvatarDefault from "assets/images/avatars/profile.jpg";
 import * as Actions from "auth/store/actions";
 
 const initialState = {
   role: "guest",
   data: {
     displayName: "Guest",
-    avatarURL: "http://i.pravatar.cc/128",
-    email: "test@test.com",
-    shortcuts: ["calendar", "mail", "contacts", "todo"]
+    avatarURL: imgAvatarDefault,
+    email: "test@test.com"
   }
 };
 
@@ -14,17 +14,17 @@ const user = function(state = initialState, action) {
   switch (action.type) {
     case Actions.SET_USER_DATA: {
       return {
-        ...initialState,
+        ...state,
         ...action.payload
       };
     }
     case Actions.REMOVE_USER_DATA: {
       return {
-        ...initialState
+        ...state
       };
     }
     case Actions.USER_LOGGED_OUT: {
-      return initialState;
+      return state;
     }
     default: {
       return state;

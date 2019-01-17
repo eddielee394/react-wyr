@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { withFormsy } from "formsy-react";
 import {
   Checkbox,
   FormControl,
   FormControlLabel,
   FormHelperText
 } from "@material-ui/core";
+import { withFormsy } from "formsy-react";
 import _ from "@lodash";
 
 class CheckboxFormsy extends Component {

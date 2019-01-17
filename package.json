@@ -20,6 +20,7 @@
     "jsonwebtoken": "8.4.0",
     "jss-extend": "6.2.0",
     "jwt-decode": "2.2.0",
+    "localforage": "^1.7.3",
     "lodash": "4.17.11",
     "lodash-es": "4.17.11",
     "mobile-detect": "1.4.3",
@@ -40,6 +41,7 @@
     "react-scripts": "2.1.1",
     "react-spinners": "^0.5.1",
     "react-swipeable-views": "^0.13.0",
+    "react-table": "^6.8.6",
     "redux": "4.0.1",
     "redux-persist": "^5.10.0",
     "redux-thunk": "2.3.0",
@@ -79,6 +81,7 @@
     "redux-devtools-log-monitor": "^1.4.0",
     "redux-devtools-test-generator": "^0.5.1",
     "redux-devtools-trace-monitor": "^0.1.0",
+    "redux-immutable-state-invariant": "^2.1.0",
     "redux-logger": "^3.0.6",
     "redux-slider-monitor": "^2.0.0-2",
     "tailwindcss": "^0.7.2"

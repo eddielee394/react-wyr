@@ -1,3 +1,4 @@
+import { QuestionAdd } from "components/polls/Questions";
 import React, { Component } from "react";
 import { Drawer, Typography } from "@material-ui/core/";
 import { withStyles } from "@material-ui/core/styles/index";
@@ -24,7 +25,7 @@ class QuickPanel extends Component {
         anchor="right"
         onClose={() => toggleQuickPanel(false)}
       >
-        <Typography>Add Question</Typography>
+        <QuestionAdd />
       </Drawer>
     );
   }

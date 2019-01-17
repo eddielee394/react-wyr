@@ -1,10 +1,17 @@
-import jwt from "jsonwebtoken";
-import { normalize } from "normalizr";
-import { API, Schemas } from "utils";
-import mock from "./mock";
 import _ from "@lodash";
-import { Helpers } from "utils";
 import { amber, blue, blueGrey, green } from "@material-ui/core/colors";
+import imgAvatarKatina from "assets/images/avatars/katina.jpg";
+import imgAvatarOdessa from "assets/images/avatars/odessa.jpg";
+import imgAvatarDefault from "assets/images/avatars/profile.jpg";
+import imgAvatarTyson from "assets/images/avatars/tyson.jpg";
+import imgBg3 from "assets/images/bg-patterns/bg-03.jpg";
+import imgBg4 from "assets/images/bg-patterns/bg-04.jpg";
+import imgBg5 from "assets/images/bg-patterns/bg-05.jpg";
+import imgBg8 from "assets/images/bg-patterns/bg-08.jpg";
+import jwt from "jsonwebtoken";
+import { Helpers } from "utils";
+import jwtService from "utils/jwtService";
+import mock from "./mock";
 
 const jwtConfig = {
   secret: "local-secret",
@@ -13,7 +20,7 @@ const jwtConfig = {
 
 /**
  * Users Data
- * @type {{im_not_a_horse: {id: string, name: string, avatarURL: string, answers: {"8xf0y6ziyjabvozdd253nd": string, "6ni6ok3ym7mf1p33lnez": string, am8ehyc8byjqgar0jgpub9: string, loxhs1bqm25b708cmbf3g: string}, questions: string[]}, burt_b: {id: string, name: string, avatarURL: string, answers: {vthrdm985a262al8qx3do: string, xj352vofupe1dqz9emx13r: string}, questions: string[]}, johndoe: {id: string, name: string, avatarURL: string, answers: {xj352vofupe1dqz9emx13r: string, vthrdm985a262al8qx3do: string, "6ni6ok3ym7mf1p33lnez": string}, questions: string[]}}}
+ *
  */
 let users = {
   da_anchorman: {
@@ -24,7 +31,7 @@ let users = {
     data: {
       displayName: "da_anchorman",
       name: "Ron Burgundy",
-      avatarURL: "http://i.pravatar.cc/150?img=51",
+      avatarURL: imgAvatarOdessa,
       email: "da_anchorman@test.com",
       answers: {
         xj352vofupe1dqz9emx13r: "answerOne",
@@ -32,39 +39,10 @@ let users = {
         loxhs1bqm25b708cmbf3g: "answerTwo",
         "6ni6ok3ym7mf1p33lnez": "answerOne"
       },
-      questions: ["6ni6ok3ym7mf1p33lnez", "xj352vofupe1dqz9emx13r"],
+      questions: ["6ni6ok3ym7mf1p33lnez"],
       settings: {
-        layout: {
-          style: "layout1",
-          config: {
-            scroll: "content",
-            navbar: {
-              display: true,
-              folded: true,
-              position: "left"
-            },
-            toolbar: {
-              display: true,
-              style: "fixed",
-              position: "below"
-            },
-            footer: {
-              display: true,
-              style: "fixed",
-              position: "below"
-            },
-            mode: "fullwidth"
-          }
-        },
-        customScrollbars: true,
-        theme: {
-          main: "defaultDark",
-          navbar: "defaultDark",
-          toolbar: "defaultDark",
-          footer: "defaultDark"
-        }
-      },
-      shortcuts: ["calendar", "mail", "contacts"]
+        coverPhotoUrl: imgBg3
+      }
     }
   },
   burt_b: {
@@ -75,42 +53,19 @@ let users = {
     data: {
       displayName: "burt_b",
       name: "Burt Beynolds",
-      avatarURL: "http://i.pravatar.cc/150?img=53",
+      avatarURL: imgAvatarTyson,
       email: "burt_b@test.com",
       answers: {
         vthrdm985a262al8qx3do: "answerOne",
         xj352vofupe1dqz9emx13r: "answerTwo",
-        xj352vofupe1dqz3emx15z: "answerOne"
+        xj352vofupe1dqz3emx15z: "answerOne",
+        loxhs1bqm25b708cmbf3g: "answerOne",
+        am8ehyc8byjqgar0jgpub9: "answerOne"
       },
       questions: ["loxhs1bqm25b708cmbf3g", "vthrdm985a262al8qx3do"],
       settings: {
-        layout: {
-          style: "layout2",
-          config: {
-            mode: "boxed",
-            scroll: "content",
-            navbar: {
-              display: true
-            },
-            toolbar: {
-              display: true,
-              position: "below"
-            },
-            footer: {
-              display: true,
-              style: "fixed"
-            }
-          }
-        },
-        customScrollbars: true,
-        theme: {
-          main: "greeny",
-          navbar: "mainThemeDark",
-          toolbar: "mainThemeDark",
-          footer: "mainThemeDark"
-        }
-      },
-      shortcuts: ["calendar", "mail", "contacts", "todo"]
+        coverPhotoUrl: imgBg4
+      }
     }
   },
   im_not_a_horse: {
@@ -121,43 +76,19 @@ let users = {
     data: {
       displayName: "im_not_a_horse",
       name: "Sarah Jessica Marker",
-      avatarURL: "http://i.pravatar.cc/150?img=47",
+      avatarURL: imgAvatarKatina,
       email: "im_not_a_horse@test.com",
       answers: {
-        "8xf0y6ziyjabvozdd253nd": "answerOne",
-        "6ni6ok3ym7mf1p33lnez": "answerOne",
-        am8ehyc8byjqgar0jgpub9: "answerTwo",
-        loxhs1bqm25b708cmbf3g: "answerTwo"
+        "8xf0y6ziyjabvozdd253nd": "answerOne"
       },
-      questions: ["8xf0y6ziyjabvozdd253nd", "am8ehyc8byjqgar0jgpub9"],
+      questions: [
+        "8xf0y6ziyjabvozdd253nd",
+        "am8ehyc8byjqgar0jgpub9",
+        "xj352vofupe1dqz9emx13r"
+      ],
       settings: {
-        layout: {
-          style: "layout2",
-          config: {
-            mode: "boxed",
-            scroll: "content",
-            navbar: {
-              display: true
-            },
-            toolbar: {
-              display: true,
-              position: "below"
-            },
-            footer: {
-              display: true,
-              style: "fixed"
-            }
-          }
-        },
-        customScrollbars: true,
-        theme: {
-          main: "greeny",
-          navbar: "mainThemeDark",
-          toolbar: "mainThemeDark",
-          footer: "mainThemeDark"
-        }
-      },
-      shortcuts: ["calendar", "mail", "contacts", "todo"]
+        coverPhotoUrl: imgBg5
+      }
     }
   }
 };
@@ -175,7 +106,7 @@ let questions = [
     answers: {
       answerOne: {
         id: "answerOne",
-        votes: [{ id: "im_not_a_horse" }],
+        votes: ["im_not_a_horse"],
         text: "have horrible short term memory"
       },
       answerTwo: {
@@ -195,7 +126,7 @@ let questions = [
       answerOne: { id: "answerOne", votes: [], text: "become a superhero" },
       answerTwo: {
         id: "answerTwo",
-        votes: [{ id: "da_anchorman" }, { id: "im_not_a_horse" }],
+        votes: ["da_anchorman"],
         text: "become a supervillian"
       }
     },
@@ -207,10 +138,10 @@ let questions = [
     timestamp: 1545876775000,
     title: "Superpowers",
     answers: {
-      answerOne: { id: "answerOne", votes: [], text: "be telekinetic" },
+      answerOne: { id: "answerOne", votes: ["burt_b"], text: "be telekinetic" },
       answerTwo: {
         id: "answerTwo",
-        votes: [{ id: "im_not_a_horse" }],
+        votes: [],
         text: "be telepathic"
       }
     },
@@ -224,12 +155,12 @@ let questions = [
     answers: {
       answerOne: {
         id: "answerOne",
-        votes: [],
+        votes: ["burt_b"],
         text: "be a front-end developer"
       },
       answerTwo: {
         id: "answerTwo",
-        votes: ["im_not_a_horse"],
+        votes: [],
         text: "be a back-end developer"
       }
     },
@@ -256,7 +187,7 @@ let questions = [
   },
   {
     id: "xj352vofupe1dqz9emx13r",
-    author: { id: "da_anchorman" },
+    author: { id: "im_not_a_horse" },
     timestamp: 1544667175000,
     title: "JS or Swift?",
     answers: {
@@ -337,104 +268,6 @@ let categories = [
   }
 ];
 
-// store array in local storage for registered users
-// users = JSON.parse(localStorage.getItem("users")) || users;
-//
-// export function configureFakeDB() {
-//   localStorage.setItem("users", JSON.stringify(users));
-//   localStorage.setItem("questions", JSON.stringify(questions));
-// }
-
-/**
- * Gets Users
- * @return {Promise<{users: Object}>}
- * @private
- */
-export function _getUsers() {
-  return new Promise((res, rej) => {
-    setTimeout(() => res({ ...users }), 1000);
-  });
-}
-
-/**
- * Gets Questions
- * @return {Promise<{questions: Object}>}
- * @private
- */
-export function _getQuestions() {
-  return new Promise((res, rej) => {
-    setTimeout(() => res({ ...questions }), 1000);
-  });
-}
-
-/**
- * Saves the question
- * @param question
- * @return {Promise<{id: string, author: string, 1: Object, 2: Object, timestamp: Object}>}
- * @private
- */
-export function _saveQuestion(question) {
-  return new Promise((res, rej) => {
-    const authUser = question.author;
-    const formattedQuestion = Helpers.formatQuestion(question);
-
-    setTimeout(() => {
-      questions = {
-        ...questions,
-        [formattedQuestion.id]: formattedQuestion
-      };
-
-      users = {
-        ...users,
-        [authUser]: {
-          ...users[authUser],
-          questions: users[authUser].questions.concat([formattedQuestion.id])
-        }
-      };
-
-      res(formattedQuestion);
-    }, 1000);
-  });
-}
-
-/**
- * Saves answer to the question
- * @param authUser
- * @param questionId
- * @param answer
- * @return {Promise<{authUser: string, questionId: string, answer: string }>}
- * @private
- */
-export function _saveQuestionAnswer({ authUser, questionId, answer }) {
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      users = {
-        ...users,
-        [authUser]: {
-          ...users[authUser],
-          answers: {
-            ...users[authUser].answers,
-            [questionId]: answer
-          }
-        }
-      };
-
-      questions = {
-        ...questions,
-        [questionId]: {
-          ...questions[questionId],
-          [answer]: {
-            ...questions[questionId][answer],
-            votes: questions[questionId][answer].votes.concat([authUser])
-          }
-        }
-      };
-
-      res();
-    }, 500);
-  });
-}
-
 /**
  * Questions mock requests
  */
@@ -459,6 +292,13 @@ mock.onGet("/api/questions").reply(request => {
     return [200, response];
   }
   return [200, questions];
+});
+
+mock.onPost("/api/questions").reply(request => {
+  const data = JSON.parse(request.data);
+  const question = Helpers.formatQuestion(data);
+
+  return [200, question];
 });
 
 mock.onGet("/api/question").reply(request => {
@@ -490,83 +330,17 @@ mock.onGet("/api/question/save").reply(request => {
   return [200, question];
 });
 
-mock.onPost("/api/question/update").reply(request => {
-  const data = JSON.parse(request.data);
-  questions = Object.values(questions);
-
-  /*sample data
-
-  let _questions = {
-    ...questions,
-    [data.questionId]: {
-      ...questions[data.questionId],
-      [data.answer]: {
-        ...questions[data.questionId][data.answer],
-        votes: questions[data.questionId][data.answer].votes.concat([
-          data.authUser
-        ])
-      }
-    }
-  };
-  console.log("Question update sample merged questions: ", _questions);
-  */
-
-  /*
-        data: [
-        {
-          id: '8xf0y6ziyjabvozdd253nd',
-          userId: 'im_not_a_horse',
-          timestamp: 1545099175000,
-          title: 'Memory',
-          answers: {
-            answerOne: {
-              votes: [
-                'im_not_a_horse'
-              ],
-              text: 'have horrible short term memory'
-            },
-            answerTwo: {
-              votes: [],
-              text: 'have horrible long term memory'
-            }
-          },
-          categoryId: 1
-        },
-        ]
-   */
-
-  console.log("Question update post request: ", request, request.data, data);
-  console.log("Question update post request.data: ", request.data);
-  console.log("Question update post data: ", data);
-
-  questions = questions.map(_question => {
-    console.log("Axios question 0: ", _question, _question.id);
-
-    if (_question.id === data.questionId) {
-      console.log("Axios question 1: ", _question);
-      // ...questions[data.questionId][data.answer]
-      return _.merge(_question.answers[data.answerId], data);
-    }
-    console.log("Axios question 2: ", _question);
-    return _question;
-  });
-
-  return [200, data];
-});
-
 mock.onGet("/api/questions/categories").reply(() => {
   return [200, categories];
 });
 
 mock.onGet("/api/questions/category").reply(request => {
-  console.log("Axios category request: ", request);
   const { config } = request;
   const { params } = config;
   const { categoryId } = params;
-  console.log("Axios category request: ", params);
-  // console.log("Axios category id: ", categoryId);
+  // "Axios category id: ", categoryId);
   const response = _.find(categories, { value: categoryId });
-  // console.log("Axios category response: ", response);
+  // "Axios category response: ", response);
 
   return [200, response];
 });
@@ -575,21 +349,30 @@ mock.onGet("/api/questions/category").reply(request => {
  * Users mock requests
  */
 mock.onGet("/api/users").reply(config => {
-  users = Object.values(users);
+  // users = Object.values(users);
   const response = users;
   if (users) {
-    return [200, response];
+    return [200, users];
   }
 
   const error = {};
-  return [200, { error }];
+  return [404, { error }];
+});
+
+mock.onPost("/api/users").reply(request => {
+  return [200, users];
 });
 
 mock.onGet("/api/auth").reply(config => {
   const data = JSON.parse(config.data);
   const { email, password } = data;
 
-  const user = _.cloneDeep(users.find(_user => _user.data.email === email));
+  const user = _.chain(users)
+    .cloneDeep()
+    .find({ data: { email: email } })
+    .value();
+
+  console.log("api user", user);
 
   const error = {
     email: user ? null : "Check your username/email",
@@ -621,7 +404,12 @@ mock.onGet("/api/auth/access-token").reply(config => {
   try {
     const { id } = jwt.verify(access_token, jwtConfig.secret);
 
-    const user = _.cloneDeep(users.find(_user => _user.id === id));
+    const user = _.chain(users)
+      .cloneDeep()
+      .find({ data: { id: id } })
+      .value();
+
+    console.log("api user", user);
     delete user.password;
 
     const updatedAccessToken = jwt.sign({ id: user.id }, jwtConfig.secret, {
@@ -643,7 +431,10 @@ mock.onGet("/api/auth/access-token").reply(config => {
 mock.onPost("/api/auth/register").reply(request => {
   const data = JSON.parse(request.data);
   const { displayName, password, email } = data;
-  const isEmailExists = users.find(_user => _user.data.email === email);
+
+  const isEmailExists = Object.keys(users).find(
+    k => users[k].data.email === email
+  );
   const error = {
     email: isEmailExists ? "The email is already in use" : null,
     displayName: displayName !== "" ? null : "Enter display name",
@@ -651,51 +442,41 @@ mock.onPost("/api/auth/register").reply(request => {
   };
   if (!error.displayName && !error.password && !error.email) {
     const newUser = {
-      id: Helpers.generateUID(),
+      id: displayName,
       from: "localStorage",
       password,
       role: "user",
-      token: null,
+      access_token: null,
       data: {
         displayName,
-        avatarURL: "http://pravatar.cc/128",
+        avatarURL: imgAvatarDefault,
         email,
-        settings: {},
-        shortcuts: []
+        answers: {},
+        questions: [],
+        settings: {
+          coverPhotoUrl: imgBg8
+        }
       }
     };
 
-    users = [...users, newUser];
+    users = { ...users, newUser };
 
-    const user = _.cloneDeep(newUser);
-    delete user.password;
-
-    const access_token = jwt.sign({ id: user.id }, jwtConfig.secret, {
+    const access_token = jwt.sign({ id: newUser.id }, jwtConfig.secret, {
       expiresIn: jwtConfig.expiresIn
     });
 
-    // localStorage.setItem("users", JSON.stringify(users));
+    const _newUser = _.cloneDeep(newUser);
+
+    const user = _.merge(_newUser, { access_token: access_token });
 
     const response = {
-      user,
-      access_token
+      user: user,
+      access_token: access_token
     };
+
+    jwtService.setSession(access_token);
 
     return [200, response];
   }
   return [200, { error }];
-});
-
-mock.onPost("/api/auth/user/update").reply(config => {
-  const data = JSON.parse(config.data);
-  const { user } = data;
-
-  users = users.map(_user => {
-    if (_user.id === user.id) {
-      return _.merge(_user, user);
-    }
-    return _user;
-  });
-
-  return [200, user];
 });
