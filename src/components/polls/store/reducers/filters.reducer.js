@@ -15,14 +15,12 @@ const filtersReducer = function(state = initialState, action) {
       };
     }
     case Actions.SET_CATEGORY_FILTER: {
-      console.log("action.category", action.category);
       return {
         ...state,
         categoryFilter: action.payload
       };
     }
     case Actions.SET_STATUS_FILTER: {
-      console.log("action.status: ", action.status);
       return {
         ...state,
         statusFilter: action.payload
