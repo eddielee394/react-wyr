@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 // import withReducer from "store/withReducer";
 // import reducer from "auth/store/reducers";
 // import axios from "axios";
-import Profile from "components/profile/Profile";
+import Profile from "components/Profile/Profile";
 
 class DashboardPage extends Component {
   /**

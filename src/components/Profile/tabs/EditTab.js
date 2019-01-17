@@ -26,7 +26,7 @@ class EditTab extends Component {
   };
 
   componentDidMount() {
-    axios.get("/api/profile/photos-videos").then(res => {
+    axios.get("/api/Profile/photos-videos").then(res => {
       this.setState({ photosVideos: res.data });
     });
   }

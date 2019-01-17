@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { FusePageSimple, FuseAnimate } from "@fuse";
 import { Avatar, Button, Tab, Tabs, Typography } from "@material-ui/core";
-import TimelineTab from "components/profile/tabs/TimelineTab";
+import TimelineTab from "components/Profile/tabs/TimelineTab";
 import connect from "react-redux/es/connect/connect";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
@@ -15,7 +15,7 @@ import imgMountain from "assets/images/bg-patterns/bg-full_2.jpg";
 import imgWoodlands from "assets/images/bg-patterns/bg-1920_2.jpg";
 import imgBatman from "assets/images/bg-patterns/dark-material-bg.jpg";
 import _ from "lodash";
-import EditTab from "components/profile/tabs/EditTab";
+import EditTab from "components/Profile/tabs/EditTab";
 
 const styles = theme => ({
   layoutRoot: {},
