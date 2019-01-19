@@ -32,7 +32,7 @@ let users = {
         loxhs1bqm25b708cmbf3g: "answerTwo",
         "6ni6ok3ym7mf1p33lnez": "answerOne"
       },
-      questions: ["6ni6ok3ym7mf1p33lnez", "xj352vofupe1dqz9emx13r"],
+      questions: ["6ni6ok3ym7mf1p33lnez"],
       settings: {
         layout: {
           style: "layout1",
@@ -80,7 +80,9 @@ let users = {
       answers: {
         vthrdm985a262al8qx3do: "answerOne",
         xj352vofupe1dqz9emx13r: "answerTwo",
-        xj352vofupe1dqz3emx15z: "answerOne"
+        xj352vofupe1dqz3emx15z: "answerOne",
+        loxhs1bqm25b708cmbf3g: "answerOne",
+        am8ehyc8byjqgar0jgpub9: "answerOne"
       },
       questions: ["loxhs1bqm25b708cmbf3g", "vthrdm985a262al8qx3do"],
       settings: {
@@ -124,40 +126,16 @@ let users = {
       avatarURL: "http://i.pravatar.cc/150?img=47",
       email: "im_not_a_horse@test.com",
       answers: {
-        "8xf0y6ziyjabvozdd253nd": "answerOne",
-        "6ni6ok3ym7mf1p33lnez": "answerOne",
-        am8ehyc8byjqgar0jgpub9: "answerTwo",
-        loxhs1bqm25b708cmbf3g: "answerTwo"
+        "8xf0y6ziyjabvozdd253nd": "answerOne"
+        // "6ni6ok3ym7mf1p33lnez": "answerOne"
       },
-      questions: ["8xf0y6ziyjabvozdd253nd", "am8ehyc8byjqgar0jgpub9"],
-      settings: {
-        layout: {
-          style: "layout2",
-          config: {
-            mode: "boxed",
-            scroll: "content",
-            navbar: {
-              display: true
-            },
-            toolbar: {
-              display: true,
-              position: "below"
-            },
-            footer: {
-              display: true,
-              style: "fixed"
-            }
-          }
-        },
-        customScrollbars: true,
-        theme: {
-          main: "greeny",
-          navbar: "mainThemeDark",
-          toolbar: "mainThemeDark",
-          footer: "mainThemeDark"
-        }
-      },
-      shortcuts: ["calendar", "mail", "contacts", "todo"]
+      questions: [
+        "8xf0y6ziyjabvozdd253nd",
+        "am8ehyc8byjqgar0jgpub9",
+        "xj352vofupe1dqz9emx13r"
+      ],
+      settings: {},
+      shortcuts: []
     }
   }
 };
@@ -175,7 +153,7 @@ let questions = [
     answers: {
       answerOne: {
         id: "answerOne",
-        votes: [{ id: "im_not_a_horse" }],
+        votes: ["im_not_a_horse"],
         text: "have horrible short term memory"
       },
       answerTwo: {
@@ -195,7 +173,7 @@ let questions = [
       answerOne: { id: "answerOne", votes: [], text: "become a superhero" },
       answerTwo: {
         id: "answerTwo",
-        votes: [{ id: "da_anchorman" }, { id: "im_not_a_horse" }],
+        votes: ["da_anchorman"],
         text: "become a supervillian"
       }
     },
@@ -207,10 +185,10 @@ let questions = [
     timestamp: 1545876775000,
     title: "Superpowers",
     answers: {
-      answerOne: { id: "answerOne", votes: [], text: "be telekinetic" },
+      answerOne: { id: "answerOne", votes: ["burt_b"], text: "be telekinetic" },
       answerTwo: {
         id: "answerTwo",
-        votes: [{ id: "im_not_a_horse" }],
+        votes: [],
         text: "be telepathic"
       }
     },
@@ -224,12 +202,12 @@ let questions = [
     answers: {
       answerOne: {
         id: "answerOne",
-        votes: [],
+        votes: ["burt_b"],
         text: "be a front-end developer"
       },
       answerTwo: {
         id: "answerTwo",
-        votes: ["im_not_a_horse"],
+        votes: [],
         text: "be a back-end developer"
       }
     },
@@ -256,7 +234,7 @@ let questions = [
   },
   {
     id: "xj352vofupe1dqz9emx13r",
-    author: { id: "da_anchorman" },
+    author: { id: "im_not_a_horse" },
     timestamp: 1544667175000,
     title: "JS or Swift?",
     answers: {
@@ -658,8 +636,10 @@ mock.onPost("/api/auth/register").reply(request => {
       token: null,
       data: {
         displayName,
-        avatarURL: "http://pravatar.cc/128",
+        avatarURL: "http://i.pravatar.cc/150",
         email,
+        answers: {},
+        questions: [],
         settings: {},
         shortcuts: []
       }
@@ -678,6 +658,7 @@ mock.onPost("/api/auth/register").reply(request => {
 
     const response = {
       user,
+      users,
       access_token
     };
 

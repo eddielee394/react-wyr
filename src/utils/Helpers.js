@@ -84,6 +84,13 @@ class Helpers {
 
     return `${value}%`;
   };
+
+  static rankArray = (num, arr) =>
+    arr
+      .sort(function(a, b) {
+        return b - a;
+      })
+      .indexOf(num) + 1;
 }
 
 export default Helpers;
