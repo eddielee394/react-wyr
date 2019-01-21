@@ -1,22 +1,13 @@
+import { SelectFormsy, TextFieldFormsy } from "@fuse";
+import { Button, MenuItem, Typography, withStyles } from "@material-ui/core";
+import * as Actions from "components/polls/store/actions";
 import reducer from "components/polls/store/reducers";
-import React, { Component } from "react";
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  TextField,
-  Select,
-  Typography,
-  withStyles
-} from "@material-ui/core";
 import Formsy from "formsy-react";
+import React, { Component } from "react";
 import connect from "react-redux/es/connect/connect";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import withReducer from "store/withReducer";
-import * as Actions from "components/polls/store/actions";
 
 class QuestionAdd extends Component {
   state = {
@@ -43,45 +34,33 @@ class QuestionAdd extends Component {
     console.info("submit", model);
   };
 
-  handleSetCategorySelect = event => {
-    const categoryId = event.target.value;
-    let filterUrl = { categoryId: categoryId };
-
-    if (!categoryId || categoryId === "0") {
-      filterUrl = { categoryId: undefined };
-    }
-
-    this.updateUrlQuery(filterUrl);
-
-    return this.props.setCategoryFilter(event);
-  };
-
   render() {
-    const { categorySelect, categories } = this.props;
-    const { canSubmit } = this.state;
+    const { categories } = this.props;
+    const { canSubmit, category, title, answerOne, answerTwo } = this.state;
+
     const categorySelectElement = (
-      <FormControl className="flex w-full mb-24" variant="outlined">
-        <InputLabel htmlFor="category-label-placeholder">Category</InputLabel>
-        <Select
-          value={categorySelect}
-          onChange={this.handleSetCategoryFilter}
-          input={
-            <OutlinedInput
-              labelWidth={"category".length * 9}
-              name="category"
-              id="category-label-placeholder"
-            />
-          }
-          required
-        >
-          {categories.map(category => (
-            <MenuItem value={category.id} key={category.id}>
-              {category.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <SelectFormsy
+        name="category"
+        label="Category *"
+        value={"0"}
+        onChange={this.handleSetCategoryFilter}
+        variant="outlined"
+        className="my-16"
+        validations={{ notEquals: (values, value) => value !== "0" }}
+        validationError="Category is required"
+        required
+      >
+        <MenuItem value="0" key="0">
+          Select Category
+        </MenuItem>
+        {categories.map(category => (
+          <MenuItem value={category.id} key={category.id}>
+            {category.label}
+          </MenuItem>
+        ))}
+      </SelectFormsy>
     );
+
     return (
       <div className="max-w-sm">
         <Typography className="h2 mb-24">Submit Question</Typography>
@@ -92,13 +71,13 @@ class QuestionAdd extends Component {
           ref={form => (this.form = form)}
           className="flex flex-col justify-center"
         >
-          <TextField
-            className="mb-24"
+          <TextFieldFormsy
+            className="my-16"
             label="Title"
             autoFocus
             id="title"
             name="title"
-            value={this.state.title}
+            value={title}
             onChange={this.handleChange}
             variant="outlined"
             required
@@ -107,29 +86,31 @@ class QuestionAdd extends Component {
 
           {categorySelectElement}
 
-          <TextField
-            className="mb-24"
+          <TextFieldFormsy
+            className="my-16"
             label="Answer One"
             id="answerOne"
             name="answerOne"
-            value={this.state.answerOne}
+            value={answerOne}
             onChange={this.handleChange}
             variant="outlined"
             multiline
             rows={5}
             fullWidth
+            required
           />
-          <TextField
-            className="mb-24"
+          <TextFieldFormsy
+            className="my-16"
             label="Answer Two"
             id="answerTwo"
             name="answerTwo"
-            value={this.state.answerTwo}
+            value={answerTwo}
             onChange={this.handleChange}
             variant="outlined"
             multiline
             rows={5}
             fullWidth
+            required
           />
 
           <Button
@@ -137,7 +118,7 @@ class QuestionAdd extends Component {
             variant="contained"
             color="primary"
             className="mx-auto my-16"
-            aria-label="LOG IN"
+            aria-label="Submit"
             disabled={!canSubmit}
           >
             Can submit
