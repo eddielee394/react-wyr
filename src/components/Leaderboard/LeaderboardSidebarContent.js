@@ -86,11 +86,11 @@ class LeaderboardSidebarContent extends Component {
               </ListItem>
               <Divider />
               <ListSubheader>
-                <Typography variant="Subheading" className="pt-16" gutterBottom>
+                <Typography variant="subtitle2" className="pt-16" gutterBottom>
                   My Stats
                 </Typography>
               </ListSubheader>
-              <ListItem activeClassName="active" className={classes.listItem}>
+              <ListItem className={classes.listItem}>
                 <Icon className="list-item-icon text-16" color="action">
                   assignment_turned_in
                 </Icon>
@@ -105,7 +105,7 @@ class LeaderboardSidebarContent extends Component {
                   </Avatar>
                 </ListItemAvatar>
               </ListItem>
-              <ListItem activeClassName="active" className={classes.listItem}>
+              <ListItem className={classes.listItem}>
                 <Icon className="list-item-icon text-16" color="action">
                   ballot
                 </Icon>
@@ -120,7 +120,7 @@ class LeaderboardSidebarContent extends Component {
                   </Avatar>
                 </ListItemAvatar>
               </ListItem>
-              <ListItem activeClassName="active" className={classes.listItem}>
+              <ListItem className={classes.listItem}>
                 <Icon className="list-item-icon text-16" color="action">
                   whatshot
                 </Icon>

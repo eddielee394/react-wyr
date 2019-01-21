@@ -324,28 +324,6 @@ let categories = [
 // }
 
 /**
- * Gets Users
- * @return {Promise<{users: Object}>}
- * @private
- */
-export function _getUsers() {
-  return new Promise((res, rej) => {
-    setTimeout(() => res({ ...users }), 1000);
-  });
-}
-
-/**
- * Gets Questions
- * @return {Promise<{questions: Object}>}
- * @private
- */
-export function _getQuestions() {
-  return new Promise((res, rej) => {
-    setTimeout(() => res({ ...questions }), 1000);
-  });
-}
-
-/**
  * Saves the question
  * @param question
  * @return {Promise<{id: string, author: string, 1: Object, 2: Object, timestamp: Object}>}
