@@ -13,9 +13,9 @@ import {
  * @param {function} getInitialData
  * @param {function} getUsers
  * @param {function} getQuestions
- * @param {function} saveQuestion
+ * @param {function} storeQuestion
  * @param {function} saveQuestionAnswer
- * @type {{getInitialData: (function(): Promise<{users: Object, questions: Object} | never>), getUsers: (function(): Promise<{Object}>), getQuestions: (function(): Promise<Object>), saveQuestion: (function(*=): Promise<Object>), saveQuestionAnswer: (function(*=): Promise<Object>)}}
+ * @type {{getInitialData: (function(): Promise<{users: Object, questions: Object} | never>), getUsers: (function(): Promise<{Object}>), getQuestions: (function(): Promise<Object>), storeQuestion: (function(*=): Promise<Object>), saveQuestionAnswer: (function(*=): Promise<Object>)}}
  */
 class API {
   static ROOT_URL = process.env.REACT_APP_API_ROOT_URL;
@@ -65,7 +65,7 @@ class API {
    * @return {Promise<{id: string, author: string, optionOne: Object, optionTwo: Object, timestamp: Object}>}
    * @param data
    */
-  static saveQuestion = data => axios.post("/api/question/save", data);
+  static storeQuestion = data => "/api/questions";
 
   /**
    * Saves the answer to a question
@@ -74,7 +74,7 @@ class API {
    * @return {Promise<{authUser: string, questionId: string, answer: string }>}
    * @param data
    */
-  static updateQuestion = data => axios.post("/api/question/update", data);
+  static updateQuestion = data => "/api/question/update";
 }
 
 export default API;

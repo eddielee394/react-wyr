@@ -12,8 +12,8 @@ import withReducer from "store/withReducer";
 class QuestionAdd extends Component {
   state = {
     title: "",
-    answerOne: "",
-    answerTwo: "",
+    answerOneText: "",
+    answerTwoText: "",
     category: "",
     canSubmit: false
   };
@@ -30,13 +30,18 @@ class QuestionAdd extends Component {
     this.setState({ canSubmit: true });
   };
 
+  resetForm = () => {
+    this.form.reset();
+  };
+
   onSubmit = model => {
-    console.info("submit", model);
+    this.props.storeQuestion(model);
+    this.resetForm();
   };
 
   render() {
     const { categories } = this.props;
-    const { canSubmit, category, title, answerOne, answerTwo } = this.state;
+    const { canSubmit, title, answerOneText, answerTwoText } = this.state;
 
     const categorySelectElement = (
       <SelectFormsy
@@ -89,9 +94,9 @@ class QuestionAdd extends Component {
           <TextFieldFormsy
             className="my-16"
             label="Answer One"
-            id="answerOne"
-            name="answerOne"
-            value={answerOne}
+            id="answerOneText"
+            name="answerOneText"
+            value={answerOneText}
             onChange={this.handleChange}
             variant="outlined"
             multiline
@@ -102,9 +107,9 @@ class QuestionAdd extends Component {
           <TextFieldFormsy
             className="my-16"
             label="Answer Two"
-            id="answerTwo"
-            name="answerTwo"
-            value={answerTwo}
+            id="answerTwoText"
+            name="answerTwoText"
+            value={answerTwoText}
             onChange={this.handleChange}
             variant="outlined"
             multiline
@@ -132,7 +137,8 @@ class QuestionAdd extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      getCategories: Actions.getCategories
+      getCategories: Actions.getCategories,
+      storeQuestion: Actions.storeQuestion
     },
     dispatch
   );

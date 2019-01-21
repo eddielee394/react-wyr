@@ -4,8 +4,8 @@
  */
 import axios from "axios";
 
-const axiosRequest = ({ endpoint, method, ...config }) => {
-  return axios({ method: method, url: endpoint, config });
+const axiosRequest = ({ data, endpoint, method, ...config }) => {
+  return axios({ data: data, method: method, url: endpoint, config });
 };
 
 const apiRequest = params => {
@@ -43,7 +43,7 @@ export default store => next => action => {
   }
 
   let { endpoint } = callAPI;
-  const { schema, types, method, ...config } = callAPI;
+  const { schema, types, method, data, ...config } = callAPI;
   const validMethods = [
     "GET",
     "HEAD",
@@ -88,7 +88,7 @@ export default store => next => action => {
   const [requestType, successType, failureType] = types;
   next(actionWith({ type: requestType }));
 
-  return callApi({ endpoint, method, schema, ...config }).then(
+  return callApi({ endpoint, method, schema, data, ...config }).then(
     response =>
       next(
         actionWith({

@@ -40,7 +40,7 @@ class Helpers {
    */
   static formatQuestion = ({ optionOneText, optionTwoText, author }) => {
     return {
-      id: this.generateUID(),
+      id: Helpers.generateUID(),
       timestamp: Date.now(),
       author,
       optionOne: {

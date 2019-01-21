@@ -56,50 +56,52 @@ export function updateUserShortcuts(shortcuts) {
 /**
  * Update User Shortcuts
  */
-export function updateUserAnswer(data) {
-  const { questionId, answerId } = data;
-  return (dispatch, getState) => {
-    const user = getState().auth.user;
-    const newUser = {
-      ...user,
-      data: {
-        ...user.data,
-        answers: {
-          ...user.data.answers,
-          [questionId]: answerId
-        }
+export const updateUserAnswer = data => (dispatch, getState) => {
+  const { questionId, answerId, author } = data;
+
+  let user = {};
+  if (author && author === getState().auth.user.id) {
+    user = _.find(getState().auth.users, { id: author });
+  } else {
+    user = getState().auth.user;
+  }
+
+  const newUser = {
+    ...user,
+    data: {
+      ...user.data,
+      answers: {
+        ...user.data.answers,
+        [questionId]: answerId
       }
-    };
-
-    console.log(newUser);
-
-    updateUserData(newUser);
-
-    return dispatch(setUserData(newUser));
+    }
   };
-}
-export function updateUserQuestion(data) {
-  const { questionId, answerId } = data;
-  return (dispatch, getState) => {
-    const user = getState().auth.user;
-    const newUser = {
-      ...user,
-      data: {
-        ...user.data,
-        answers: {
-          ...user.data.answers,
-          [questionId]: answerId
-        }
-      }
-    };
 
-    console.log(newUser);
+  updateUserData(newUser);
 
-    updateUserData(newUser);
+  return dispatch(setUserData(newUser));
+};
+export const updateUserQuestion = data => (dispatch, getState) => {
+  const { id, author } = data;
+  let user = {};
+  if (author && author === getState().auth.user.id) {
+    user = _.find(getState().auth.users, { id: author });
+  } else {
+    user = getState().auth.user;
+  }
 
-    return dispatch(setUserData(newUser));
+  const newUser = {
+    ...user,
+    data: {
+      ...user.data,
+      questions: [...user.data.questions.concat(id)]
+    }
   };
-}
+
+  updateUserData(newUser);
+
+  return dispatch(setUserData(newUser));
+};
 
 /**
  * Remove User Data

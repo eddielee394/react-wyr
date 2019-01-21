@@ -324,74 +324,6 @@ let categories = [
 // }
 
 /**
- * Saves the question
- * @param question
- * @return {Promise<{id: string, author: string, 1: Object, 2: Object, timestamp: Object}>}
- * @private
- */
-export function _saveQuestion(question) {
-  return new Promise((res, rej) => {
-    const authUser = question.author;
-    const formattedQuestion = Helpers.formatQuestion(question);
-
-    setTimeout(() => {
-      questions = {
-        ...questions,
-        [formattedQuestion.id]: formattedQuestion
-      };
-
-      users = {
-        ...users,
-        [authUser]: {
-          ...users[authUser],
-          questions: users[authUser].questions.concat([formattedQuestion.id])
-        }
-      };
-
-      res(formattedQuestion);
-    }, 1000);
-  });
-}
-
-/**
- * Saves answer to the question
- * @param authUser
- * @param questionId
- * @param answer
- * @return {Promise<{authUser: string, questionId: string, answer: string }>}
- * @private
- */
-export function _saveQuestionAnswer({ authUser, questionId, answer }) {
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      users = {
-        ...users,
-        [authUser]: {
-          ...users[authUser],
-          answers: {
-            ...users[authUser].answers,
-            [questionId]: answer
-          }
-        }
-      };
-
-      questions = {
-        ...questions,
-        [questionId]: {
-          ...questions[questionId],
-          [answer]: {
-            ...questions[questionId][answer],
-            votes: questions[questionId][answer].votes.concat([authUser])
-          }
-        }
-      };
-
-      res();
-    }, 500);
-  });
-}
-
-/**
  * Questions mock requests
  */
 mock.onGet("/api/questions").reply(request => {
@@ -415,6 +347,13 @@ mock.onGet("/api/questions").reply(request => {
     return [200, response];
   }
   return [200, questions];
+});
+
+mock.onPost("/api/questions").reply(request => {
+  const data = JSON.parse(request.data);
+  const question = Helpers.formatQuestion(data);
+
+  return [200, question];
 });
 
 mock.onGet("/api/question").reply(request => {
@@ -444,70 +383,6 @@ mock.onGet("/api/question/save").reply(request => {
     questions = [...questions, question];
   }
   return [200, question];
-});
-
-mock.onPost("/api/question/update").reply(request => {
-  const data = JSON.parse(request.data);
-  questions = Object.values(questions);
-
-  /*sample data
-
-  let _questions = {
-    ...questions,
-    [data.questionId]: {
-      ...questions[data.questionId],
-      [data.answer]: {
-        ...questions[data.questionId][data.answer],
-        votes: questions[data.questionId][data.answer].votes.concat([
-          data.authUser
-        ])
-      }
-    }
-  };
-  console.log("Question update sample merged questions: ", _questions);
-  */
-
-  /*
-        data: [
-        {
-          id: '8xf0y6ziyjabvozdd253nd',
-          userId: 'im_not_a_horse',
-          timestamp: 1545099175000,
-          title: 'Memory',
-          answers: {
-            answerOne: {
-              votes: [
-                'im_not_a_horse'
-              ],
-              text: 'have horrible short term memory'
-            },
-            answerTwo: {
-              votes: [],
-              text: 'have horrible long term memory'
-            }
-          },
-          categoryId: 1
-        },
-        ]
-   */
-
-  console.log("Question update post request: ", request, request.data, data);
-  console.log("Question update post request.data: ", request.data);
-  console.log("Question update post data: ", data);
-
-  questions = questions.map(_question => {
-    console.log("Axios question 0: ", _question, _question.id);
-
-    if (_question.id === data.questionId) {
-      console.log("Axios question 1: ", _question);
-      // ...questions[data.questionId][data.answer]
-      return _.merge(_question.answers[data.answerId], data);
-    }
-    console.log("Axios question 2: ", _question);
-    return _question;
-  });
-
-  return [200, data];
 });
 
 mock.onGet("/api/questions/categories").reply(() => {
