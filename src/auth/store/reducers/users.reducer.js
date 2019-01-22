@@ -8,13 +8,13 @@ const users = function(state = initialState, action) {
     case Actions.GET_ALL_USERS: {
       return {
         ...state,
-        ...action.payload
+        ..._.keyBy(action.payload, "id")
       };
     }
     case Actions.STORE_USER_SUCCESS: {
-      const users = _.cloneDeep(state);
-      const usersArray = Object.keys(users).map(k => users[k]);
-      const newUsers = [...usersArray, action.payload];
+      const _users = _.cloneDeep(state);
+      const users = _.keyBy(_users, "id");
+      const newUsers = { ...users, [action.payload.id]: { ...action.payload } };
 
       return {
         ...state,
