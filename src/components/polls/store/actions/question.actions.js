@@ -1,7 +1,7 @@
-import { updateUserAnswer, updateUserQuestion } from "auth/store/actions";
-import { CALL_API } from "middleware/api";
-import { showMessage } from "store/actions/fuse";
-import { API, Schemas } from "utils";
+import {updateUserAnswer, updateUserQuestion} from "auth/store/actions";
+import {CALL_API} from "middleware/api";
+import {showMessage} from "store/actions/fuse";
+import {API, Schemas} from "utils";
 
 export const GET_QUESTION = "[POLLS] GET QUESTION";
 
@@ -28,7 +28,7 @@ export function getQuestion(params) {
 export const storeQuestion = data => (dispatch, getState) => {
   const author = getState().auth.user.id;
 
-  const updatedData = Object.assign(data, { author: author });
+  const updatedData = Object.assign({}, data, { author: author });
 
   dispatch({
     [CALL_API]: {

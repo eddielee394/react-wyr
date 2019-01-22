@@ -40,16 +40,14 @@ const persistConfig = {
   key: "root",
   storage: localForage,
   timeout: 0,
-  // whitelist: ["users", "questions"]
-  // stateReconciler: hardSet // see "Merge Process" section for details.
   stateReconciler: autoMergeLevel2,
-  blacklist: ["classes"],
+  blacklist: ["classes", "fuse", "quickPanel"],
   debug: true
 };
 
 const persistedReducer = persistReducer(persistConfig, createReducer());
 // const store = createStore(createReducer(), enhancer);
-const store = createStore(persistedReducer, enhancer);
+const store = createStore(persistedReducer, undefined, enhancer);
 const persistor = persistStore(store);
 
 store.asyncReducers = {};

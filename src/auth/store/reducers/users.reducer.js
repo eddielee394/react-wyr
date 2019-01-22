@@ -8,13 +8,14 @@ const users = function(state = initialState, action) {
     case Actions.GET_ALL_USERS: {
       return {
         ...state,
-        ..._.keyBy(action.payload, "id")
+        // ..._.keyBy(action.payload, "id")
+        ...action.payload
       };
     }
     case Actions.STORE_USER_SUCCESS: {
       const _users = _.cloneDeep(state);
-      const users = _.keyBy(_users, "id");
-      const newUsers = { ...users, [action.payload.id]: { ...action.payload } };
+      // const users = _.keyBy(_users, "id");
+      const newUsers = { ...users, [action.payload.id]: action.payload };
 
       return {
         ...state,
@@ -22,13 +23,13 @@ const users = function(state = initialState, action) {
       };
     }
     case Actions.UPDATE_USER_SUCCESS: {
-      const _users = _.cloneDeep(state);
-      const users = _.keyBy(_users, "id");
+      // const _users = _.cloneDeep(state);
+      // const users = _.keyBy(_users, "id");
 
       const newUsers = {
-        ...users,
+        ...state,
         [action.payload.id]: {
-          ...users[action.payload.id],
+          ...state[action.payload.id],
           ...action.payload
         }
       };

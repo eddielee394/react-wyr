@@ -1,7 +1,7 @@
 import _ from "@lodash";
-import { amber, blue, blueGrey, green } from "@material-ui/core/colors";
+import {amber, blue, blueGrey, green} from "@material-ui/core/colors";
 import jwt from "jsonwebtoken";
-import { Helpers } from "utils";
+import {Helpers} from "utils";
 import jwtService from "utils/jwtService";
 import mock from "./mock";
 
@@ -403,14 +403,14 @@ mock.onGet("/api/questions/category").reply(request => {
  * Users mock requests
  */
 mock.onGet("/api/users").reply(config => {
-  users = Object.values(users);
+  // users = Object.values(users);
   const response = users;
   if (users) {
-    return [200, response];
+    return [200, users];
   }
 
   const error = {};
-  return [200, { error }];
+  return [404, { error }];
 });
 
 mock.onPost("/api/users").reply(request => {
@@ -421,7 +421,9 @@ mock.onGet("/api/auth").reply(config => {
   const data = JSON.parse(config.data);
   const { email, password } = data;
 
-  const user = _.cloneDeep(users.find(_user => _user.data.email === email));
+  const user = _.cloneDeep(
+    Object.keys(users).find(k => users[k].data.email === email)
+  );
 
   const error = {
     email: user ? null : "Check your username/email",
@@ -453,7 +455,7 @@ mock.onGet("/api/auth/access-token").reply(config => {
   try {
     const { id } = jwt.verify(access_token, jwtConfig.secret);
 
-    const user = _.cloneDeep(users.find(_user => _user.id === id));
+    const user = _.cloneDeep(Object.keys(users).find(k => users[k].id === id));
     delete user.password;
 
     const updatedAccessToken = jwt.sign({ id: user.id }, jwtConfig.secret, {
@@ -475,7 +477,10 @@ mock.onGet("/api/auth/access-token").reply(config => {
 mock.onPost("/api/auth/register").reply(request => {
   const data = JSON.parse(request.data);
   const { displayName, password, email } = data;
-  const isEmailExists = users.find(_user => _user.data.email === email);
+
+  const isEmailExists = Object.keys(users).find(
+    k => users[k].data.email === email
+  );
   const error = {
     email: isEmailExists ? "The email is already in use" : null,
     displayName: displayName !== "" ? null : "Enter display name",
@@ -499,7 +504,7 @@ mock.onPost("/api/auth/register").reply(request => {
       }
     };
 
-    users = [...users, newUser];
+    users = { ...users, newUser };
 
     const access_token = jwt.sign({ id: newUser.id }, jwtConfig.secret, {
       expiresIn: jwtConfig.expiresIn

@@ -81,6 +81,7 @@
     "redux-devtools-log-monitor": "^1.4.0",
     "redux-devtools-test-generator": "^0.5.1",
     "redux-devtools-trace-monitor": "^0.1.0",
+    "redux-immutable-state-invariant": "^2.1.0",
     "redux-logger": "^3.0.6",
     "redux-slider-monitor": "^2.0.0-2",
     "tailwindcss": "^0.7.2"

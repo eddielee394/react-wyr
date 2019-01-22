@@ -1,7 +1,7 @@
-import {setUserData} from "auth/store/actions";
-import {store} from "store";
+import { setUserData } from "auth/store/actions";
+import { store } from "store";
 import * as Actions from "store/actions";
-import {API} from "utils";
+import { API } from "utils";
 
 export const GET_ALL_USERS = "[USERS] GET ALL";
 export const STORE_USER_SUCCESS = "[USER] STORE USER SUCCESS";
