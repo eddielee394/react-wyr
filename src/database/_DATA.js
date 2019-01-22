@@ -1,7 +1,7 @@
 import _ from "@lodash";
-import {amber, blue, blueGrey, green} from "@material-ui/core/colors";
+import { amber, blue, blueGrey, green } from "@material-ui/core/colors";
 import jwt from "jsonwebtoken";
-import {Helpers} from "utils";
+import { Helpers } from "utils";
 import jwtService from "utils/jwtService";
 import mock from "./mock";
 
@@ -519,18 +519,4 @@ mock.onPost("/api/auth/register").reply(request => {
     return [200, response];
   }
   return [200, { error }];
-});
-
-mock.onPost("/api/auth/user/update").reply(config => {
-  const data = JSON.parse(config.data);
-  const { user } = data;
-
-  users = users.map(_user => {
-    if (_user.id === user.id) {
-      return _.merge(_user, user);
-    }
-    return _user;
-  });
-
-  return [200, user];
 });

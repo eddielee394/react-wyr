@@ -1,22 +1,22 @@
 import {FuseAnimateGroup} from "@fuse";
 import {
-  AppBar,
-  Avatar,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  Divider,
-  Icon,
-  IconButton,
-  Input,
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
-  Toolbar,
-  Typography
+    AppBar,
+    Avatar,
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    CardHeader,
+    Divider,
+    Icon,
+    IconButton,
+    Input,
+    List,
+    ListItem,
+    ListItemText,
+    Paper,
+    Toolbar,
+    Typography
 } from "@material-ui/core";
 import {withStyles} from "@material-ui/core/styles/index";
 import classNames from "classnames";
