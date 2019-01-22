@@ -15,17 +15,12 @@ const apiRequest = params => {
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
 const callApi = params => {
-  console.log("callApi", params);
   return apiRequest(params)
     .then(response => {
-      console.log("api.CallApi request success", response);
-
       // return Object.assign({}, normalize(response.data, schema));
       return response.data;
     })
     .catch(error => {
-      console.log("api.CallApi request error: ", error.config);
-
       return Promise.reject(error.message);
     });
 };

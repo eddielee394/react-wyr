@@ -1,21 +1,21 @@
-import * as Actions from "components/polls/store/actions";
-import reducer from "components/polls/store/reducers";
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { FusePageSimple, FuseAnimate } from "@fuse";
-import { Avatar, Button, Tab, Tabs, Typography } from "@material-ui/core";
-import TimelineTab from "components/Profile/tabs/TimelineTab";
-import connect from "react-redux/es/connect/connect";
-import { withRouter } from "react-router-dom";
-import { bindActionCreators } from "redux";
-import withReducer from "store/withReducer";
+import {FuseAnimate, FusePageSimple} from "@fuse";
+import {Avatar, Button, Tab, Tabs, Typography} from "@material-ui/core";
+import {withStyles} from "@material-ui/core/styles";
 import imgArtsy from "assets/images/bg-patterns/9.png";
+import imgWoodlands from "assets/images/bg-patterns/bg-1920_2.jpg";
 import imgDowntown from "assets/images/bg-patterns/bg-24.jpg";
 import imgMountain from "assets/images/bg-patterns/bg-full_2.jpg";
-import imgWoodlands from "assets/images/bg-patterns/bg-1920_2.jpg";
 import imgBatman from "assets/images/bg-patterns/dark-material-bg.jpg";
-import _ from "lodash";
+import * as Actions from "components/polls/store/actions";
+import reducer from "components/polls/store/reducers";
 import EditTab from "components/Profile/tabs/EditTab";
+import TimelineTab from "components/Profile/tabs/TimelineTab";
+import _ from "lodash";
+import React, {Component} from "react";
+import connect from "react-redux/es/connect/connect";
+import {withRouter} from "react-router-dom";
+import {bindActionCreators} from "redux";
+import withReducer from "store/withReducer";
 
 const styles = theme => ({
   layoutRoot: {},
@@ -61,7 +61,6 @@ class Profile extends Component {
 
   getCoverPhoto() {
     const { coverPhotos, activeCoverPhoto } = this.state;
-    console.log(coverPhotos.filter(photo => photo.id === activeCoverPhoto));
     const coverPhoto = _.filter(coverPhotos, { id: activeCoverPhoto });
     return coverPhoto[0];
   }

@@ -19,7 +19,6 @@ class LeaderboardList extends Component {
   handleUserProfileRedirect = userId => {};
 
   avatarClass = value => {
-    console.log(value === 1);
     if (value === 1) {
       return this.props.classes.goldAvatar;
     }

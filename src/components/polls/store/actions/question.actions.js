@@ -14,14 +14,10 @@ export const STORE_QUESTION_SUCCESS = "[POLLS] STORE QUESTION SUCCESS";
 export const STORE_QUESTION_FAILURE = "[POLLS] STORE QUESTION FAILURE";
 
 export function getQuestion(params) {
-  console.log("Actions.Question.getQuestion params: ", params);
-
   const request = API.getQuestion(params);
-  console.log("Actions.Question.getQuestion request: ", request);
 
   return dispatch =>
     request.then(response => {
-      console.log("Actions.Question.getQuestion response: ", response);
       dispatch({
         type: GET_QUESTION,
         payload: response.data

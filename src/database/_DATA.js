@@ -1,10 +1,9 @@
-import jwt from "jsonwebtoken";
-import { normalize } from "normalizr";
-import { API, Schemas } from "utils";
-import mock from "./mock";
 import _ from "@lodash";
-import { Helpers } from "utils";
-import { amber, blue, blueGrey, green } from "@material-ui/core/colors";
+import {amber, blue, blueGrey, green} from "@material-ui/core/colors";
+import jwt from "jsonwebtoken";
+import {Helpers} from "utils";
+import jwtService from "utils/jwtService";
+import mock from "./mock";
 
 const jwtConfig = {
   secret: "local-secret",
@@ -390,14 +389,12 @@ mock.onGet("/api/questions/categories").reply(() => {
 });
 
 mock.onGet("/api/questions/category").reply(request => {
-  console.log("Axios category request: ", request);
   const { config } = request;
   const { params } = config;
   const { categoryId } = params;
-  console.log("Axios category request: ", params);
-  // console.log("Axios category id: ", categoryId);
+  // "Axios category id: ", categoryId);
   const response = _.find(categories, { value: categoryId });
-  // console.log("Axios category response: ", response);
+  // "Axios category response: ", response);
 
   return [200, response];
 });
@@ -414,6 +411,10 @@ mock.onGet("/api/users").reply(config => {
 
   const error = {};
   return [200, { error }];
+});
+
+mock.onPost("/api/users").reply(request => {
+  return [200, users];
 });
 
 mock.onGet("/api/auth").reply(config => {
@@ -482,11 +483,11 @@ mock.onPost("/api/auth/register").reply(request => {
   };
   if (!error.displayName && !error.password && !error.email) {
     const newUser = {
-      id: Helpers.generateUID(),
+      id: displayName,
       from: "localStorage",
       password,
       role: "user",
-      token: null,
+      access_token: null,
       data: {
         displayName,
         avatarURL: "http://i.pravatar.cc/150",
@@ -500,20 +501,20 @@ mock.onPost("/api/auth/register").reply(request => {
 
     users = [...users, newUser];
 
-    const user = _.cloneDeep(newUser);
-    delete user.password;
-
-    const access_token = jwt.sign({ id: user.id }, jwtConfig.secret, {
+    const access_token = jwt.sign({ id: newUser.id }, jwtConfig.secret, {
       expiresIn: jwtConfig.expiresIn
     });
 
-    // localStorage.setItem("users", JSON.stringify(users));
+    const _newUser = _.cloneDeep(newUser);
+
+    const user = _.merge(_newUser, { access_token: access_token });
 
     const response = {
-      user,
-      users,
-      access_token
+      user: user,
+      access_token: access_token
     };
+
+    jwtService.setSession(access_token);
 
     return [200, response];
   }

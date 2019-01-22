@@ -1,6 +1,4 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles/index";
-import axios from "axios/index";
+import {FuseAnimateGroup} from "@fuse";
 import {
   AppBar,
   Avatar,
@@ -20,9 +18,10 @@ import {
   Toolbar,
   Typography
 } from "@material-ui/core";
+import {withStyles} from "@material-ui/core/styles/index";
 import classNames from "classnames";
-import { Link } from "react-router-dom";
-import { FuseAnimateGroup } from "@fuse";
+import React, {Component} from "react";
+import {Link} from "react-router-dom";
 
 const styles = theme => ({
   root: {}
@@ -34,12 +33,9 @@ class TimelineTab extends Component {
     userQuestions: null
   };
 
-  // componentDidMount() {}
-
   render() {
     const { classes, questions, auth } = this.props;
     const { activities } = this.state;
-    console.log(this.props);
 
     return (
       <div className={classNames(classes.root, "md:flex max-w-2xl")}>

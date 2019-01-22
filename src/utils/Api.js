@@ -40,7 +40,10 @@ class API {
    * @return {Promise<{users: {Object}}>} Object where the key is the user’s id and the value is the user object
    */
   static fetchUsers = () => axios.get("/api/users");
-  // static getUsers = () => _getUsers();
+
+  static storeUser = () => "/api/users";
+
+  static registerUser = data => "/api/auth/register";
 
   /**
    * Gets questions from database
