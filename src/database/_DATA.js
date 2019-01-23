@@ -1,7 +1,15 @@
 import _ from "@lodash";
-import {amber, blue, blueGrey, green} from "@material-ui/core/colors";
+import { amber, blue, blueGrey, green } from "@material-ui/core/colors";
+import imgAvatarKatina from "assets/images/avatars/katina.jpg";
+import imgAvatarOdessa from "assets/images/avatars/odessa.jpg";
+import imgAvatarDefault from "assets/images/avatars/profile.jpg";
+import imgAvatarTyson from "assets/images/avatars/tyson.jpg";
+import imgBg3 from "assets/images/bg-patterns/bg-03.jpg";
+import imgBg4 from "assets/images/bg-patterns/bg-04.jpg";
+import imgBg5 from "assets/images/bg-patterns/bg-05.jpg";
+import imgBg8 from "assets/images/bg-patterns/bg-08.jpg";
 import jwt from "jsonwebtoken";
-import {Helpers} from "utils";
+import { Helpers } from "utils";
 import jwtService from "utils/jwtService";
 import mock from "./mock";
 
@@ -23,7 +31,7 @@ let users = {
     data: {
       displayName: "da_anchorman",
       name: "Ron Burgundy",
-      avatarURL: "http://i.pravatar.cc/150?img=51",
+      avatarURL: imgAvatarOdessa,
       email: "da_anchorman@test.com",
       answers: {
         xj352vofupe1dqz9emx13r: "answerOne",
@@ -33,37 +41,8 @@ let users = {
       },
       questions: ["6ni6ok3ym7mf1p33lnez"],
       settings: {
-        layout: {
-          style: "layout1",
-          config: {
-            scroll: "content",
-            navbar: {
-              display: true,
-              folded: true,
-              position: "left"
-            },
-            toolbar: {
-              display: true,
-              style: "fixed",
-              position: "below"
-            },
-            footer: {
-              display: true,
-              style: "fixed",
-              position: "below"
-            },
-            mode: "fullwidth"
-          }
-        },
-        customScrollbars: true,
-        theme: {
-          main: "defaultDark",
-          navbar: "defaultDark",
-          toolbar: "defaultDark",
-          footer: "defaultDark"
-        }
-      },
-      shortcuts: ["calendar", "mail", "contacts"]
+        coverPhotoUrl: imgBg3
+      }
     }
   },
   burt_b: {
@@ -74,7 +53,7 @@ let users = {
     data: {
       displayName: "burt_b",
       name: "Burt Beynolds",
-      avatarURL: "http://i.pravatar.cc/150?img=53",
+      avatarURL: imgAvatarTyson,
       email: "burt_b@test.com",
       answers: {
         vthrdm985a262al8qx3do: "answerOne",
@@ -85,33 +64,8 @@ let users = {
       },
       questions: ["loxhs1bqm25b708cmbf3g", "vthrdm985a262al8qx3do"],
       settings: {
-        layout: {
-          style: "layout2",
-          config: {
-            mode: "boxed",
-            scroll: "content",
-            navbar: {
-              display: true
-            },
-            toolbar: {
-              display: true,
-              position: "below"
-            },
-            footer: {
-              display: true,
-              style: "fixed"
-            }
-          }
-        },
-        customScrollbars: true,
-        theme: {
-          main: "greeny",
-          navbar: "mainThemeDark",
-          toolbar: "mainThemeDark",
-          footer: "mainThemeDark"
-        }
-      },
-      shortcuts: ["calendar", "mail", "contacts", "todo"]
+        coverPhotoUrl: imgBg4
+      }
     }
   },
   im_not_a_horse: {
@@ -122,19 +76,19 @@ let users = {
     data: {
       displayName: "im_not_a_horse",
       name: "Sarah Jessica Marker",
-      avatarURL: "http://i.pravatar.cc/150?img=47",
+      avatarURL: imgAvatarKatina,
       email: "im_not_a_horse@test.com",
       answers: {
         "8xf0y6ziyjabvozdd253nd": "answerOne"
-        // "6ni6ok3ym7mf1p33lnez": "answerOne"
       },
       questions: [
         "8xf0y6ziyjabvozdd253nd",
         "am8ehyc8byjqgar0jgpub9",
         "xj352vofupe1dqz9emx13r"
       ],
-      settings: {},
-      shortcuts: []
+      settings: {
+        coverPhotoUrl: imgBg5
+      }
     }
   }
 };
@@ -495,12 +449,13 @@ mock.onPost("/api/auth/register").reply(request => {
       access_token: null,
       data: {
         displayName,
-        avatarURL: "http://i.pravatar.cc/150",
+        avatarURL: imgAvatarDefault,
         email,
         answers: {},
         questions: [],
-        settings: {},
-        shortcuts: []
+        settings: {
+          coverPhotoUrl: imgBg8
+        }
       }
     };
 

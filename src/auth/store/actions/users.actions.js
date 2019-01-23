@@ -24,9 +24,8 @@ export const storeUserData = user => dispatch => {
     type: STORE_USER_SUCCESS,
     payload: user
   });
-  dispatch(updateUserData(user));
 
-  return dispatch(setUserData(user));
+  return dispatch(updateUserData(user));
 };
 
 /**
@@ -40,5 +39,7 @@ export const updateUserData = user => dispatch => {
     type: UPDATE_USER_SUCCESS,
     payload: user
   });
+
+  dispatch(setUserData(user));
   return store.dispatch(Actions.showMessage({ message: "User data updated" }));
 };

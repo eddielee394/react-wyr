@@ -1,40 +1,40 @@
-import {FuseAnimateGroup} from "@fuse";
+import { FuseAnimateGroup } from "@fuse";
 import {
-    AppBar,
-    Avatar,
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    CardHeader,
-    Divider,
-    Icon,
-    IconButton,
-    Input,
-    List,
-    ListItem,
-    ListItemText,
-    Paper,
-    Toolbar,
-    Typography
+  AppBar,
+  Avatar,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Divider,
+  Icon,
+  IconButton,
+  Input,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Toolbar,
+  Typography
 } from "@material-ui/core";
-import {withStyles} from "@material-ui/core/styles/index";
+import { withStyles } from "@material-ui/core/styles/index";
 import classNames from "classnames";
-import React, {Component} from "react";
-import {Link} from "react-router-dom";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
   root: {}
 });
 
-class TimelineTab extends Component {
+class ActivityTab extends Component {
   state = {
     activities: null,
     userQuestions: null
   };
 
   render() {
-    const { classes, questions, auth } = this.props;
+    const { classes, questions, users, user } = this.props;
     const { activities } = this.state;
 
     return (
@@ -97,7 +97,7 @@ class TimelineTab extends Component {
                     avatar={
                       <Avatar
                         aria-label="Recipe"
-                        src={auth.users[question.userId]}
+                        src={users[question.userId]}
                       />
                     }
                     action={
@@ -241,7 +241,7 @@ class TimelineTab extends Component {
                     )}
 
                     <div className="flex flex-auto">
-                      <Avatar src={auth.user.data.avatarURL} />
+                      <Avatar src={user.data.avatarURL} />
                       <div className="flex-1 pl-8">
                         <Paper elevation={0} className="w-full mb-16">
                           <Input
@@ -334,4 +334,4 @@ class TimelineTab extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(TimelineTab);
+export default withStyles(styles, { withTheme: true })(ActivityTab);

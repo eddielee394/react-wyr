@@ -1,12 +1,12 @@
+import imgAvatarDefault from "assets/images/avatars/profile.jpg";
 import * as Actions from "auth/store/actions";
 
 const initialState = {
   role: "guest",
   data: {
     displayName: "Guest",
-    avatarURL: "http://i.pravatar.cc/128",
-    email: "test@test.com",
-    shortcuts: ["calendar", "mail", "contacts", "todo"]
+    avatarURL: imgAvatarDefault,
+    email: "test@test.com"
   }
 };
 

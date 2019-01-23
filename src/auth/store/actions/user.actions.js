@@ -1,5 +1,5 @@
 import _ from "@lodash";
-import {updateUserData} from "auth/store/actions";
+import { updateUserData } from "auth/store/actions";
 import history from "utils/history";
 import jwtService from "utils/jwtService";
 
@@ -40,9 +40,7 @@ export const updateUserAnswer = data => (dispatch, getState) => {
     }
   };
 
-  dispatch(updateUserData(newUser));
-
-  return dispatch(setUserData(newUser));
+  return dispatch(updateUserData(newUser));
 };
 
 export const updateUserQuestion = data => (dispatch, getState) => {
@@ -62,9 +60,7 @@ export const updateUserQuestion = data => (dispatch, getState) => {
     }
   };
 
-  dispatch(updateUserData(newUser));
-
-  return dispatch(setUserData(newUser));
+  return dispatch(updateUserData(newUser));
 };
 
 /**
