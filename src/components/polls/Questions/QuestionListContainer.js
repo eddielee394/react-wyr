@@ -85,6 +85,17 @@ class QuestionListContainer extends Component {
     return Object.keys(authUser.data.answers).includes(questionId);
   };
 
+  isUserAnswer = (questionId, answerId) => {
+    const { auth } = this.props;
+    const answers = auth.user.data.answers;
+
+    if (this.userHasAnswered) {
+      return answers[questionId] === answerId;
+    }
+
+    return false;
+  };
+
   /**
    * Add vote handler
    * @param data
@@ -147,8 +158,12 @@ class QuestionListContainer extends Component {
     return Object.keys(users).length;
   };
 
+  handleGetAuthor = question =>
+    _.find(this.props.auth.users, { id: question.author.id });
+
   render() {
     const { classes, questions, category, stepIndex, ...props } = this.props;
+    this.isUserAnswer();
 
     const headerTitle = (
       <Typography className="flex-1 text-20">{category.label}</Typography>
@@ -160,7 +175,13 @@ class QuestionListContainer extends Component {
         key="all"
       >
         <Paper className="w-full rounded-8 p-16 md:p-24" elevation={1}>
-          <QuestionList category={category} questions={questions} />
+          <QuestionList
+            category={category}
+            questions={questions}
+            userHasAnswered={this.userHasAnswered}
+            handleGetAuthor={this.handleGetAuthor}
+            handleVotePercent={this.handleVotePercent}
+          />
         </Paper>
       </div>
     );
@@ -178,6 +199,8 @@ class QuestionListContainer extends Component {
             handleVotePercent={this.handleVotePercent}
             question={_question}
             userHasAnswered={this.userHasAnswered(_question.id)}
+            isUserAnswer={this.isUserAnswer}
+            author={this.handleGetAuthor(_question)}
           />
         </Paper>
       </div>

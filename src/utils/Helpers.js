@@ -94,7 +94,7 @@ class Helpers {
     value = value.toFixed(0);
     value = Math.min(value, 100);
 
-    return `${value}%`;
+    return value;
   };
 
   static rankArray = (num, arr) =>
