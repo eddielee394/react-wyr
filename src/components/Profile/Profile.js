@@ -153,7 +153,7 @@ class Profile extends Component {
   };
 
   render() {
-    const { classes, user, users, questions } = this.props;
+    const { classes, user, users, questions, categories } = this.props;
     const {
       profileTab,
       coverPhotos,
@@ -333,7 +333,12 @@ class Profile extends Component {
         }
         content={
           <div className="p-16 sm:p-24">
-            <ActivityTab questions={questions} user={user} users={users} />
+            <ActivityTab
+              questions={questions}
+              categories={categories}
+              user={user}
+              users={users}
+            />
             {editCoverPhotoDialog}
             {editAvatarDialog}
           </div>
@@ -358,7 +363,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps({ polls, auth }) {
   return {
     questions: polls.questions.data,
-    categories: polls.questions.categories,
+    categories: polls.categories.data,
     user: auth.user,
     users: auth.users
   };
