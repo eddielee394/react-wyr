@@ -20,7 +20,7 @@ const jwtConfig = {
 
 /**
  * Users Data
- * @type {{im_not_a_horse: {id: string, name: string, avatarURL: string, answers: {"8xf0y6ziyjabvozdd253nd": string, "6ni6ok3ym7mf1p33lnez": string, am8ehyc8byjqgar0jgpub9: string, loxhs1bqm25b708cmbf3g: string}, questions: string[]}, burt_b: {id: string, name: string, avatarURL: string, answers: {vthrdm985a262al8qx3do: string, xj352vofupe1dqz9emx13r: string}, questions: string[]}, johndoe: {id: string, name: string, avatarURL: string, answers: {xj352vofupe1dqz9emx13r: string, vthrdm985a262al8qx3do: string, "6ni6ok3ym7mf1p33lnez": string}, questions: string[]}}}
+ *
  */
 let users = {
   da_anchorman: {
@@ -268,14 +268,6 @@ let categories = [
   }
 ];
 
-// store array in local storage for registered users
-// users = JSON.parse(localStorage.getItem("users")) || users;
-//
-// export function configureFakeDB() {
-//   localStorage.setItem("users", JSON.stringify(users));
-//   localStorage.setItem("questions", JSON.stringify(questions));
-// }
-
 /**
  * Questions mock requests
  */
@@ -375,9 +367,12 @@ mock.onGet("/api/auth").reply(config => {
   const data = JSON.parse(config.data);
   const { email, password } = data;
 
-  const user = _.cloneDeep(
-    Object.keys(users).find(k => users[k].data.email === email)
-  );
+  const user = _.chain(users)
+    .cloneDeep()
+    .find({ data: { email: email } })
+    .value();
+
+  console.log("api user", user);
 
   const error = {
     email: user ? null : "Check your username/email",
@@ -409,7 +404,12 @@ mock.onGet("/api/auth/access-token").reply(config => {
   try {
     const { id } = jwt.verify(access_token, jwtConfig.secret);
 
-    const user = _.cloneDeep(Object.keys(users).find(k => users[k].id === id));
+    const user = _.chain(users)
+      .cloneDeep()
+      .find({ data: { id: id } })
+      .value();
+
+    console.log("api user", user);
     delete user.password;
 
     const updatedAccessToken = jwt.sign({ id: user.id }, jwtConfig.secret, {
