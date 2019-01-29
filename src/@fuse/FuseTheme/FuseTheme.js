@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { themesConfig } from "config/themesConfig";
+import { themesConfig } from "app/config/themesConfig";
 import _ from "@lodash";
 import { fuseDark } from "@fuse/fuseColors";
 import lightBlue from "@material-ui/core/colors/lightBlue";

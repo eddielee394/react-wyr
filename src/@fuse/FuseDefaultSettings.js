@@ -1,5 +1,5 @@
 import _ from "@lodash";
-import settingsConfig from "config/settingsConfig";
+import settingsConfig from "app/config/settingsConfig";
 import qs from "qs";
 
 const defaultSettings = {
