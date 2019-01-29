@@ -1,11 +1,8 @@
-import * as localForage from "localforage";
 import { default as applyMiddleware } from "middleware";
 import * as reduxModule from "redux";
 import { compose, createStore } from "redux";
-import { persistReducer, persistStore } from "redux-persist";
-import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 import { DevTools } from "utils";
-import createReducer from "./store/reducers";
+import createReducer from "store/reducers";
 
 /*
 Fix for Firefox redux dev tools extension
@@ -39,24 +36,10 @@ const devToolsInstrument = devToolsExtActive
 const enhancer = composeEnhancers(applyMiddleware, devToolsInstrument);
 
 /**
- * Redux persist
- */
-const persistConfig = {
-  key: "root",
-  storage: localForage,
-  timeout: 0,
-  stateReconciler: autoMergeLevel2,
-  blacklist: ["classes", "fuse", "quickPanel"],
-  debug: true
-};
-
-/**
  * Redux-persist init
  *
  */
-const persistedReducer = persistReducer(persistConfig, createReducer());
-const store = createStore(persistedReducer, undefined, enhancer);
-const persistor = persistStore(store);
+const store = createStore(createReducer(), enhancer);
 
 store.asyncReducers = {};
 
@@ -68,21 +51,12 @@ store.asyncReducers = {};
  */
 export const injectReducer = (key, reducer) => {
   if (store.asyncReducers[key]) {
-    persistor.persist();
     return;
   }
   store.asyncReducers[key] = reducer;
-  store.replaceReducer(
-    persistReducer(persistConfig, createReducer(store.asyncReducers))
-  );
-  persistor.persist();
+  store.replaceReducer(createReducer(store.asyncReducers));
+
   return store;
 };
 
-/**
- * Purge Store
- * @desc Uncomment to purge the store for debugging purposes
- */
-// persistor.purge();
-
-export { store, persistor };
+export default store;

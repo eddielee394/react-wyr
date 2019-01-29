@@ -21,10 +21,9 @@ import ReactDOM from "react-dom";
 import JssProvider from "react-jss/lib/JssProvider";
 import { Provider } from "react-redux";
 import { Router } from "react-router-dom";
-import { PersistGate } from "redux-persist/lib/integration/react";
 import { Auth } from "./auth";
 import { routes } from "./config/routesConfig";
-import { persistor, store } from "./store";
+import store from "store";
 import history from "./utils/history";
 
 library.add(fas, far, fab);
@@ -41,27 +40,25 @@ ReactDOM.render(
   <JssProvider jss={jss} generateClassName={generateClassName}>
     <Provider store={store}>
       <Auth>
-        <PersistGate loading={<Loader />} persistor={persistor}>
-          <Router history={history}>
-            <FuseAuthorization routes={routes}>
-              <FuseTheme>
-                <FuseLayout
-                  routes={routes}
-                  toolbar={<MainToolbar />}
-                  navbarHeader={<MainNavbarHeader />}
-                  navbarContent={<MainNavbarContent />}
-                  footer={<MainFooter />}
-                  rightSidePanel={
-                    <React.Fragment>
-                      <QuickPanel />
-                    </React.Fragment>
-                  }
-                  contentWrapper={<SettingsPanel />}
-                />
-              </FuseTheme>
-            </FuseAuthorization>
-          </Router>
-        </PersistGate>
+        <Router history={history}>
+          <FuseAuthorization routes={routes}>
+            <FuseTheme>
+              <FuseLayout
+                routes={routes}
+                toolbar={<MainToolbar />}
+                navbarHeader={<MainNavbarHeader />}
+                navbarContent={<MainNavbarContent />}
+                footer={<MainFooter />}
+                rightSidePanel={
+                  <React.Fragment>
+                    <QuickPanel />
+                  </React.Fragment>
+                }
+                contentWrapper={<SettingsPanel />}
+              />
+            </FuseTheme>
+          </FuseAuthorization>
+        </Router>
       </Auth>
     </Provider>
   </JssProvider>,

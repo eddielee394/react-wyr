@@ -29,7 +29,7 @@ const CategoryItem = props => {
             color: theme.palette.getContrastText(category.color)
           }}
         >
-          <Button href={`/questions/${category.value}`}>
+          <Button component={Link} to={`/questions/${category.value}`}>
             <Typography className="font-medium truncate" variant="button">
               {category.label}
             </Typography>

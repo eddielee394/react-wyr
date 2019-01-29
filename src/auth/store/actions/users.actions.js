@@ -1,5 +1,5 @@
 import { setUserData } from "auth/store/actions";
-import { store } from "store";
+import store from "store";
 import * as Actions from "store/actions";
 import { API } from "utils";
 
