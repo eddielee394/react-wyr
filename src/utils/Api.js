@@ -10,29 +10,8 @@ import {
 /**
  * API Methods
  * @namespace API
- * @param {function} getInitialData
- * @param {function} getUsers
- * @param {function} getQuestions
- * @param {function} storeQuestion
- * @param {function} saveQuestionAnswer
- * @type {{getInitialData: (function(): Promise<{users: Object, questions: Object} | never>), getUsers: (function(): Promise<{Object}>), getQuestions: (function(): Promise<Object>), storeQuestion: (function(*=): Promise<Object>), saveQuestionAnswer: (function(*=): Promise<Object>)}}
  */
 class API {
-  static ROOT_URL = process.env.REACT_APP_API_ROOT_URL;
-  /**
-   * Gets the initial application data
-   * @function
-   * @memberof API
-   * @return {Promise<{users: {Object}, questions: {Object}} | never>}
-   */
-  static fetchInitialData = () =>
-    Promise.all([API.getUsers(), API.getQuestions()]).then(
-      ([users, questions]) => ({
-        users,
-        questions
-      })
-    );
-
   /**
    * Gets users from database
    * @function
@@ -55,9 +34,13 @@ class API {
 
   static fetchQuestion = params => axios.get("/api/question", { params });
 
-  static fetchQuestionsByCategory = () => "/api/questions";
+  static fetchQuestionsByCategory = params =>
+    axios.get("/api/questions", { params });
 
   static fetchCategories = () => "/api/questions/categories";
+
+  static fetchCategory = params =>
+    axios.get("/api/questions/category", { params });
 
   /**
    * Saves a question
@@ -75,7 +58,7 @@ class API {
    * @return {Promise<{authUser: string, questionId: string, answer: string }>}
    * @param data
    */
-  static updateQuestion = data => "/api/question/update";
+  static updateQuestion = data => "/api/question";
 }
 
 export default API;

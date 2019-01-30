@@ -389,6 +389,12 @@ mock.onGet("/api/question").reply(request => {
   return [200, response];
 });
 
+mock.onPost("/api/question").reply(request => {
+  const data = JSON.parse(request.data);
+
+  return [200, data];
+});
+
 mock.onGet("/api/question/save").reply(request => {
   const data = JSON.parse(request.data);
   let question = null;
@@ -451,7 +457,15 @@ mock.onGet("/api/users").reply(config => {
 });
 
 mock.onPost("/api/users").reply(request => {
-  return [200, users];
+  const data = JSON.parse(request.data);
+  const { user } = data;
+  users = users.map(_user => {
+    if (_user.id === user.id) {
+      return _.merge(_user, user);
+    }
+    return _user;
+  });
+  return [200, user];
 });
 
 mock.onGet("/api/auth").reply(config => {
