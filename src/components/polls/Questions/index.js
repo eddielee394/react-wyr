@@ -5,3 +5,4 @@ export {
 export {
   default as QuestionListContainer
 } from "components/polls/Questions/QuestionListContainer";
+export { default as QuestionAdd } from "components/polls/Questions/QuestionAdd";

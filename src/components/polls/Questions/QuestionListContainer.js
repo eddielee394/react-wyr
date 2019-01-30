@@ -34,7 +34,7 @@ class QuestionListContainer extends Component {
      */
     const { params } = this.props.match;
     this.props.getCategory(params);
-    this.props.getQuestions();
+    this.props.getQuestionsByCategory(params);
   }
 
   componentDidUpdate(prevProps) {
@@ -83,6 +83,17 @@ class QuestionListContainer extends Component {
   userHasAnswered = questionId => {
     const { authUser } = this.props;
     return Object.keys(authUser.data.answers).includes(questionId);
+  };
+
+  isUserAnswer = (questionId, answerId) => {
+    const { auth } = this.props;
+    const answers = auth.user.data.answers;
+
+    if (this.userHasAnswered) {
+      return answers[questionId] === answerId;
+    }
+
+    return false;
   };
 
   /**
@@ -147,8 +158,12 @@ class QuestionListContainer extends Component {
     return Object.keys(users).length;
   };
 
+  handleGetAuthor = question =>
+    _.find(this.props.auth.users, { id: question.author.id });
+
   render() {
     const { classes, questions, category, stepIndex, ...props } = this.props;
+    this.isUserAnswer();
 
     const headerTitle = (
       <Typography className="flex-1 text-20">{category.label}</Typography>
@@ -160,7 +175,13 @@ class QuestionListContainer extends Component {
         key="all"
       >
         <Paper className="w-full rounded-8 p-16 md:p-24" elevation={1}>
-          <QuestionList category={category} questions={questions} />
+          <QuestionList
+            category={category}
+            questions={questions}
+            userHasAnswered={this.userHasAnswered}
+            handleGetAuthor={this.handleGetAuthor}
+            handleVotePercent={this.handleVotePercent}
+          />
         </Paper>
       </div>
     );
@@ -178,6 +199,8 @@ class QuestionListContainer extends Component {
             handleVotePercent={this.handleVotePercent}
             question={_question}
             userHasAnswered={this.userHasAnswered(_question.id)}
+            isUserAnswer={this.isUserAnswer}
+            author={this.handleGetAuthor(_question)}
           />
         </Paper>
       </div>
@@ -310,11 +333,11 @@ class QuestionListContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
+      getCategory: Actions.getCategory,
       getQuestions: Actions.getQuestions,
-      // getQuestionsByCategory: Actions.getQuestionsByCategory,
-      updateQuestion: Actions.updateQuestion,
+      getQuestionsByCategory: Actions.getQuestionsByCategory,
       getQuestion: Actions.getQuestion,
-      getCategory: Actions.getCategory
+      updateQuestion: Actions.updateQuestion
     },
     dispatch
   );
@@ -322,6 +345,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps({ polls, auth }, props) {
   const { params } = props.match;
+
   const questions = polls.questions.data.filter(
     question => question.categoryId === polls.category.data.id
   );
@@ -335,9 +359,9 @@ function mapStateToProps({ polls, auth }, props) {
   );
 
   return {
-    question: question,
-    questions: questions,
     category: polls.category.data,
+    question: question,
+    questions: polls.questions.data,
     authUser: auth.user,
     auth,
     stepIndex
@@ -371,11 +395,9 @@ const styles = theme => ({
 
 export default withReducer("polls", reducer)(
   withStyles(styles, { withTheme: true })(
-    withRouter(
-      connect(
-        mapStateToProps,
-        mapDispatchToProps
-      )(QuestionListContainer)
-    )
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(QuestionListContainer)
   )
 );

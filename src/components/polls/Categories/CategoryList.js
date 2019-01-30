@@ -126,12 +126,9 @@ class CategoryList extends Component {
         </div>
       ) : (
         filteredQuestions.map(question => {
-          const category = categories.find(
-            _category => _category.id === question.categoryId
-          );
           return (
             <CategoryItem
-              category={category}
+              categories={categories}
               question={question}
               userHasAnswered={this.userHasAnswered(question.id)}
               key={question.id}
@@ -345,11 +342,9 @@ const styles = theme => ({
 
 export default withReducer("polls", reducer)(
   withStyles(styles, { withTheme: true })(
-    withRouter(
-      connect(
-        mapStateToProps,
-        mapDispatchToProps
-      )(CategoryList)
-    )
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(CategoryList)
   )
 );

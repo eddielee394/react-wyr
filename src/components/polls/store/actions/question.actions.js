@@ -9,19 +9,15 @@ export const UPDATE_QUESTION = "[POLLS] UPDATE QUESTION";
 export const UPDATE_QUESTION_SUCCESS = "[POLLS] UPDATE QUESTION SUCCESS";
 export const UPDATE_QUESTION_FAILURE = "[POLLS] UPDATE QUESTION FAILURE";
 
-export const SAVE_QUESTION = "[POLLS] SAVE QUESTION";
-export const SAVE_QUESTION_SUCCESS = "[POLLS] SAVE QUESTION SUCCESS";
-export const SAVE_QUESTION_FAILURE = "[POLLS] SAVE QUESTION FAILURE";
+export const STORE_QUESTION = "[POLLS] STORE QUESTION";
+export const STORE_QUESTION_SUCCESS = "[POLLS] STORE QUESTION SUCCESS";
+export const STORE_QUESTION_FAILURE = "[POLLS] STORE QUESTION FAILURE";
 
 export function getQuestion(params) {
-  console.log("Actions.Question.getQuestion params: ", params);
-
   const request = API.getQuestion(params);
-  console.log("Actions.Question.getQuestion request: ", request);
 
   return dispatch =>
     request.then(response => {
-      console.log("Actions.Question.getQuestion response: ", response);
       dispatch({
         type: GET_QUESTION,
         payload: response.data
@@ -29,22 +25,34 @@ export function getQuestion(params) {
     });
 }
 
-export const saveQuestion = data => dispatch => {
-  dispatch(updateUserQuestion(data));
-  dispatch({
+export const storeQuestion = data => (dispatch, getState) => {
+  const author = getState().auth.user.id;
+
+  const updatedData = Object.assign({}, data, { author: author });
+
+  return dispatch({
     [CALL_API]: {
-      types: [SAVE_QUESTION, SAVE_QUESTION_SUCCESS, SAVE_QUESTION_FAILURE],
-      endpoint: API.saveQuestion(),
+      types: [STORE_QUESTION, STORE_QUESTION_SUCCESS, STORE_QUESTION_FAILURE],
+      endpoint: API.storeQuestion(),
       method: "POST",
-      params: data,
+      data: updatedData,
       schema: Schemas.questionsList
     }
-  });
-  dispatch(showMessage({ message: "Question Updated" }));
+  })
+    .then(response => {
+      return dispatch(
+        updateUserQuestion({
+          id: response.payload.id,
+          author: response.payload.author.id
+        })
+      );
+    })
+    .then(() => {
+      return dispatch(showMessage({ message: "Question Added" }));
+    });
 };
 
 export const updateQuestion = data => dispatch => {
-  dispatch(updateUserAnswer(data));
   dispatch({
     [CALL_API]: {
       types: [
@@ -57,6 +65,9 @@ export const updateQuestion = data => dispatch => {
       params: data,
       schema: Schemas.questionsList
     }
-  });
-  dispatch(showMessage({ message: "Question Updated" }));
+  })
+    .then(response => dispatch(updateUserAnswer(data)))
+    .then(() => {
+      return dispatch(showMessage({ message: "Question Updated" }));
+    });
 };

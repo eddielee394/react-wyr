@@ -1,5 +1,4 @@
 import moment from "moment";
-import _ from "../@lodash";
 
 class Helpers {
   /**
@@ -38,19 +37,32 @@ class Helpers {
    * @param author
    * @return {{id: string, timestamp: number, author: *, optionOne: {votes: Array, text: *}, optionTwo: {votes: Array, text: *}}}
    */
-  static formatQuestion = ({ optionOneText, optionTwoText, author }) => {
+  static formatQuestion = ({
+    category,
+    title,
+    answerOneText,
+    answerTwoText,
+    author
+  }) => {
     return {
-      id: this.generateUID(),
+      id: Helpers.generateUID(),
+
+      author: { id: author },
       timestamp: Date.now(),
-      author,
-      optionOne: {
-        votes: [],
-        text: optionOneText
+      title: title,
+      answers: {
+        answerOne: {
+          id: "answerOne",
+          votes: [],
+          text: answerOneText
+        },
+        answerTwo: {
+          id: "answerTwo",
+          votes: [],
+          text: answerTwoText
+        }
       },
-      optionTwo: {
-        votes: [],
-        text: optionTwoText
-      }
+      categoryId: category
     };
   };
 
@@ -82,8 +94,15 @@ class Helpers {
     value = value.toFixed(0);
     value = Math.min(value, 100);
 
-    return `${value}%`;
+    return value;
   };
+
+  static rankArray = (num, arr) =>
+    arr
+      .sort(function(a, b) {
+        return b - a;
+      })
+      .indexOf(num) + 1;
 }
 
 export default Helpers;

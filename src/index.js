@@ -1,23 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import "assets/sass/App.scss";
-import jssExtend from "jss-extend";
-import JssProvider from "react-jss/lib/JssProvider";
-import { create } from "jss";
+import { FuseAuthorization, FuseLayout, FuseTheme } from "@fuse";
 import { createGenerateClassName, jssPreset } from "@material-ui/core/styles";
-import { Provider } from "react-redux";
-import { Router } from "react-router-dom";
-import { routes } from "./config/routesConfig";
-import history from "./utils/history";
-import { store } from "./store";
-
-import { Auth } from "./auth";
-import { FuseAuthorization, FuseTheme, FuseLayout } from "@fuse";
+import "assets/sass/App.scss";
 import {
+  Loader,
   MainFooter,
   MainNavbarContent,
   MainNavbarHeader,
@@ -25,8 +14,22 @@ import {
   QuickPanel,
   SettingsPanel
 } from "components/_layout";
+import { initDb } from "database/_DATA";
+import { create } from "jss";
+import jssExtend from "jss-extend";
+import React from "react";
+import ReactDOM from "react-dom";
+import JssProvider from "react-jss/lib/JssProvider";
+import { Provider } from "react-redux";
+import { Router } from "react-router-dom";
+import { Auth } from "./auth";
+import { routes } from "./config/routesConfig";
+import store from "store";
+import history from "./utils/history";
 
 library.add(fas, far, fab);
+
+initDb();
 
 const jss = create({
   ...jssPreset(),
@@ -39,7 +42,6 @@ const generateClassName = createGenerateClassName();
 ReactDOM.render(
   <JssProvider jss={jss} generateClassName={generateClassName}>
     <Provider store={store}>
-      {/*<PersistGate loading={null} persistor={persistor}>*/}
       <Auth>
         <Router history={history}>
           <FuseAuthorization routes={routes}>
@@ -61,7 +63,6 @@ ReactDOM.render(
           </FuseAuthorization>
         </Router>
       </Auth>
-      {/*</PersistGate>*/}
     </Provider>
   </JssProvider>,
   document.getElementById("root")

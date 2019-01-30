@@ -47,19 +47,6 @@ class jwtService extends FuseUtils.EventEmitter {
     }
   };
 
-  createUser = data => {
-    return new Promise((resolve, reject) => {
-      axios.post("/api/auth/register", data).then(response => {
-        if (response.data.user) {
-          this.setSession(response.data.access_token);
-          resolve(response.data.user);
-        } else {
-          reject(response.data.error);
-        }
-      });
-    });
-  };
-
   signInWithEmailAndPassword = (email, password) => {
     return new Promise((resolve, reject) => {
       axios
@@ -81,7 +68,6 @@ class jwtService extends FuseUtils.EventEmitter {
   };
 
   signInWithToken = () => {
-    console.log("signing in with token");
     return new Promise((resolve, reject) => {
       axios
         .get("/api/auth/access-token", {
@@ -97,12 +83,6 @@ class jwtService extends FuseUtils.EventEmitter {
             reject(response.data.error);
           }
         });
-    });
-  };
-
-  updateUserData = user => {
-    return axios.post("/api/auth/user/update", {
-      user: user
     });
   };
 

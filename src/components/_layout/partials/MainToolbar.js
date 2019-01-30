@@ -142,7 +142,7 @@ class MainToolbar extends Component {
           className="w-64 h-64"
           onClick={() => toggleQuickPanel(true)}
         >
-          <Icon>format_list_bulleted</Icon>
+          <Icon>library_add</Icon>
         </IconButton>
       </div>
     );

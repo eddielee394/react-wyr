@@ -14,9 +14,11 @@ import { Link } from "react-router-dom";
 import { Helpers } from "utils";
 
 const CategoryItem = props => {
-  const { category, question, userHasAnswered, theme } = props;
+  const { categories, question, userHasAnswered, theme } = props;
   const progressValue = userHasAnswered ? 100 : 0;
-
+  const category = categories.find(
+    _category => _category.id === question.categoryId
+  );
   const buttonStatus = () => (userHasAnswered ? "COMPLETED" : "START");
 
   return (
@@ -29,7 +31,7 @@ const CategoryItem = props => {
             color: theme.palette.getContrastText(category.color)
           }}
         >
-          <Button href={`/questions/${category.value}`}>
+          <Button component={Link} to={`/questions/${category.value}`}>
             <Typography className="font-medium truncate" variant="button">
               {category.label}
             </Typography>
