@@ -12,7 +12,7 @@ export const GET_QUESTIONS_BY_CATEGORY_FAILURE =
   "[POLLS] GET QUESTIONS BY CATEGORY FAILURE";
 
 export const getQuestions = params => dispatch => {
-  dispatch({
+  return dispatch({
     [CALL_API]: {
       types: [GET_QUESTIONS, GET_QUESTIONS_SUCCESS, GET_QUESTIONS_FAILURE],
       endpoint: API.fetchQuestions(),
@@ -24,7 +24,7 @@ export const getQuestions = params => dispatch => {
 };
 
 export const getQuestionsByCategory = categoryId => dispatch => {
-  dispatch({
+  return dispatch({
     [CALL_API]: {
       types: [
         GET_QUESTIONS_BY_CATEGORY,

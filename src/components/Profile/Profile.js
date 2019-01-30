@@ -77,8 +77,8 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    this.props.getQuestions();
     this.props.getCategories();
+    this.props.getQuestions();
   }
 
   getCoverPhoto() {
@@ -417,13 +417,9 @@ const styles = theme => ({
 
 export default withReducer("polls", reducer)(
   withStyles(styles, { withTheme: true })(
-    withRouter(
-      connect(mapStateToProps)(
-        connect(
-          mapStateToProps,
-          mapDispatchToProps
-        )(Profile)
-      )
-    )
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(Profile)
   )
 );

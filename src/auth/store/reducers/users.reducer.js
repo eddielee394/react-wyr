@@ -8,8 +8,8 @@ const users = function(state = initialState, action) {
     case Actions.GET_ALL_USERS: {
       return {
         ...state,
-        // ..._.keyBy(action.payload, "id")
-        ...action.payload
+        ..._.keyBy(action.payload, "id")
+        // ...action.payload
       };
     }
     case Actions.STORE_USER_SUCCESS: {

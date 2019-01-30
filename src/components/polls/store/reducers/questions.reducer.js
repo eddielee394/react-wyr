@@ -14,22 +14,15 @@ const questionsReducer = function(state = initialState, action) {
       };
     }
     case Actions.GET_QUESTIONS_BY_CATEGORY_SUCCESS: {
-      const categoryId = action.config.params.categoryId;
-
-      let questions = state.data.filter(
-        question => question.categoryId === categoryId
-      );
-
       return {
         ...state,
-        data: questions
+        data: action.payload
       };
     }
     case Actions.STORE_QUESTION_SUCCESS: {
-      const data = [...state.data, { ...action.payload }];
       return {
         ...state,
-        data: data
+        data: [...state.data, { ...action.payload }]
       };
     }
     case Actions.UPDATE_QUESTION_SUCCESS: {

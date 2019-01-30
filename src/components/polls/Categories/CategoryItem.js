@@ -14,9 +14,11 @@ import { Link } from "react-router-dom";
 import { Helpers } from "utils";
 
 const CategoryItem = props => {
-  const { category, question, userHasAnswered, theme } = props;
+  const { categories, question, userHasAnswered, theme } = props;
   const progressValue = userHasAnswered ? 100 : 0;
-
+  const category = categories.find(
+    _category => _category.id === question.categoryId
+  );
   const buttonStatus = () => (userHasAnswered ? "COMPLETED" : "START");
 
   return (

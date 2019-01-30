@@ -4,8 +4,14 @@
  */
 import axios from "axios";
 
-const axiosRequest = ({ data, endpoint, method, ...config }) => {
-  return axios({ data: data, method: method, url: endpoint, config });
+const axiosRequest = ({ data, endpoint, method, params, ...config }) => {
+  return axios({
+    data: data,
+    method: method,
+    url: endpoint,
+    params: params,
+    config
+  });
 };
 
 const apiRequest = params => {

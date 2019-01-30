@@ -12,7 +12,7 @@ const login = function(state = initialState, action) {
   switch (action.type) {
     case Actions.LOGIN_SUCCESS: {
       return {
-        ...state,
+        ...initialState,
         success: true
       };
     }

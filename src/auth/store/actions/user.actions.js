@@ -78,15 +78,7 @@ export function logoutUser() {
       pathname: "/"
     });
 
-    switch (user.from) {
-      case "jwtService": {
-        jwtService.logout();
-        break;
-      }
-      default: {
-        jwtService.logout();
-      }
-    }
+    jwtService.logout();
 
     dispatch({
       type: USER_LOGGED_OUT

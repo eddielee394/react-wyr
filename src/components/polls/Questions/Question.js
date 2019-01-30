@@ -223,4 +223,4 @@ const styles = theme => ({
   }
 });
 
-export default withStyles(styles)(withRouter(connect()(Question)));
+export default withStyles(styles)(Question);

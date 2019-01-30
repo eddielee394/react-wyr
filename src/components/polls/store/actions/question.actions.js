@@ -30,7 +30,7 @@ export const storeQuestion = data => (dispatch, getState) => {
 
   const updatedData = Object.assign({}, data, { author: author });
 
-  dispatch({
+  return dispatch({
     [CALL_API]: {
       types: [STORE_QUESTION, STORE_QUESTION_SUCCESS, STORE_QUESTION_FAILURE],
       endpoint: API.storeQuestion(),
@@ -38,16 +38,18 @@ export const storeQuestion = data => (dispatch, getState) => {
       data: updatedData,
       schema: Schemas.questionsList
     }
-  }).then(response => {
-    dispatch(
-      updateUserQuestion({
-        id: response.payload.id,
-        author: response.payload.author.id
-      })
-    );
-  });
-
-  return dispatch(showMessage({ message: "Question Added" }));
+  })
+    .then(response => {
+      return dispatch(
+        updateUserQuestion({
+          id: response.payload.id,
+          author: response.payload.author.id
+        })
+      );
+    })
+    .then(() => {
+      return dispatch(showMessage({ message: "Question Added" }));
+    });
 };
 
 export const updateQuestion = data => dispatch => {
@@ -63,7 +65,9 @@ export const updateQuestion = data => dispatch => {
       params: data,
       schema: Schemas.questionsList
     }
-  }).then(response => dispatch(updateUserAnswer(data)));
-
-  return dispatch(showMessage({ message: "Question Updated" }));
+  })
+    .then(response => dispatch(updateUserAnswer(data)))
+    .then(() => {
+      return dispatch(showMessage({ message: "Question Updated" }));
+    });
 };

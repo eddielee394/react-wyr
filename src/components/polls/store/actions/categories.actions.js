@@ -6,7 +6,7 @@ export const GET_CATEGORIES_SUCCESS = "[POLLS] GET CATEGORIES SUCCESS";
 export const GET_CATEGORIES_FAILURE = "[POLLS] GET CATEGORIES FAILURE";
 
 export const getCategories = () => dispatch => {
-  dispatch({
+  return dispatch({
     [CALL_API]: {
       types: [GET_CATEGORIES, GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE],
       endpoint: API.fetchCategories(),

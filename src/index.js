@@ -14,6 +14,7 @@ import {
   QuickPanel,
   SettingsPanel
 } from "components/_layout";
+import { initDb } from "database/_DATA";
 import { create } from "jss";
 import jssExtend from "jss-extend";
 import React from "react";
@@ -27,6 +28,8 @@ import store from "store";
 import history from "./utils/history";
 
 library.add(fas, far, fab);
+
+initDb();
 
 const jss = create({
   ...jssPreset(),

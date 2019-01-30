@@ -14,17 +14,17 @@ const user = function(state = initialState, action) {
   switch (action.type) {
     case Actions.SET_USER_DATA: {
       return {
-        ...state,
+        ...initialState,
         ...action.payload
       };
     }
     case Actions.REMOVE_USER_DATA: {
       return {
-        ...state
+        ...initialState
       };
     }
     case Actions.USER_LOGGED_OUT: {
-      return state;
+      return initialState;
     }
     default: {
       return state;

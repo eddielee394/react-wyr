@@ -9,21 +9,17 @@ import imgBg4 from "assets/images/bg-patterns/bg-04.jpg";
 import imgBg5 from "assets/images/bg-patterns/bg-05.jpg";
 import imgBg8 from "assets/images/bg-patterns/bg-08.jpg";
 import jwt from "jsonwebtoken";
+import * as localforage from "localforage";
 import { Helpers } from "utils";
 import jwtService from "utils/jwtService";
 import mock from "./mock";
-
-const jwtConfig = {
-  secret: "local-secret",
-  expiresIn: "2 days" // A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (days, hours, etc)
-};
 
 /**
  * Users Data
  *
  */
-let users = {
-  da_anchorman: {
+let users = [
+  {
     id: "da_anchorman",
     from: "localStorage",
     password: "password",
@@ -45,7 +41,7 @@ let users = {
       }
     }
   },
-  burt_b: {
+  {
     id: "burt_b",
     from: "localStorage",
     password: "password",
@@ -68,7 +64,7 @@ let users = {
       }
     }
   },
-  im_not_a_horse: {
+  {
     id: "im_not_a_horse",
     from: "localStorage",
     password: "password",
@@ -91,7 +87,7 @@ let users = {
       }
     }
   }
-};
+];
 
 /**
  * Questions Data
@@ -267,31 +263,111 @@ let categories = [
     color: blue[500]
   }
 ];
+/**
+ * JWT Config
+ * @param secret authorization secret
+ * @param expiresIn A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (days, hours, etc)
+ */
+const jwtConfig = {
+  secret: "local_secret",
+  expiresIn: "2 days" //
+};
+
+/**
+ * Setup localforage db
+ */
+export const initDb = () => {
+  const migrationKeys = {
+    users: users,
+    categories: categories,
+    questions: questions
+  };
+
+  return localforage
+    .length()
+    .then(keyCnt => {
+      if (keyCnt === 0) {
+        return migrationKeys;
+      }
+
+      return localforage.keys().then(keys => {
+        const filteredKeys = Object.keys(migrationKeys).filter((k, v) => {
+          return !keys.includes(k);
+        });
+
+        return _.pick(migrationKeys, filteredKeys);
+      });
+    })
+    .then(data => {
+      for (const key in data) {
+        let value = data[key];
+
+        setStoredData(key, value);
+      }
+    });
+};
+
+export const getStoredData = (key, callback = () => null) => {
+  return new Promise((resolve, reject) =>
+    localforage
+      .getItem(key)
+      .then(value => {
+        console.log(value);
+        resolve(value);
+      })
+      .catch(error => {
+        console.warn(
+          `There was an error retreiving the [${key}] from localstorage`,
+          error
+        );
+        reject(error);
+      })
+  );
+};
+
+export const setStoredData = (key, value) => {
+  localforage
+    .setItem(key, value)
+    .then(() => {
+      return console.log(`[${key}] successfully saved to localstorage`);
+    })
+    .catch(error => {
+      return console.log(`There was an error saved [${key}] to localstorage`);
+    });
+};
 
 /**
  * Questions mock requests
  */
 mock.onGet("/api/questions").reply(request => {
-  let response = questions;
-
   if (request.params) {
     const { categoryId } = request.params;
 
-    const category = _.find(categories, { value: categoryId });
-    const _categoryId = categoryId;
+    return getStoredData("categories")
+      .then(categories => {
+        const category = categories.find(
+          _category => _category.value === categoryId
+        );
 
-    questions = questions.filter(
-      question => question.categoryId === _categoryId
-    );
+        return category;
+      })
+      .then(category => {
+        return getStoredData("questions").then(_questions => {
+          questions = _questions.filter(
+            _question => _question.categoryId === category.id
+          );
 
-    response = {
-      questions,
-      category: category
-    };
-
-    return [200, response];
+          return questions;
+        });
+      })
+      .then(questions => {
+        return [200, questions];
+      });
   }
-  return [200, questions];
+
+  return getStoredData("questions").then(questions => {
+    return [200, questions];
+  });
 });
 
 mock.onPost("/api/questions").reply(request => {
@@ -330,7 +406,18 @@ mock.onGet("/api/question/save").reply(request => {
   return [200, question];
 });
 
-mock.onGet("/api/questions/categories").reply(() => {
+mock.onGet("/api/questions/categories").reply(request => {
+  if (request.params) {
+    const { categoryId } = request.params;
+    // console.log("axios categories requestParams true: ", categories);
+    const category = categories.find(
+      _category => _category.value === categoryId
+    );
+    // console.log("axios categories: ", categories);
+
+    return [200, category];
+  }
+
   return [200, categories];
 });
 
@@ -366,35 +453,38 @@ mock.onPost("/api/users").reply(request => {
 mock.onGet("/api/auth").reply(config => {
   const data = JSON.parse(config.data);
   const { email, password } = data;
+  return localforage.getItem("users").then(users => {
+    let user = _.cloneDeep(users.find(_user => _user.data.email === email));
 
-  const user = _.chain(users)
-    .cloneDeep()
-    .find({ data: { email: email } })
-    .value();
-
-  console.log("api user", user);
-
-  const error = {
-    email: user ? null : "Check your username/email",
-    password: user && user.password === password ? null : "Check your password"
-  };
-
-  if (!error.email && !error.password && !error.displayName) {
-    delete user.password;
-
-    const access_token = jwt.sign({ id: user.id }, jwtConfig.secret, {
-      expiresIn: jwtConfig.expiresIn
-    });
-
-    const response = {
-      // users,
-      user,
-      access_token
+    const error = {
+      email: user ? null : "Check your username/email",
+      password:
+        user && user.password === password ? null : "Check your password"
     };
 
-    return [200, response];
-  }
-  return [200, { error }];
+    if (!error.email && !error.password && !error.displayName) {
+      delete user.password;
+
+      const access_token = jwt.sign({ id: user.id }, jwtConfig.secret, {
+        expiresIn: jwtConfig.expiresIn
+      });
+
+      user = {
+        ...user,
+        access_token: access_token
+      };
+
+      const response = {
+        user: user,
+        access_token: access_token
+      };
+
+      setStoredData("user", user);
+
+      return [200, response];
+    }
+    return [200, { error }];
+  });
 });
 
 mock.onGet("/api/auth/access-token").reply(config => {
@@ -404,12 +494,8 @@ mock.onGet("/api/auth/access-token").reply(config => {
   try {
     const { id } = jwt.verify(access_token, jwtConfig.secret);
 
-    const user = _.chain(users)
-      .cloneDeep()
-      .find({ data: { id: id } })
-      .value();
+    const user = _.cloneDeep(users.find(_user => _user.id === id));
 
-    console.log("api user", user);
     delete user.password;
 
     const updatedAccessToken = jwt.sign({ id: user.id }, jwtConfig.secret, {
@@ -417,13 +503,14 @@ mock.onGet("/api/auth/access-token").reply(config => {
     });
 
     const response = {
-      user,
+      user: user,
       access_token: updatedAccessToken
     };
 
     return [200, response];
   } catch (e) {
     const error = "Invalid access token detected";
+    console.log("api access_token error", error);
     return [401, { error }];
   }
 });

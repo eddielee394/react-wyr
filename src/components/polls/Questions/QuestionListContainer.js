@@ -34,7 +34,7 @@ class QuestionListContainer extends Component {
      */
     const { params } = this.props.match;
     this.props.getCategory(params);
-    this.props.getQuestions();
+    this.props.getQuestionsByCategory(params);
   }
 
   componentDidUpdate(prevProps) {
@@ -333,11 +333,11 @@ class QuestionListContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
+      getCategory: Actions.getCategory,
       getQuestions: Actions.getQuestions,
-      // getQuestionsByCategory: Actions.getQuestionsByCategory,
-      updateQuestion: Actions.updateQuestion,
+      getQuestionsByCategory: Actions.getQuestionsByCategory,
       getQuestion: Actions.getQuestion,
-      getCategory: Actions.getCategory
+      updateQuestion: Actions.updateQuestion
     },
     dispatch
   );
@@ -345,6 +345,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps({ polls, auth }, props) {
   const { params } = props.match;
+
   const questions = polls.questions.data.filter(
     question => question.categoryId === polls.category.data.id
   );
@@ -358,9 +359,9 @@ function mapStateToProps({ polls, auth }, props) {
   );
 
   return {
-    question: question,
-    questions: questions,
     category: polls.category.data,
+    question: question,
+    questions: polls.questions.data,
     authUser: auth.user,
     auth,
     stepIndex
@@ -394,11 +395,9 @@ const styles = theme => ({
 
 export default withReducer("polls", reducer)(
   withStyles(styles, { withTheme: true })(
-    withRouter(
-      connect(
-        mapStateToProps,
-        mapDispatchToProps
-      )(QuestionListContainer)
-    )
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(QuestionListContainer)
   )
 );

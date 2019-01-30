@@ -177,11 +177,9 @@ const styles = theme => ({
 
 export default withReducer("polls", reducer)(
   withStyles(styles, { withTheme: true })(
-    withRouter(
-      connect(
-        mapStateToProps,
-        mapDispatchToProps
-      )(QuestionAdd)
-    )
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(QuestionAdd)
   )
 );

@@ -6,10 +6,10 @@ export const GET_CATEGORY_SUCCESS = "[POLLS] GET CATEGORY SUCCESS";
 export const GET_CATEGORY_FAILURE = "[POLLS] GET CATEGORY FAILURE";
 
 export const getCategory = routeParams => dispatch => {
-  dispatch({
+  return dispatch({
     [CALL_API]: {
       types: [GET_CATEGORY, GET_CATEGORY_SUCCESS, GET_CATEGORY_FAILURE],
-      endpoint: API.fetchCategory(),
+      endpoint: API.fetchCategories(),
       method: "GET",
       schema: Schemas.categoriesList,
       params: routeParams

@@ -59,8 +59,6 @@ class API {
 
   static fetchCategories = () => "/api/questions/categories";
 
-  static fetchCategory = () => "/api/questions/category";
-
   /**
    * Saves a question
    * @description Save the polling question in the database
