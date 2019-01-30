@@ -133,10 +133,6 @@ class JWTLoginTab extends Component {
               onChange={this.handleChange}
               label="Remember me"
             />
-
-            <Link className="font-medium" to="/forgot-password">
-              Forgot Password?
-            </Link>
           </div>
 
           <Button

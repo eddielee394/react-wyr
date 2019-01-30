@@ -1,3 +1,4 @@
+import SocialLinks from "components/_layout/SocialLinks/SocialLinks";
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles/index";
@@ -76,6 +77,9 @@ class LoginPage extends Component {
                 <Link className="font-medium" to="/register">
                   Create an account
                 </Link>
+              </div>
+              <div className="mt-48">
+                <SocialLinks />
               </div>
             </CardContent>
           </Card>
