@@ -373,7 +373,11 @@ mock.onGet("/api/questions").reply(request => {
 mock.onPost("/api/questions").reply(request => {
   const data = JSON.parse(request.data);
   const question = Helpers.formatQuestion(data);
-
+  getStoredData("questions")
+    .then(questions => {
+      return [...questions, question];
+    })
+    .then(data => setStoredData("questions", data));
   return [200, question];
 });
 
