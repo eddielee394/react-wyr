@@ -10,8 +10,8 @@ import imgBg5 from "assets/images/bg-patterns/bg-05.jpg";
 import imgBg8 from "assets/images/bg-patterns/bg-08.jpg";
 import jwt from "jsonwebtoken";
 import * as localforage from "localforage";
-import { Helpers } from "utils";
-import jwtService from "utils/jwtService";
+import { Helpers } from "app/utils";
+import jwtService from "app/utils/jwtService";
 import mock from "./mock";
 
 /**
@@ -28,7 +28,7 @@ let users = [
       displayName: "da_anchorman",
       name: "Ron Burgundy",
       avatarURL: imgAvatarOdessa,
-      email: "da_anchorman@test.com",
+      email: "da_anchorman",
       answers: {
         xj352vofupe1dqz9emx13r: "answerOne",
         vthrdm985a262al8qx3do: "answerTwo",
@@ -50,7 +50,7 @@ let users = [
       displayName: "burt_b",
       name: "Burt Beynolds",
       avatarURL: imgAvatarTyson,
-      email: "burt_b@test.com",
+      email: "burt_b",
       answers: {
         vthrdm985a262al8qx3do: "answerOne",
         xj352vofupe1dqz9emx13r: "answerTwo",
@@ -73,7 +73,7 @@ let users = [
       displayName: "im_not_a_horse",
       name: "Sarah Jessica Marker",
       avatarURL: imgAvatarKatina,
-      email: "im_not_a_horse@test.com",
+      email: "im_not_a_horse",
       answers: {
         "8xf0y6ziyjabvozdd253nd": "answerOne"
       },

@@ -16,7 +16,7 @@ import classNames from "classnames";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as Actions from "store/actions";
+import * as Actions from "app/store/actions";
 
 const styles = theme => ({
   root: {},
