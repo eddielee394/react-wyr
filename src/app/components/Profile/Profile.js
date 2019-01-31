@@ -98,7 +98,7 @@ class Profile extends Component {
         avatarURL: selectedAvatar.url
       }
     };
-    this.props.updateUserData(user);
+    this.props.updateUsers(user);
   };
 
   updateCoverPhoto = () => {
@@ -115,7 +115,7 @@ class Profile extends Component {
       }
     };
 
-    this.props.updateUserData(user);
+    this.props.updateUsers(user);
   };
 
   handleOpenEditDialog = event => {
@@ -353,7 +353,7 @@ function mapDispatchToProps(dispatch) {
       getQuestions: Actions.getQuestions,
       getCategories: Actions.getCategories,
       updateQuestion: Actions.updateQuestion,
-      updateUserData: UserActions.updateUserData
+      updateUsers: UserActions.updateUsers
     },
     dispatch
   );

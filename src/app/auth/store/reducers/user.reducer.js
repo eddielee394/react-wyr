@@ -2,6 +2,8 @@ import * as Actions from "app/auth/store/actions";
 import imgAvatarDefault from "assets/images/avatars/profile.jpg";
 
 const initialState = {
+  id: "guest",
+  from: "localStorage",
   role: "guest",
   data: {
     displayName: "Guest",
@@ -12,7 +14,7 @@ const initialState = {
 
 const user = function(state = initialState, action) {
   switch (action.type) {
-    case Actions.SET_USER_DATA: {
+    case Actions.SET_USER_DATA_SUCCESS: {
       return {
         ...initialState,
         ...action.payload

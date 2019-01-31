@@ -33,7 +33,7 @@ const questionsReducer = function(state = initialState, action) {
     case Actions.UPDATE_QUESTION_SUCCESS: {
       const { questionId, answerId, userId } = action.config.params;
 
-      const question = _.find(state.data, { id: questionId });
+      const question = action.payload;
 
       const questionIndex = _.findIndex(state.data, { id: questionId });
 
@@ -43,7 +43,7 @@ const questionsReducer = function(state = initialState, action) {
           ...question.answers,
           [answerId]: {
             ...question.answers[answerId],
-            votes: [...question.answers[answerId].votes, { id: userId }]
+            votes: [...question.answers[answerId].votes, userId]
           }
         }
       };

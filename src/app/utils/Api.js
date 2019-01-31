@@ -15,6 +15,8 @@ class API {
 
   static storeUser = () => "/api/users";
 
+  static updateUser = () => "/api/user";
+
   static registerUser = data => "/api/auth/register";
 
   /**
@@ -23,12 +25,9 @@ class API {
    * @function
    * @return {Promise<{questions: Object}>} Object where the key is the question’s id and the value is the question object
    */
-  static fetchQuestions = () => "/api/questions";
+  static fetchQuestions = params => "/api/questions";
 
   static fetchQuestion = params => axios.get("/api/question", { params });
-
-  static fetchQuestionsByCategory = params =>
-    axios.get("/api/questions", { params });
 
   static fetchCategories = () => "/api/questions/categories";
 

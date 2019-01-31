@@ -7,7 +7,7 @@ const users = function(state = initialState, action) {
   switch (action.type) {
     case Actions.GET_ALL_USERS_SUCCESS: {
       const users = _.cloneDeep(_.keyBy(action.payload, "id"));
-      console.log("Actions.GET_ALL_USERS", action.payload, users);
+
       return {
         ...state,
         ...users
@@ -22,16 +22,11 @@ const users = function(state = initialState, action) {
       };
     }
     case Actions.UPDATE_USERS_SUCCESS: {
-      const newUsers = {
-        ...state,
-        [action.payload.id]: {
-          ...state[action.payload.id],
-          ...action.payload
-        }
-      };
+      const users = _.cloneDeep(_.keyBy(action.payload, "id"));
+
       return {
         ...state,
-        ...newUsers
+        ...users
       };
     }
     default: {

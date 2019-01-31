@@ -1,20 +1,28 @@
 import _ from "@lodash";
-import { updateUserData } from "app/auth/store/actions";
+import { updateUsers } from "app/auth/store/actions";
+import { CALL_API } from "app/middleware/api";
+import { API, Schemas } from "app/utils";
 
-export const SET_USER_DATA = "[USER] SET DATA";
-export const REMOVE_USER_DATA = "[USER] REMOVE DATA";
+export const SET_USER_DATA = "[USER] SET_USER_DATA";
+export const SET_USER_DATA_SUCCESS = "[USER] SET_USER_DATA_SUCCESS";
+export const SET_USER_DATA_FAILURE = "[USER] SET_USER_DATA_FAILURE";
+
+export const REMOVE_USER_DATA = "[USER] REMOVE_USER_DATA";
 
 /**
  * Set User Data
  */
-export function setUserData(user) {
-  return dispatch => {
-    dispatch({
-      type: SET_USER_DATA,
-      payload: user
-    });
-  };
-}
+export const setUserData = user => dispatch => {
+  return dispatch({
+    [CALL_API]: {
+      types: [SET_USER_DATA, SET_USER_DATA_SUCCESS, SET_USER_DATA_FAILURE],
+      endpoint: API.updateUser(),
+      method: "POST",
+      data: user,
+      schema: Schemas.questionsList
+    }
+  });
+};
 
 export const updateUserAnswer = data => (dispatch, getState) => {
   const { questionId, answerId, author } = data;
@@ -25,6 +33,8 @@ export const updateUserAnswer = data => (dispatch, getState) => {
   } else {
     user = getState().auth.user;
   }
+
+  console.log("updateUserAnswer user: ", user);
 
   const newUser = {
     ...user,
@@ -37,7 +47,7 @@ export const updateUserAnswer = data => (dispatch, getState) => {
     }
   };
 
-  return dispatch(updateUserData(newUser));
+  return dispatch(updateUsers(newUser));
 };
 
 export const updateUserQuestion = data => (dispatch, getState) => {
@@ -57,5 +67,5 @@ export const updateUserQuestion = data => (dispatch, getState) => {
     }
   };
 
-  return dispatch(updateUserData(newUser));
+  return dispatch(updateUsers(newUser));
 };

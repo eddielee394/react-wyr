@@ -13,6 +13,7 @@ import {
 import { green } from "@material-ui/core/colors";
 import Avatar from "@material-ui/core/es/Avatar/Avatar";
 import * as Actions from "app/components/polls/store/actions";
+import { Helpers } from "app/utils";
 import React, { Component } from "react";
 import connect from "react-redux/es/connect/connect";
 import { Link } from "react-router-dom";
@@ -76,7 +77,7 @@ class QuestionList extends Component {
                       access_time
                     </Icon>
                     <div className="text-16 whitespace-no-wrap">
-                      {question.length} min
+                      {Helpers.formatDate(question.timestamp)}
                     </div>
                   </div>
                 </div>

@@ -263,6 +263,19 @@ let categories = [
     color: blue[500]
   }
 ];
+
+let guestUser = {
+  id: "guest",
+  from: "localStorage",
+  password: null,
+  role: "guest",
+  data: {
+    displayName: "Guest",
+    avatarURL: imgAvatarDefault,
+    email: "test@test.com"
+  }
+};
+
 /**
  * JWT Config
  * @param secret authorization secret
@@ -280,7 +293,8 @@ export const initDb = () => {
   const migrationKeys = {
     users: users,
     categories: categories,
-    questions: questions
+    questions: questions,
+    user: guestUser
   };
 
   return localforage
@@ -390,9 +404,53 @@ mock.onGet("/api/question").reply(request => {
 });
 
 mock.onPost("/api/question").reply(request => {
-  const data = JSON.parse(request.data);
+  const { questionId, answerId, userId } = request.params;
 
-  return [200, data];
+  return getStoredData("questions")
+    .then(questions => {
+      const question = _.find(questions, { id: questionId });
+
+      const questionIndex = _.findIndex(questions, { id: questionId });
+      const oldVotes = question.answers[answerId].votes.filter(
+        value => value !== userId
+      );
+
+      const updatedVotes = [...oldVotes, userId];
+
+      const updatedQuestion = {
+        ...question,
+        answers: {
+          ...question.answers,
+          [answerId]: {
+            ...question.answers[answerId],
+            votes: updatedVotes
+          }
+        }
+      };
+
+      const updatedQuestions = [
+        ...questions.slice(0, questionIndex),
+        {
+          ...questions[questionIndex],
+          ...updatedQuestion
+        },
+        ...questions.slice(questionIndex + 1)
+      ];
+
+      const response = {
+        questions: updatedQuestions,
+        question: updatedQuestion
+      };
+
+      return response;
+    })
+    .then(response => {
+      const { questions, question } = response;
+
+      setStoredData("questions", questions);
+
+      return [200, question];
+    });
 });
 
 mock.onGet("/api/questions/categories").reply(request => {
@@ -424,7 +482,7 @@ mock.onGet("/api/questions/category").reply(request => {
 /**
  * Users mock requests
  */
-mock.onGet("/api/users").reply(config => {
+mock.onGet("/api/users").reply(request => {
   return getStoredData("users").then(users => {
     return [200, users];
   });
@@ -437,20 +495,43 @@ mock.onPost("/api/users").reply(request => {
     .then(users => {
       const newUsers = users.map(_user => {
         if (_user.id === user.id) {
-          return _.merge(_user, user);
+          const newUser = _.merge(_user, user);
+
+          return newUser;
         }
 
         return _user;
       });
 
-      setStoredData("user", user);
-
-      const response = [...newUsers, user];
+      const response =
+        newUsers.filter(_user => _user.id === user.id).length > 0
+          ? newUsers
+          : [...newUsers, user];
 
       return response;
     })
     .then(response => {
       setStoredData("users", response);
+      return [200, response];
+    });
+});
+
+mock.onPost("/api/user").reply(request => {
+  const user = JSON.parse(request.data);
+
+  return getStoredData("user")
+    .then(_user => {
+      if (_user) {
+        const response = { ..._user, ...user };
+        console.log("axios updateUser post user1: ", response, _user, user);
+
+        return response;
+      }
+
+      return user;
+    })
+    .then(response => {
+      setStoredData("user", response);
       return [200, response];
     });
 });

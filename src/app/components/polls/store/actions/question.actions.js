@@ -60,8 +60,8 @@ export const updateQuestion = data => dispatch => {
         UPDATE_QUESTION_SUCCESS,
         UPDATE_QUESTION_FAILURE
       ],
-      endpoint: API.fetchQuestions(),
-      method: "GET",
+      endpoint: API.updateQuestion(),
+      method: "POST",
       params: data,
       schema: Schemas.questionsList
     }
