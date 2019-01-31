@@ -12,12 +12,6 @@ export const pollsConfig = {
       })
     },
     {
-      path: "/questions/:categoryId",
-      component: FuseLoadable({
-        loader: () => import("./Questions/QuestionListContainer")
-      })
-    },
-    {
       path: "/questions",
       component: FuseLoadable({
         loader: () => import("./Categories/CategoryList")

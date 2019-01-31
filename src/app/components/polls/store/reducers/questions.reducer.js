@@ -2,21 +2,26 @@ import _ from "@lodash";
 import * as Actions from "app/components/polls/store/actions";
 
 const initialState = {
-  data: []
+  data: [],
+  routeParams: {}
 };
 
 const questionsReducer = function(state = initialState, action) {
   switch (action.type) {
     case Actions.GET_QUESTIONS_SUCCESS: {
+      console.log("Actions.GET_QUESTIONS_SUCCESS", action);
       return {
         ...state,
-        data: action.payload
+        data: action.payload,
+        routeParams: action.config.params
       };
     }
     case Actions.GET_QUESTIONS_BY_CATEGORY_SUCCESS: {
+      console.log("GET_QUESTIONS_BY_CATEGORY_SUCCESS", action);
       return {
         ...state,
-        data: action.payload
+        data: action.payload,
+        routeParams: action.config.params
       };
     }
     case Actions.STORE_QUESTION_SUCCESS: {

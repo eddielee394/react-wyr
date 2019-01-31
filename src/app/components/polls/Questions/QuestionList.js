@@ -26,7 +26,6 @@ class QuestionList extends Component {
     const {
       questions,
       category,
-      theme,
       handleVotePercent,
       handleGetAuthor
     } = this.props;
@@ -65,8 +64,7 @@ class QuestionList extends Component {
                 <div
                   className="flex items-center justify-between px-24 h-64"
                   style={{
-                    background: category.color,
-                    color: theme.palette.getContrastText(category.color)
+                    background: category.color
                   }}
                 >
                   <Avatar src={author.data.avatarURL} />
