@@ -23,7 +23,7 @@ class RegisterPage extends Component {
         <div
           className={classNames(
             classes.intro,
-            "flex flex-no-grow p-16 text-center md:p-128 md:items-center md:flex-no-shrink md:flex-1 md:text-left"
+            "flex flex-col flex-no-grow p-16 text-center md:p-128 md:flex-row md:items-center md:flex-no-shrink md:flex-1 md:text-left"
           )}
         >
           <FuseAnimate animation="transition.expandIn">
