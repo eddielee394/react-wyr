@@ -1,7 +1,7 @@
 import { TextFieldFormsy } from "@fuse";
 import { CheckboxFormsy } from "@fuse/formsy";
+import _ from "@lodash";
 import {
-  Avatar,
   Button,
   Divider,
   Icon,
@@ -10,17 +10,15 @@ import {
   withStyles
 } from "@material-ui/core";
 import Fab from "@material-ui/core/es/Fab/Fab";
-import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import * as Actions from "app/auth/store/actions";
+import "app/utils/reactTable/react-table-defaults";
+import classNames from "classnames";
 import Formsy from "formsy-react";
 import React, { Component } from "react";
 import connect from "react-redux/es/connect/connect";
 import { withRouter } from "react-router-dom";
-import "app/utils/reactTable/react-table-defaults";
 import ReactTable from "react-table";
 import { bindActionCreators } from "redux";
-import classNames from "classnames";
-import _ from "@lodash";
 
 class LoginForm extends Component {
   state = {

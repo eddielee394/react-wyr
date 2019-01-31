@@ -395,27 +395,6 @@ mock.onPost("/api/question").reply(request => {
   return [200, data];
 });
 
-mock.onGet("/api/question/save").reply(request => {
-  const data = JSON.parse(request.data);
-  let question = null;
-
-  //check if the question exists in the db, if so return it so we can use it later, otherwise return the new question
-  questions = questions.map(_question => {
-    if (_question.id === data.id) {
-      question = data;
-      return question;
-    }
-    return _question;
-  });
-
-  //if the question doesn't exist let's add the new one to the existing questions array
-  if (!question) {
-    question = data;
-    questions = [...questions, question];
-  }
-  return [200, question];
-});
-
 mock.onGet("/api/questions/categories").reply(request => {
   if (request.params) {
     const { categoryId } = request.params;
@@ -446,32 +425,40 @@ mock.onGet("/api/questions/category").reply(request => {
  * Users mock requests
  */
 mock.onGet("/api/users").reply(config => {
-  // users = Object.values(users);
-  const response = users;
-  if (users) {
+  return getStoredData("users").then(users => {
     return [200, users];
-  }
-
-  const error = {};
-  return [404, { error }];
+  });
 });
 
 mock.onPost("/api/users").reply(request => {
-  const data = JSON.parse(request.data);
-  const { user } = data;
-  users = users.map(_user => {
-    if (_user.id === user.id) {
-      return _.merge(_user, user);
-    }
-    return _user;
-  });
-  return [200, user];
+  const user = JSON.parse(request.data);
+
+  return getStoredData("users")
+    .then(users => {
+      const newUsers = users.map(_user => {
+        if (_user.id === user.id) {
+          return _.merge(_user, user);
+        }
+
+        return _user;
+      });
+
+      setStoredData("user", user);
+
+      const response = [...newUsers, user];
+
+      return response;
+    })
+    .then(response => {
+      setStoredData("users", response);
+      return [200, response];
+    });
 });
 
 mock.onGet("/api/auth").reply(config => {
   const data = JSON.parse(config.data);
   const { email, password } = data;
-  return localforage.getItem("users").then(users => {
+  return getStoredData("users").then(users => {
     let user = _.cloneDeep(users.find(_user => _user.data.email === email));
 
     const error = {
@@ -537,15 +524,20 @@ mock.onPost("/api/auth/register").reply(request => {
   const data = JSON.parse(request.data);
   const { displayName, password, email } = data;
 
-  const isEmailExists = Object.keys(users).find(
-    k => users[k].data.email === email
-  );
-  const error = {
-    email: isEmailExists ? "The email is already in use" : null,
-    displayName: displayName !== "" ? null : "Enter display name",
-    password: null
-  };
-  if (!error.displayName && !error.password && !error.email) {
+  return getStoredData("users").then(users => {
+    const isEmailExists = users.find(user => user.data.email === email);
+
+    const error = {
+      email: isEmailExists ? "The email is already in use" : null,
+      displayName: displayName !== "" ? null : "Enter display name",
+      password: null
+    };
+
+    if (error.displayName || error.password || error.email) {
+      console.log("Axios register error");
+      return [401, { error }];
+    }
+
     const newUser = {
       id: displayName,
       from: "localStorage",
@@ -564,12 +556,9 @@ mock.onPost("/api/auth/register").reply(request => {
       }
     };
 
-    users = { ...users, newUser };
-
     const access_token = jwt.sign({ id: newUser.id }, jwtConfig.secret, {
       expiresIn: jwtConfig.expiresIn
     });
-
     const _newUser = _.cloneDeep(newUser);
 
     const user = _.merge(_newUser, { access_token: access_token });
@@ -580,8 +569,11 @@ mock.onPost("/api/auth/register").reply(request => {
     };
 
     jwtService.setSession(access_token);
-
     return [200, response];
-  }
-  return [200, { error }];
+  });
+});
+
+mock.onPost("/api/auth/logout").reply(request => {
+  const user = request.data;
+  setStoredData("user", user);
 });

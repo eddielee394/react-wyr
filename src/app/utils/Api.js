@@ -11,7 +11,7 @@ class API {
    * @description Get all of the existing users from the database
    * @return {Promise<{users: {Object}}>} Object where the key is the user’s id and the value is the user object
    */
-  static fetchUsers = () => axios.get("/api/users");
+  static fetchUsers = () => "/api/users";
 
   static storeUser = () => "/api/users";
 

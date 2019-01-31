@@ -5,27 +5,23 @@ const initialState = {};
 
 const users = function(state = initialState, action) {
   switch (action.type) {
-    case Actions.GET_ALL_USERS: {
+    case Actions.GET_ALL_USERS_SUCCESS: {
+      const users = _.cloneDeep(_.keyBy(action.payload, "id"));
+      console.log("Actions.GET_ALL_USERS", action.payload, users);
       return {
         ...state,
-        ..._.keyBy(action.payload, "id")
-        // ...action.payload
+        ...users
       };
     }
     case Actions.STORE_USER_SUCCESS: {
-      const _users = _.cloneDeep(state);
-      // const users = _.keyBy(_users, "id");
-      const newUsers = { ..._users, [action.payload.id]: action.payload };
+      const users = _.cloneDeep(_.keyBy(action.payload, "id"));
 
       return {
         ...state,
-        ...newUsers
+        ...users
       };
     }
-    case Actions.UPDATE_USER_SUCCESS: {
-      // const _users = _.cloneDeep(state);
-      // const users = _.keyBy(_users, "id");
-
+    case Actions.UPDATE_USERS_SUCCESS: {
       const newUsers = {
         ...state,
         [action.payload.id]: {

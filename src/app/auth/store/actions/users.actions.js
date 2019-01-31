@@ -1,31 +1,44 @@
+import { CALL_API } from "app/middleware/api";
 import store from "app/store";
 import * as Actions from "app/store/actions";
-import { API } from "app/utils";
+import { API, Schemas } from "app/utils";
 import { setUserData } from "app/auth/store/actions";
 
 export const GET_ALL_USERS = "[USERS] GET ALL";
-export const STORE_USER_SUCCESS = "[USER] STORE USER SUCCESS";
-export const UPDATE_USER_SUCCESS = "[USER] UPDATE USERS SUCCESS";
+export const GET_ALL_USERS_SUCCESS = "[USERS] GET ALL USERS SUCCESS";
+export const GET_ALL_USERS_FAILURE = "[USERS] GET ALL USERS FAILURE";
 
-export function getAllUsers() {
-  const request = API.fetchUsers();
-  return dispatch => {
-    request.then(response => {
-      dispatch({
-        type: GET_ALL_USERS,
-        payload: response.data
-      });
-    });
-  };
-}
+export const STORE_USER = "[USER] STORE USER";
+export const STORE_USER_SUCCESS = "[USER] STORE USER SUCCESS";
+export const STORE_USER_FAILURE = "[USER] STORE USER FAILURE";
+
+export const UPDATE_USER = "[USER] UPDATE USERS";
+export const UPDATE_USERS_SUCCESS = "[USER] UPDATE USERS SUCCESS";
+export const UPDATE_USER_FAILURE = "[USER] UPDATE USERS FAILURE";
+
+export const getAllUsers = () => dispatch => {
+  return dispatch({
+    [CALL_API]: {
+      types: [GET_ALL_USERS, GET_ALL_USERS_SUCCESS, GET_ALL_USERS_FAILURE],
+      endpoint: API.fetchUsers(),
+      method: "GET",
+      schema: Schemas.questionsList
+    }
+  });
+};
 
 export const storeUserData = user => dispatch => {
   dispatch({
-    type: STORE_USER_SUCCESS,
-    payload: user
+    [CALL_API]: {
+      types: [STORE_USER, STORE_USER_SUCCESS, STORE_USER_FAILURE],
+      endpoint: API.storeUser(),
+      method: "POST",
+      data: user,
+      schema: Schemas.questionsList
+    }
   });
 
-  return dispatch(updateUserData(user));
+  return dispatch(setUserData(user));
 };
 
 /**
@@ -37,7 +50,7 @@ export const updateUserData = user => dispatch => {
   }
 
   dispatch({
-    type: UPDATE_USER_SUCCESS,
+    type: UPDATE_USERS_SUCCESS,
     payload: user
   });
 
