@@ -572,8 +572,3 @@ mock.onPost("/api/auth/register").reply(request => {
     return [200, response];
   });
 });
-
-mock.onPost("/api/auth/logout").reply(request => {
-  const user = request.data;
-  setStoredData("user", user);
-});

@@ -52,6 +52,8 @@ class API {
    * @param data
    */
   static updateQuestion = data => "/api/question";
+
+  static logout = () => "/api/auth/logout";
 }
 
 export default API;

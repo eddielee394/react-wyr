@@ -50,7 +50,7 @@ class Auth extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      logout: userActions.logoutUser,
+      logout: userActions.submitLogout,
       setUserData: userActions.setUserData,
       getAllUsers: userActions.getAllUsers,
       showMessage: Actions.showMessage,

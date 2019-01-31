@@ -138,7 +138,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       toggleQuickPanel: quickPanelActions.toggleQuickPanel,
-      logout: authActions.logoutUser
+      logout: authActions.submitLogout
     },
     dispatch
   );

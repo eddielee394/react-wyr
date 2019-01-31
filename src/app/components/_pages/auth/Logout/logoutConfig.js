@@ -1,5 +1,5 @@
 import { authRoles } from "app/auth";
-import { logoutUser } from "app/auth/store/actions";
+import { submitLogout } from "app/auth/store/actions";
 import store from "app/store";
 
 export const logoutConfig = {
@@ -8,7 +8,7 @@ export const logoutConfig = {
     {
       path: "/logout",
       component: () => {
-        store.dispatch(logoutUser());
+        store.dispatch(submitLogout());
         return "Logging out..";
       }
     }

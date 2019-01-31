@@ -23,7 +23,7 @@ const user = function(state = initialState, action) {
         ...initialState
       };
     }
-    case Actions.USER_LOGGED_OUT: {
+    case Actions.LOGOUT_SUCCESS: {
       return initialState;
     }
     default: {

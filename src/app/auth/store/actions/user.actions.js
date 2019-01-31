@@ -1,11 +1,8 @@
 import _ from "@lodash";
-import history from "app/utils/history";
-import jwtService from "app/utils/jwtService";
 import { updateUserData } from "app/auth/store/actions";
 
 export const SET_USER_DATA = "[USER] SET DATA";
 export const REMOVE_USER_DATA = "[USER] REMOVE DATA";
-export const USER_LOGGED_OUT = "[USER] LOGGED OUT";
 
 /**
  * Set User Data
@@ -62,26 +59,3 @@ export const updateUserQuestion = data => (dispatch, getState) => {
 
   return dispatch(updateUserData(newUser));
 };
-
-/**
- * Logout
- */
-export function logoutUser() {
-  return (dispatch, getState) => {
-    const user = getState().auth.user;
-
-    if (user.role === "guest") {
-      return null;
-    }
-
-    history.push({
-      pathname: "/"
-    });
-
-    jwtService.logout();
-
-    dispatch({
-      type: USER_LOGGED_OUT
-    });
-  };
-}

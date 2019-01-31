@@ -1,8 +1,11 @@
+import history from "app/utils/history";
 import jwtService from "app/utils/jwtService";
 import { setUserData } from "app/auth/store/actions";
 
-export const LOGIN_ERROR = "LOGIN_ERROR";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_ERROR = "[LOGIN] LOGIN_ERROR";
+export const LOGIN_SUCCESS = "[LOGIN] LOGIN_SUCCESS";
+
+export const LOGOUT_SUCCESS = "[LOGIN] LOGOUT_SUCCESS";
 
 export function submitLogin({ email, password }) {
   return dispatch =>
@@ -22,3 +25,23 @@ export function submitLogin({ email, password }) {
         });
       });
 }
+
+/**
+ * Logout
+ */
+export const submitLogout = () => (dispatch, getState) => {
+  const user = getState().auth.user;
+
+  if (user.role === "guest") {
+    return null;
+  }
+
+  history.push({
+    pathname: "/login"
+  });
+
+  jwtService.logout();
+  dispatch({
+    type: LOGOUT_SUCCESS
+  });
+};
