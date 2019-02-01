@@ -1,5 +1,7 @@
 # Would You Rather Project
 *Project & Docs are a work in progress*
+*Demo:*  https://eddielee394.github.io/react-wyr
+
 ## Overview
 A prematurely optimized, over-engineered & unnecessarily complicated "Would You Rather" game built with ReactJS, Redux & a bunch of other stuff I probably didn't need to use - (WIP)
 
@@ -42,7 +44,7 @@ The purpose behind this monstrosity is to demonstrate some real-world complexiti
 - Clone repo
 - Run `npm install`
 - Run `npm start`
-- Navigate to `http://react-wyr.local:3000` in your browser to view site
+- Navigate to `http://localhost:3000` in your browser to view site
 - If you're feelin froggy, setup a reverse proxy on your virtual host and experience the site as if you were surfing on the actual web (who needs port addresses anyway???).
 
 ## Feature List:
@@ -71,4 +73,5 @@ The purpose behind this monstrosity is to demonstrate some real-world complexiti
 - [x] Start writing todo list
 - [x] Write feature list
 - [x] Write Roadmap
-- [ ] fix issue where category state persists on `/questions` page  when navigating back from empty `QuestionsList` component path, causing an undefined category error in the CategoryList component.
+- [x] fix issue where category state persists on `/questions` page  when navigating back from empty `QuestionsList` component path, causing an undefined category error in the CategoryList component.
+- [ ] fix issue where authenticated users are temporarily redirected to login page when browser is refreshed.
