@@ -24,7 +24,7 @@ const propTypes = {};
 
 const defaultProps = {};
 
-const styles = theme => ({
+const styles = () => ({
   root: {},
   item: {
     textDecoration: "none!important"
@@ -83,6 +83,8 @@ class FuseShortcuts extends Component {
     shortcuts = shortcuts.includes(id)
       ? shortcuts.filter(_id => id !== _id)
       : [...shortcuts, id];
+
+    return shortcuts;
   };
 
   render() {

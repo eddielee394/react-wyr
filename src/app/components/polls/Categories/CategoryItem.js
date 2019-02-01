@@ -14,7 +14,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const CategoryItem = props => {
-  const { categories, question, userHasAnswered, theme } = props;
+  const { categories, question, userHasAnswered } = props;
   const progressValue = userHasAnswered ? 100 : 0;
   const category = categories.find(
     _category => _category.id === question.categoryId
