@@ -1,44 +1,77 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Would You Rather Project
+*Project & Docs are a work in progress*
+*Demo:*  https://eddielee394.github.io/react-wyr
 
-## Available Scripts
+## Overview
+A prematurely optimized, over-engineered & unnecessarily complicated "Would You Rather" game built with ReactJS, Redux & a bunch of other stuff I probably didn't need to use - (WIP)
 
-In the project directory, you can run:
+### But... Why???
+The purpose behind this monstrosity is to demonstrate some real-world complexities and pitfalls that we tend to encounter when working on actual projects.  Often times we as developers (or maybe it's just me...) have a tendency to overcomplicate, overengineer or prematurely optimize even the simplest of applications.  This is an excellent representation of this very human behavior.
 
-### `npm start`
+**Warning** The following has been attempted by a professional developer (even though said developer may wear pajamas to work every day). Please don't try this at home - or actually... yeah, go ahead & try it.  Break stuff and learn a few new things in the process.  That's what makes being a developer fun.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![screenshot_dashboard.jpg](docs/screenshots/screenshot_dashboard.jpg)
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+![screenshot_question.jpg](docs/screenshots/screenshot_question.jpg)
 
-### `npm test`
+![screenshot_questionAdd.jpg](docs/screenshots/screenshot_questionAdd.jpg)
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![screenshot_leaderboard.jpg](docs/screenshots/screenshot_leaderboard.jpg)
 
-### `npm run build`
+![screenshot_profile.jpg](docs/screenshots/screenshot_profile.jpg)
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Some packages being used
+- React 16
+- Redux 4
+- Redux thunk
+- Redux Logger
+- Redux Devtools
+- React-fontawesome 5
+- Material-ui 3.x
+- Tailwind css (Grid) 4.x
+- Axios
+- Axios-mock-adapter
+- Formsy-react
+- Jwt
+- Local Forage
+- React Router
+- React Spinners
+- React swipeable views
+- react table
+- Velocity-react
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Getting Started
+- Clone repo
+- Run `npm install`
+- Run `npm start`
+- Navigate to `http://localhost:3000` in your browser to view site
+- If you're feelin froggy, setup a reverse proxy on your virtual host and experience the site as if you were surfing on the actual web (who needs port addresses anyway???).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Feature List:
+- JWT Authorization
+- User registration
+- State persistence using custom Local Forage integration (Getting redux-persist to work properly proved to be a lil difficult)
+- Authorized routing
+- Custom templating system (thanks to the guys at @Fuse for the inspiration)
+- Axios & Axios mock adapter integration for simulated serverside requests
+- Users can:
+  - Select avatars
+  - Select profile cover photos
+  - post questions
+  - register new accounts and persist account data across browser sessions
+- API middleware integration
 
-### `npm run eject`
+## Roadmap: 
+- Allow users to follow other users
+- Redux-persist integration (I'll get it right eventually)
+- Portable backend api
+- Integration redux-orm
+- UI updates
+- Question feed on user profiles
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Todo List:
+- [x] Start writing todo list
+- [x] Write feature list
+- [x] Write Roadmap
+- [x] fix issue where category state persists on `/questions` page  when navigating back from empty `QuestionsList` component path, causing an undefined category error in the CategoryList component.
+- [ ] fix issue where authenticated users are temporarily redirected to login page when browser is refreshed.
