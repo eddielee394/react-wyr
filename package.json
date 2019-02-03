@@ -44,6 +44,7 @@
     "react-swipeable-views": "^0.13.0",
     "react-table": "^6.8.6",
     "redux": "4.0.1",
+    "redux-persist": "^4.10.2",
     "redux-thunk": "2.3.0",
     "typeface-muli": "0.0.71",
     "velocity-react": "1.4.1"

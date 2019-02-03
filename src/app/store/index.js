@@ -1,8 +1,9 @@
-import { default as applyMiddleware } from "app/middleware";
+import {default as applyMiddleware} from "app/middleware";
 import createReducer from "app/store/reducers";
-import { DevTools } from "app/utils";
+import {DevTools} from "app/utils";
 import * as reduxModule from "redux";
-import { compose, createStore } from "redux";
+import {compose, createStore} from "redux";
+import {autoRehydrate, persistStore} from 'redux-persist'
 
 // noinspection JSUnresolvedVariable
 /**
@@ -37,7 +38,7 @@ const devToolsInstrument = devToolsExtActive
   ? f => f //if extension is active, return empty object
   : DevTools.instrument({ serialize: true, trace: true });
 
-const enhancer = composeEnhancers(applyMiddleware, devToolsInstrument);
+const enhancer = composeEnhancers(applyMiddleware,autoRehydrate(), devToolsInstrument);
 
 /**
  * Redux-persist init
@@ -62,5 +63,5 @@ export const injectReducer = (key, reducer) => {
 
   return store;
 };
-
+persistStore(store);
 export default store;
