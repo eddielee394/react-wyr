@@ -58,13 +58,8 @@ function MainNavbar({ classes, navigation, layoutStyle, user }) {
       ) : (
         <React.Fragment>
           <div className="flex flex-row">
-            <Hidden lgUp>
-              <UserHeader />
-            </Hidden>
             <FuseNavigation navigation={navigation} layout={navigationLayout} />
-            <Hidden mdDown>
-              <MainToolbar />
-            </Hidden>
+            <MainToolbar />
           </div>
         </React.Fragment>
       )}

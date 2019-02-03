@@ -158,23 +158,23 @@ class FuseLayout2 extends Component {
         className={classes.navbarHeaderWrapper}
       >
         <div className={classes.navbarHeader}>{navbarHeader}</div>
-        <Hidden lgUp>
-          <IconButton onClick={navbarCloseMobile}>
-            <Icon>menu</Icon>
-          </IconButton>
-        </Hidden>
+        {/*<Hidden lgUp>*/}
+        {/*<IconButton onClick={navbarCloseMobile}>*/}
+        {/*<Icon>menu</Icon>*/}
+        {/*</IconButton>*/}
+        {/*</Hidden>*/}
       </AppBar>
     );
 
     const navBarTemplate = (
       <MuiThemeProvider theme={FuseThemes[settings.theme.navbar]}>
         <Paper id="fuse-navbar" className={classes.navbarWrapper} square={true}>
-          <Hidden mdDown>
-            <div className={classNames(classes.navbar)}>
-              {navbarHeaderTemplate}
-              <div className={classes.navbarContent}>{navbarContent}</div>
-            </div>
-          </Hidden>
+          {/*<Hidden mdDown>*/}
+          <div className={classNames(classes.navbar)}>
+            {navbarHeaderTemplate}
+            <div className={classes.navbarContent}>{navbarContent}</div>
+          </div>
+          {/*</Hidden>*/}
 
           <Hidden lgUp>
             <Drawer

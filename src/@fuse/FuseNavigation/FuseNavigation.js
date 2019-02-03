@@ -82,8 +82,8 @@ class FuseNavigation extends Component {
         case "horizontal": {
           return (
             <React.Fragment>
-              <Hidden lgUp>{verticalNav}</Hidden>
-              <Hidden mdDown>{horizontalNav}</Hidden>
+              {/*<Hidden lgUp>{verticalNav}</Hidden>*/}
+              {horizontalNav}
             </React.Fragment>
           );
         }
