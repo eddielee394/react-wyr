@@ -1,5 +1,3 @@
-import axios from "axios/index";
-
 /**
  * API Methods
  * @namespace API
@@ -19,6 +17,8 @@ class API {
 
   static registerUser = data => "/api/auth/register";
 
+  static logoutUser = () => "/api/auth/logout";
+
   /**
    * Gets questions from database
    * @description Get all of the existing questions from the database
@@ -27,12 +27,12 @@ class API {
    */
   static fetchQuestions = params => "/api/questions";
 
-  static fetchQuestion = params => axios.get("/api/question", { params });
+  // static fetchQuestion = params => axios.get("/api/question", { params });
 
   static fetchCategories = () => "/api/questions/categories";
 
-  static fetchCategory = params =>
-    axios.get("/api/questions/category", { params });
+  // static fetchCategory = params =>
+  //   axios.get("/api/questions/category", { params });
 
   /**
    * Saves a question
@@ -51,8 +51,6 @@ class API {
    * @param data
    */
   static updateQuestion = data => "/api/question";
-
-  static logout = () => "/api/auth/logout";
 }
 
 export default API;

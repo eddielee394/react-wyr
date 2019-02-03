@@ -1,22 +1,22 @@
-import { FuseAnimate, FusePageSimple } from "@fuse";
+import {FuseAnimate, FusePageSimple} from "@fuse";
 import {
-  Avatar,
-  Button,
-  Dialog,
-  DialogTitle,
-  GridList,
-  GridListTile,
-  GridListTileBar,
-  Icon,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Tab,
-  Tabs,
-  Typography,
-  withStyles
+    Avatar,
+    Button,
+    Dialog,
+    DialogTitle,
+    GridList,
+    GridListTile,
+    GridListTileBar,
+    Icon,
+    IconButton,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    Tab,
+    Tabs,
+    Typography,
+    withStyles
 } from "@material-ui/core";
 import Fab from "@material-ui/core/es/Fab/Fab";
 import * as UserActions from "app/auth/store/actions";
@@ -41,9 +41,9 @@ import imgBg12 from "assets/images/bg-patterns/bg-12.jpg";
 import imgMuiDark from "assets/images/bg-patterns/dark-material-bg.jpg";
 import classNames from "classnames";
 import _ from "lodash";
-import React, { Component } from "react";
+import React, {Component} from "react";
 import connect from "react-redux/es/connect/connect";
-import { bindActionCreators } from "redux";
+import {bindActionCreators} from "redux";
 import ActivityTab from "./tabs/ActivityTab";
 
 class Profile extends Component {
@@ -360,11 +360,12 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps({ polls, auth }) {
+  const users = _.cloneDeep(_.keyBy(auth.users, "id"));
   return {
     questions: polls.questions.data,
     categories: polls.categories.data,
     user: auth.user,
-    users: auth.users
+    users: users
   };
 }
 
