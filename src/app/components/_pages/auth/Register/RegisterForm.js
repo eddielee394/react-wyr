@@ -45,7 +45,7 @@ class RegisterForm extends Component {
       const pathname =
         this.props.location.state && this.props.location.state.redirectUrl
           ? this.props.location.state.redirectUrl
-          : "/dashboard";
+          : "/questions";
       this.props.history.push({
         pathname
       });
