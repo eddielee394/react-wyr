@@ -35,6 +35,9 @@ class QuestionListContainer extends Component {
     const { params } = this.props.match;
     this.props.getCategory(params);
     this.props.getQuestionsByCategory(params);
+    if (params.questionId) {
+      this.props.question.length === 0 && this.props.history.push(`/error-404`);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -45,6 +48,10 @@ class QuestionListContainer extends Component {
 
     if (!_.isEqual(this.props.location, prevProps.location)) {
       this.handleChangeIndex({ questionId: params.questionId });
+      if (params.questionId) {
+        this.props.question.length === 0 &&
+          this.props.history.push(`/error-404`);
+      }
     }
   }
 
