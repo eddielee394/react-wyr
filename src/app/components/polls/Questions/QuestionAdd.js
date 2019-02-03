@@ -125,7 +125,7 @@ class QuestionAdd extends Component {
             aria-label="Submit"
             disabled={!canSubmit}
           >
-            Can submit
+            Submit
           </Button>
         </Formsy>
       </div>
