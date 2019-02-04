@@ -4,7 +4,6 @@ import { blueGrey, brown, yellow } from "@material-ui/core/colors";
 import "app/utils/reactTable/react-table-defaults";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import ReactTable from "react-table";
 
 class LeaderboardList extends Component {
@@ -155,5 +154,5 @@ const styles = () => ({
 });
 
 export default withStyles(styles, { withTheme: true })(
-  withRouter(connect(mapStateToProps)(LeaderboardList))
+  connect(mapStateToProps)(LeaderboardList)
 );
