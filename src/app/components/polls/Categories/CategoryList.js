@@ -19,6 +19,7 @@ import queryString from "query-string";
 import React, { Component } from "react";
 import connect from "react-redux/es/connect/connect";
 import { bindActionCreators } from "redux";
+import _ from "@lodash";
 
 class CategoryList extends Component {
   componentDidMount() {
@@ -90,11 +91,12 @@ class CategoryList extends Component {
   };
 
   searchFilterResults = (data, searchText) => {
+    const sortedData = _.orderBy(data, "timestamp", "desc");
     if (searchText.length === 0) {
-      return data;
+      return sortedData;
     }
 
-    return FuseUtils.filterArrayByString(data, searchText);
+    return FuseUtils.filterArrayByString(sortedData, searchText);
   };
 
   userHasAnswered = questionId => {
