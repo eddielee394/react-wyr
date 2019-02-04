@@ -1,6 +1,6 @@
 import { FusePageSimple } from "@fuse";
 import _ from "@lodash";
-import * as Actions from "app/components/Leaderboard/store/actions";
+import * as userActions from "app/components/Leaderboard/store/actions";
 import reducer from "app/components/Leaderboard/store/reducers";
 import withReducer from "app/store/withReducer";
 import {
@@ -9,18 +9,20 @@ import {
 } from "app/components/Leaderboard";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 
 class Leaderboard extends Component {
   componentDidMount() {
-    this.props.getUsers(this.props.match.params);
+    this.props.getUsers();
     this.props.getUsersStats();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(this.props.location, prevProps.location)) {
-      this.props.getUsers(this.props.match.params);
+    if (
+      !_.isEqual(this.props.user, prevProps.user) ||
+      !_.isEqual(this.props.users, prevProps.users)
+    ) {
+      this.props.getUsers();
       this.props.getUsersStats();
     }
   }
@@ -47,8 +49,8 @@ class Leaderboard extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      getUsers: Actions.getUsers,
-      getUsersStats: Actions.getUsersStats
+      getUsers: userActions.getUsers,
+      getUsersStats: userActions.getUsersStats
     },
     dispatch
   );
@@ -63,10 +65,8 @@ function mapStateToProps({ leaderboard, auth }) {
 }
 
 export default withReducer("leaderboard", reducer)(
-  withRouter(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(Leaderboard)
-  )
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Leaderboard)
 );

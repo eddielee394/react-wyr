@@ -15,7 +15,7 @@ import ListItemAvatar from "@material-ui/core/es/ListItemAvatar/ListItemAvatar";
 import ListSubheader from "@material-ui/core/es/ListSubheader/ListSubheader";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavLink, withRouter } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { bindActionCreators } from "redux";
 
 class LeaderboardSidebarContent extends Component {
@@ -183,10 +183,8 @@ const styles = theme => ({
 });
 
 export default withStyles(styles, { withTheme: true })(
-  withRouter(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(LeaderboardSidebarContent)
-  )
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(LeaderboardSidebarContent)
 );
