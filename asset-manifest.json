@@ -1,7 +1,7 @@
 {
   "main.css": "/react-wyr/static/css/main.8098de3b.chunk.css",
-  "main.js": "/react-wyr/static/js/main.71f8fc0c.chunk.js",
-  "main.js.map": "/react-wyr/static/js/main.71f8fc0c.chunk.js.map",
+  "main.js": "/react-wyr/static/js/main.0b0ab1e3.chunk.js",
+  "main.js.map": "/react-wyr/static/js/main.0b0ab1e3.chunk.js.map",
   "static/js/1.54ac3df2.chunk.js": "/react-wyr/static/js/1.54ac3df2.chunk.js",
   "static/js/1.54ac3df2.chunk.js.map": "/react-wyr/static/js/1.54ac3df2.chunk.js.map",
   "static/js/2.3b7a5c9f.chunk.js": "/react-wyr/static/js/2.3b7a5c9f.chunk.js",
@@ -13,8 +13,8 @@
   "static/js/5.79b56200.chunk.js": "/react-wyr/static/js/5.79b56200.chunk.js",
   "static/js/5.79b56200.chunk.js.map": "/react-wyr/static/js/5.79b56200.chunk.js.map",
   "static/css/6.97effa52.chunk.css": "/react-wyr/static/css/6.97effa52.chunk.css",
-  "static/js/6.9a4bf80f.chunk.js": "/react-wyr/static/js/6.9a4bf80f.chunk.js",
-  "static/js/6.9a4bf80f.chunk.js.map": "/react-wyr/static/js/6.9a4bf80f.chunk.js.map",
+  "static/js/6.69f74862.chunk.js": "/react-wyr/static/js/6.69f74862.chunk.js",
+  "static/js/6.69f74862.chunk.js.map": "/react-wyr/static/js/6.69f74862.chunk.js.map",
   "runtime~main.js": "/react-wyr/static/js/runtime~main.2562ba9a.js",
   "runtime~main.js.map": "/react-wyr/static/js/runtime~main.2562ba9a.js.map",
   "static/media/index.css": "/react-wyr/static/media/muli-latin-900italic.3b4a9a0e.woff",
@@ -32,6 +32,6 @@
   "static/css/main.8098de3b.chunk.css.map": "/react-wyr/static/css/main.8098de3b.chunk.css.map",
   "static/css/6.97effa52.chunk.css.map": "/react-wyr/static/css/6.97effa52.chunk.css.map",
   "index.html": "/react-wyr/index.html",
-  "precache-manifest.66b879501bbf725f72f0a341a86a328f.js": "/react-wyr/precache-manifest.66b879501bbf725f72f0a341a86a328f.js",
+  "precache-manifest.212e3d58d6682f4d9b8220d9c6234537.js": "/react-wyr/precache-manifest.212e3d58d6682f4d9b8220d9c6234537.js",
   "service-worker.js": "/react-wyr/service-worker.js"
 }
