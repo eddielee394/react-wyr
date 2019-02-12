@@ -4,6 +4,8 @@ import { showMessage } from "app/store/actions/fuse";
 import { API, Schemas } from "app/utils";
 
 export const GET_QUESTION = "[POLLS] GET QUESTION";
+export const GET_QUESTION_SUCCESS = "[POLLS] GET QUESTION SUCCESS";
+export const GET_QUESTION_FAILURE = "[POLLS] GET QUESTION FAILURE";
 
 export const UPDATE_QUESTION = "[POLLS] UPDATE QUESTION";
 export const UPDATE_QUESTION_SUCCESS = "[POLLS] UPDATE QUESTION SUCCESS";
@@ -13,17 +15,17 @@ export const STORE_QUESTION = "[POLLS] STORE QUESTION";
 export const STORE_QUESTION_SUCCESS = "[POLLS] STORE QUESTION SUCCESS";
 export const STORE_QUESTION_FAILURE = "[POLLS] STORE QUESTION FAILURE";
 
-export function getQuestion(params) {
-  const request = API.getQuestion(params);
-
-  return dispatch =>
-    request.then(response => {
-      dispatch({
-        type: GET_QUESTION,
-        payload: response.data
-      });
-    });
-}
+export const getQuestion = params => (dispatch, getState) => {
+  return dispatch({
+    [CALL_API]: {
+      types: [GET_QUESTION, GET_QUESTION_SUCCESS, GET_QUESTION_FAILURE],
+      endpoint: API.fetchQuestion(params),
+      method: "GET",
+      params: params,
+      schema: Schemas.questionsList
+    }
+  });
+};
 
 export const storeQuestion = data => (dispatch, getState) => {
   const author = getState().auth.user.id;

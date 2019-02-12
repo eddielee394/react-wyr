@@ -24,20 +24,32 @@ import { Question, QuestionList } from "app/components/polls/Questions";
 import React, { Component } from "react";
 import connect from "react-redux/es/connect/connect";
 import { Link } from "react-router-dom";
+import { RingLoader } from "react-spinners";
 import SwipeableViews from "react-swipeable-views";
 import { bindActionCreators } from "redux";
 
 class QuestionListContainer extends Component {
+  state = {
+    contentLoaded: false
+  };
+
   componentDidMount() {
     /**
      * Get the Question list data
      */
     const { params } = this.props.match;
-    this.props.getCategory(params);
-    this.props.getQuestionsByCategory(params);
-    if (params.questionId) {
-      this.props.question.length === 0 && this.props.history.push(`/error-404`);
-    }
+
+    Promise.all([
+      this.props.getCategory(params),
+      this.props.getQuestionsByCategory(params),
+      this.props.getQuestion(params)
+    ]).then(response => {
+      this.setState({ contentLoaded: true });
+
+      if (params.questionId) {
+        this.props.question === null && this.props.history.push(`/error-404`);
+      }
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -48,9 +60,12 @@ class QuestionListContainer extends Component {
 
     if (!_.isEqual(this.props.location, prevProps.location)) {
       this.handleChangeIndex({ questionId: params.questionId });
+
       if (params.questionId) {
-        this.props.question.length === 0 &&
-          this.props.history.push(`/error-404`);
+        this.props.getQuestion(params).then(() => {
+          this.setState({ contentLoaded: true });
+          this.props.question === null && this.props.history.push(`/error-404`);
+        });
       }
     }
   }
@@ -169,7 +184,7 @@ class QuestionListContainer extends Component {
     _.find(this.props.auth.users, { id: question.author.id });
 
   render() {
-    const { classes, questions, category, stepIndex } = this.props;
+    const { classes, questions, category, stepIndex, match } = this.props;
     this.isUserAnswer();
 
     const headerTitle = (
@@ -213,20 +228,27 @@ class QuestionListContainer extends Component {
       </div>
     ));
 
-    const steps = questions.map(_question => {
-      return (
-        <Step
-          classes={{ root: classes.step }}
-          key={_question.id}
-          completed={this.userHasAnswered(_question.id)}
-          onClick={() => this.handleChangeQuestion(_question.id)}
-        >
-          <StepLabel classes={{ root: classes.stepLabel }}>
-            {_question.title}
-          </StepLabel>
-        </Step>
+    const steps =
+      this.state.contentLoaded === false ? (
+        <div className="flex justify-center">
+          <RingLoader color={"#039be5"} />
+        </div>
+      ) : (
+        questions.map(_question => {
+          return (
+            <Step
+              classes={{ root: classes.step }}
+              key={_question.id}
+              completed={this.userHasAnswered(_question.id)}
+              onClick={() => this.handleChangeQuestion(_question.id)}
+            >
+              <StepLabel classes={{ root: classes.stepLabel }}>
+                {_question.title}
+              </StepLabel>
+            </Step>
+          );
+        })
       );
-    });
 
     const backControl = stepIndex > 0 && (
       <Fab
@@ -309,7 +331,6 @@ class QuestionListContainer extends Component {
                 button
                 divider
                 onClick={() => this.handleChangeQuestion()}
-                activeClassName="active"
                 className={classes.listItem}
                 key="all"
               >
@@ -341,7 +362,6 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       getCategory: Actions.getCategory,
-      getQuestions: Actions.getQuestions,
       getQuestionsByCategory: Actions.getQuestionsByCategory,
       getQuestion: Actions.getQuestion,
       updateQuestion: Actions.updateQuestion
@@ -353,21 +373,13 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps({ polls, auth }, props) {
   const { params } = props.match;
 
-  const questions = polls.questions.data.filter(
-    question => question.categoryId === polls.category.data.id
-  );
-
-  const stepIndex = questions.findIndex(
-    _question => _question.id === params.questionId
-  );
-
-  const question = questions.filter(
+  const stepIndex = polls.questions.data.findIndex(
     _question => _question.id === params.questionId
   );
 
   return {
     category: polls.category.data,
-    question: question,
+    question: polls.question.data,
     questions: polls.questions.data,
     authUser: auth.user,
     auth,

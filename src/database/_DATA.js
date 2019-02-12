@@ -426,13 +426,16 @@ mock.onPost("/api/questions").reply(request => {
   return [200, question];
 });
 
-// mock.onGet("/api/question").reply(request => {
-//   const { questionId } = request.params;
-//
-//   const response = _.find(questions, { id: questionId });
-//
-//   return [200, response];
-// });
+mock.onGet("/api/question").reply(request => {
+  const { questionId } = request.params;
+  return getStoredData("questions").then(questions => {
+    const response = _.find(questions, { id: questionId });
+    if (!response) {
+      return [400, response];
+    }
+    return [200, response];
+  });
+});
 
 mock.onPost("/api/question").reply(request => {
   const { questionId, answerId, userId } = request.params;
