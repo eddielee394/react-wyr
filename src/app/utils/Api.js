@@ -27,7 +27,7 @@ class API {
    */
   static fetchQuestions = params => "/api/questions";
 
-  // static fetchQuestion = params => axios.get("/api/question", { params });
+  static fetchQuestion = params => "/api/question";
 
   static fetchCategories = () => "/api/questions/categories";
 
